@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Dark variants derived from the light inventory design -->
+
+    <color name="keeply_primary">#FF7B90F6</color>
+    <color name="keeply_primary_dark">#FF4F6CF1</color>
+    <color name="keeply_primary_light">#FFA8B6FA</color>
+    <color name="keeply_on_primary">#FF10163A</color>
+    <color name="keeply_primary_container">#FF2A3A8F</color>
+    <color name="keeply_on_primary_container">#FFDCE2FF</color>
+
+    <color name="keeply_background">#FF121318</color>
+    <color name="keeply_on_background">#FFE8E9ED</color>
+
+    <color name="keeply_surface">#FF1C1D24</color>
+    <color name="keeply_on_surface">#FFE8E9ED</color>
+    <color name="keeply_surface_variant">#FF2A2C38</color>
+    <color name="keeply_on_surface_variant">#FFB0B1B8</color>
+
+    <color name="keeply_surface_tint">#FF23263A</color>
+    <color name="keeply_nav_background">#FF1C1D24</color>
+
+    <color name="keeply_text_primary">#FFE8E9ED</color>
+    <color name="keeply_text_secondary">#FFA0A1A8</color>
+    <color name="keeply_text_tertiary">#FF7A7B84</color>
+    <color name="keeply_text_disabled">#FF5C5D66</color>
+    <color name="keeply_text_on_primary">#FF10163A</color>
+    <color name="keeply_text_link">#FF7B90F6</color>
+
+    <color name="keeply_icon_primary">#FFE8E9ED</color>
+    <color name="keeply_icon_secondary">#FFA0A1A8</color>
+    <color name="keeply_icon_active">#FF7B90F6</color>
+    <color name="keeply_icon_on_primary">#FF10163A</color>
+
+    <color name="keeply_outline">#FF3A3B46</color>
+    <color name="keeply_outline_variant">#FF2E2F3A</color>
+    <color name="keeply_divider">#FF2E2F3A</color>
+
+    <color name="keeply_error">#FFEF9A9A</color>
+    <color name="keeply_on_error">#FF3B1010</color>
+    <color name="keeply_error_container">#FF5C1F1F</color>
+    <color name="keeply_on_error_container">#FFFFDAD6</color>
+
+    <color name="keeply_success">#FF81C8A3</color>
+    <color name="keeply_on_success">#FF0E2A1C</color>
+    <color name="keeply_success_container">#FF1B3D2C</color>
+    <color name="keeply_on_success_container">#FFC8EBD8</color>
+
+    <color name="keeply_warning">#FFFFC107</color>
+    <color name="keeply_on_warning">#FF2A1E00</color>
+    <color name="keeply_warning_container">#FF4A3700</color>
+    <color name="keeply_on_warning_container">#FFFFE8B0</color>
+
+    <color name="keeply_shadow">#66000000</color>
+    <color name="keeply_scrim">#B3000000</color>
+
+    <color name="splash_background">@color/keeply_primary_dark</color>
+    <color name="splash_text">#FFFFFFFF</color>
+</resources>

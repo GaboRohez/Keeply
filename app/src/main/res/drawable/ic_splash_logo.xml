@@ -5,33 +5,58 @@
     android:viewportWidth="140"
     android:viewportHeight="140">
 
-    <!-- Soft circle -->
+    <!--
+      Cubo isométrico en 3 piezas, estilo del logo de referencia.
+      Diferencias: gaps más abiertos (Y más visible), esquinas más
+      redondas y caras con opacidad distinta para dar volumen.
+    -->
+
+    <!-- Cara superior -->
     <path
         android:fillColor="#FFFFFF"
-        android:fillAlpha="0.18"
-        android:pathData="M70,70m-64,0a64,64 0,1 1,128 0a64,64 0,1 1,-128 0" />
+        android:pathData="M70,24
+            C73.8,24 78.4,26.4 87.6,32.2
+            L100.4,40.2
+            C105.6,43.5 105.6,49.2 100.4,52.5
+            L76.4,67.6
+            C72.8,69.9 67.2,69.9 63.6,67.6
+            L39.6,52.5
+            C34.4,49.2 34.4,43.5 39.6,40.2
+            L52.4,32.2
+            C61.6,26.4 66.2,24 70,24
+            Z" />
 
-    <!-- Cabinet body -->
+    <!-- Cara inferior izquierda -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M38,42h64c3.3,0 6,2.7 6,6v58c0,3.3 -2.7,6 -6,6H38c-3.3,0 -6,-2.7 -6,-6V48c0,-3.3 2.7,-6 6,-6z" />
+        android:fillAlpha="0.88"
+        android:pathData="M36.8,57.4
+            C40.2,55.2 45.2,55.4 48.6,57.6
+            L61.8,66.2
+            C65.2,68.4 67.2,72.2 67.2,76.4
+            V100.6
+            C67.2,105.6 64,108.8 60.2,108.8
+            C58.2,108.8 56,108 54,106.7
+            L40.4,98
+            C36.6,95.6 34.2,91.4 34.2,86.8
+            V65.2
+            C34.2,61.8 35.2,59 36.8,57.4
+            Z" />
 
-    <!-- Cabinet door split -->
+    <!-- Cara inferior derecha -->
     <path
-        android:fillColor="#1F7A6A"
-        android:fillAlpha="0.12"
-        android:pathData="M70,48v58H38c-1.1,0 -2,-0.9 -2,-2V50c0,-1.1 0.9,-2 2,-2h32z" />
-
-    <!-- Cross (medicine) -->
-    <path
-        android:fillColor="#1F7A6A"
-        android:pathData="M66,58h8c1.1,0 2,0.9 2,2v8h8c1.1,0 2,0.9 2,2v8c0,1.1 -0.9,2 -2,2h-8v8c0,1.1 -0.9,2 -2,2h-8c-1.1,0 -2,-0.9 -2,-2v-8h-8c-1.1,0 -2,-0.9 -2,-2v-8c0,-1.1 0.9,-2 2,-2h8v-8c0,-1.1 0.9,-2 2,-2z" />
-
-    <!-- Door knobs -->
-    <path
-        android:fillColor="#1F7A6A"
-        android:pathData="M58,78m-2.5,0a2.5,2.5 0,1 1,5 0a2.5,2.5 0,1 1,-5 0" />
-    <path
-        android:fillColor="#1F7A6A"
-        android:pathData="M82,78m-2.5,0a2.5,2.5 0,1 1,5 0a2.5,2.5 0,1 1,-5 0" />
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.74"
+        android:pathData="M103.2,57.4
+            C99.8,55.2 94.8,55.4 91.4,57.6
+            L78.2,66.2
+            C74.8,68.4 72.8,72.2 72.8,76.4
+            V100.6
+            C72.8,105.6 76,108.8 79.8,108.8
+            C81.8,108.8 84,108 86,106.7
+            L99.6,98
+            C103.4,95.6 105.8,91.4 105.8,86.8
+            V65.2
+            C105.8,61.8 104.8,59 103.2,57.4
+            Z" />
 </vector>
