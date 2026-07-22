@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="140dp"
+    android:height="140dp"
+    android:viewportWidth="140"
+    android:viewportHeight="140">
+
+    <!-- Soft circle -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.18"
+        android:pathData="M70,70m-64,0a64,64 0,1 1,128 0a64,64 0,1 1,-128 0" />
+
+    <!-- Cabinet body -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M38,42h64c3.3,0 6,2.7 6,6v58c0,3.3 -2.7,6 -6,6H38c-3.3,0 -6,-2.7 -6,-6V48c0,-3.3 2.7,-6 6,-6z" />
+
+    <!-- Cabinet door split -->
+    <path
+        android:fillColor="#1F7A6A"
+        android:fillAlpha="0.12"
+        android:pathData="M70,48v58H38c-1.1,0 -2,-0.9 -2,-2V50c0,-1.1 0.9,-2 2,-2h32z" />
+
+    <!-- Cross (medicine) -->
+    <path
+        android:fillColor="#1F7A6A"
+        android:pathData="M66,58h8c1.1,0 2,0.9 2,2v8h8c1.1,0 2,0.9 2,2v8c0,1.1 -0.9,2 -2,2h-8v8c0,1.1 -0.9,2 -2,2h-8c-1.1,0 -2,-0.9 -2,-2v-8h-8c-1.1,0 -2,-0.9 -2,-2v-8c0,-1.1 0.9,-2 2,-2h8v-8c0,-1.1 0.9,-2 2,-2z" />
+
+    <!-- Door knobs -->
+    <path
+        android:fillColor="#1F7A6A"
+        android:pathData="M58,78m-2.5,0a2.5,2.5 0,1 1,5 0a2.5,2.5 0,1 1,-5 0" />
+    <path
+        android:fillColor="#1F7A6A"
+        android:pathData="M82,78m-2.5,0a2.5,2.5 0,1 1,5 0a2.5,2.5 0,1 1,-5 0" />
+</vector>
