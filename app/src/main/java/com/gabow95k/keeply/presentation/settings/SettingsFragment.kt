@@ -23,7 +23,11 @@ import com.gabow95k.keeply.databinding.FragmentSettingsBinding
 import com.gabow95k.keeply.notifications.InventoryAlertScheduler
 import com.gabow95k.keeply.notifications.NotificationScheduleEvaluator
 import com.gabow95k.keeply.presentation.base.BaseFragment
+import com.gabow95k.keeply.presentation.privacy.PrivacyPolicyActivity
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
@@ -61,8 +65,25 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         bindPreferenceState()
         setupListeners()
         observeProfile()
+        bindPrivacyStatus()
 
         binding.tvAppVersion.text = getString(R.string.settings_version, BuildConfig.VERSION_NAME)
+    }
+
+    private fun bindPrivacyStatus() {
+        binding.tvPrivacyStatus.text = if (prefs.hasAcceptedCurrentPrivacy()) {
+            getString(
+                R.string.settings_privacy_accepted,
+                formatPrivacyDate(prefs.privacyAcceptedAt)
+            )
+        } else {
+            getString(R.string.settings_privacy_pending)
+        }
+    }
+
+    private fun formatPrivacyDate(millis: Long): String {
+        if (millis <= 0L) return "—"
+        return SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date(millis))
     }
 
     private fun bindPreferenceState() {
@@ -74,6 +95,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         binding.switchExpiring.isChecked = prefs.notifyExpiringSoon
         binding.switchOutOfStock.isChecked = prefs.notifyOutOfStock
         binding.switchLowStock.isChecked = prefs.notifyLowStock
+        binding.switchShoppingPrompts.isChecked = prefs.notifyShoppingPrompts
 
         when (prefs.notificationCadence) {
             NotificationCadence.DAILY -> binding.chipCadenceDaily.isChecked = true
@@ -106,6 +128,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         binding.rowBackup.setOnClickListener { showComingSoon() }
         binding.rowCategories.setOnClickListener { showComingSoon() }
         binding.rowExport.setOnClickListener { showComingSoon() }
+        binding.rowPrivacy.setOnClickListener {
+            startActivity(PrivacyPolicyActivity.newViewIntent(requireContext()))
+        }
 
         binding.switchNotifications.setOnCheckedChangeListener { _, isChecked ->
             if (suppressSwitchCallbacks) return@setOnCheckedChangeListener
@@ -129,6 +154,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         }
         binding.switchLowStock.setOnCheckedChangeListener { _, isChecked ->
             if (!suppressSwitchCallbacks) prefs.notifyLowStock = isChecked
+        }
+        binding.switchShoppingPrompts.setOnCheckedChangeListener { _, isChecked ->
+            if (!suppressSwitchCallbacks) prefs.notifyShoppingPrompts = isChecked
         }
 
         binding.chipGroupCadence.setOnCheckedStateChangeListener { _, checkedIds ->
@@ -278,6 +306,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         binding.switchExpiring.isEnabled = enabled
         binding.switchOutOfStock.isEnabled = enabled
         binding.switchLowStock.isEnabled = enabled
+        binding.switchShoppingPrompts.isEnabled = enabled
 
         binding.chipCadenceDaily.isEnabled = enabled
         binding.chipCadenceEvery3.isEnabled = enabled

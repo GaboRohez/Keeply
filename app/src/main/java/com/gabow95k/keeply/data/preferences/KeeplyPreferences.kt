@@ -72,6 +72,42 @@ class KeeplyPreferences(context: Context) {
         get() = prefs.getString(KEY_LAST_NOTIFIED_SLOT, "").orEmpty()
         set(value) = prefs.edit { putString(KEY_LAST_NOTIFIED_SLOT, value) }
 
+    var privacyAcceptedVersion: Int
+        get() = prefs.getInt(KEY_PRIVACY_ACCEPTED_VERSION, 0)
+        set(value) = prefs.edit { putInt(KEY_PRIVACY_ACCEPTED_VERSION, value) }
+
+    var privacyAcceptedAt: Long
+        get() = prefs.getLong(KEY_PRIVACY_ACCEPTED_AT, 0L)
+        set(value) = prefs.edit { putLong(KEY_PRIVACY_ACCEPTED_AT, value) }
+
+    fun hasAcceptedCurrentPrivacy(): Boolean =
+        privacyAcceptedVersion >= CURRENT_PRIVACY_VERSION
+
+    fun acceptCurrentPrivacy() {
+        privacyAcceptedVersion = CURRENT_PRIVACY_VERSION
+        privacyAcceptedAt = System.currentTimeMillis()
+    }
+
+    var lastMonthEndPromptMonth: Int
+        get() = prefs.getInt(KEY_LAST_MONTH_END_PROMPT, 0)
+        set(value) = prefs.edit { putInt(KEY_LAST_MONTH_END_PROMPT, value) }
+
+    var lastLowStockPromptDay: Int
+        get() = prefs.getInt(KEY_LAST_LOW_STOCK_PROMPT, 0)
+        set(value) = prefs.edit { putInt(KEY_LAST_LOW_STOCK_PROMPT, value) }
+
+    var lastTipPromptDay: Int
+        get() = prefs.getInt(KEY_LAST_TIP_PROMPT, 0)
+        set(value) = prefs.edit { putInt(KEY_LAST_TIP_PROMPT, value) }
+
+    var nextTipIndex: Int
+        get() = prefs.getInt(KEY_NEXT_TIP_INDEX, 0)
+        set(value) = prefs.edit { putInt(KEY_NEXT_TIP_INDEX, value) }
+
+    var notifyShoppingPrompts: Boolean
+        get() = prefs.getBoolean(KEY_NOTIFY_SHOPPING_PROMPTS, true)
+        set(value) = prefs.edit { putBoolean(KEY_NOTIFY_SHOPPING_PROMPTS, value) }
+
     fun applyTimesPerDay(times: Int) {
         notificationTimesPerDay = times
         notificationSlots = NotificationTimeSlot.defaultsForTimesPerDay(times)
@@ -80,6 +116,7 @@ class KeeplyPreferences(context: Context) {
     companion object {
         const val PREFS_NAME = "keeply_prefs"
         const val DEFAULT_EXPIRING_SOON_DAYS = 7
+        const val CURRENT_PRIVACY_VERSION = 1
 
         private const val KEY_NOTIFICATIONS_ENABLED = "notifications_enabled"
         private const val KEY_NOTIFY_EXPIRED = "notify_expired"
@@ -92,6 +129,13 @@ class KeeplyPreferences(context: Context) {
         private const val KEY_NOTIFICATION_SLOTS = "notification_slots"
         private const val KEY_NOTIFICATION_ANCHOR_DAY = "notification_anchor_day"
         private const val KEY_LAST_NOTIFIED_SLOT = "last_notified_slot"
+        private const val KEY_PRIVACY_ACCEPTED_VERSION = "privacy_accepted_version"
+        private const val KEY_PRIVACY_ACCEPTED_AT = "privacy_accepted_at"
+        private const val KEY_LAST_MONTH_END_PROMPT = "last_month_end_prompt"
+        private const val KEY_LAST_LOW_STOCK_PROMPT = "last_low_stock_prompt"
+        private const val KEY_LAST_TIP_PROMPT = "last_tip_prompt"
+        private const val KEY_NEXT_TIP_INDEX = "next_tip_index"
+        private const val KEY_NOTIFY_SHOPPING_PROMPTS = "notify_shopping_prompts"
 
         @Volatile
         private var instance: KeeplyPreferences? = null

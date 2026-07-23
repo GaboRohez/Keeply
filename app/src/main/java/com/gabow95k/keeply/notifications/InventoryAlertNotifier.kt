@@ -46,6 +46,10 @@ class InventoryAlertNotifier(private val context: Context) {
         }
     }
 
+    fun notifyShoppingPrompt(title: String, body: String) {
+        show(id = ID_SHOPPING_PROMPT, title = title, body = body)
+    }
+
     private fun buildBody(names: List<String>, pluralRes: Int): String {
         val preview = names.take(MAX_NAMES_IN_BODY).joinToString(", ")
         val extra = names.size - MAX_NAMES_IN_BODY
@@ -88,5 +92,6 @@ class InventoryAlertNotifier(private val context: Context) {
         private const val ID_EXPIRING_SOON = 1002
         private const val ID_OUT_OF_STOCK = 1003
         private const val ID_LOW_STOCK = 1004
+        private const val ID_SHOPPING_PROMPT = 1005
     }
 }

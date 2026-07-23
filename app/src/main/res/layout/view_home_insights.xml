@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardMonthlyInsights"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="14dp"
+    app:cardBackgroundColor="@color/keeply_surface"
+    app:cardElevation="2dp"
+    app:shapeAppearanceOverlay="@style/ShapeAppearance.Keeply.Card"
+    app:strokeWidth="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvInsightsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/onest"
+            android:text="@string/home_insights_section"
+            android:textColor="@color/keeply_text_primary"
+            android:textFontWeight="700"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvInsightsSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/onest"
+            android:text="@string/home_insights_subtitle"
+            android:textColor="@color/keeply_text_secondary"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:id="@+id/insightsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:divider="?android:attr/listDivider"
+            android:orientation="vertical"
+            android:showDividers="middle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnInsightsShop"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/onest"
+            android:text="@string/home_insights_shop_action"
+            android:textAllCaps="false"
+            android:visibility="gone"
+            app:backgroundTint="@color/keeply_primary"
+            app:cornerRadius="14dp"
+            tools:visibility="visible" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

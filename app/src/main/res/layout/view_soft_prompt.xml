@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardSoftPrompt"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="14dp"
+    android:visibility="gone"
+    app:cardBackgroundColor="@color/keeply_primary_container"
+    app:cardElevation="0dp"
+    app:shapeAppearanceOverlay="@style/ShapeAppearance.Keeply.Card"
+    app:strokeWidth="0dp"
+    tools:visibility="visible">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvPromptTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/onest"
+            android:textColor="@color/keeply_on_primary_container"
+            android:textFontWeight="700"
+            android:textSize="15sp"
+            tools:text="Fin de mes cerca" />
+
+        <TextView
+            android:id="@+id/tvPromptBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/onest"
+            android:textColor="@color/keeply_on_primary_container"
+            android:textSize="13sp"
+            tools:text="¿Quieres crear tu lista del súper?" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPromptDismiss"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/onest"
+                android:text="@string/prompt_dismiss"
+                android:textAllCaps="false"
+                android:textColor="@color/keeply_on_primary_container" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPromptAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/onest"
+                android:textAllCaps="false"
+                app:backgroundTint="@color/keeply_primary"
+                tools:text="Crear lista" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -17,6 +17,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.gabow95k.keeply.R
+import com.gabow95k.keeply.data.local.StockChangeLogger
 import com.gabow95k.keeply.data.local.db.CategoryDefaults
 import com.gabow95k.keeply.data.local.db.KeeplyDatabase
 import com.gabow95k.keeply.data.local.entity.CategoryEntity
@@ -57,6 +58,7 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
     private var selectedExpirationDate: Long? = null
     private var editingItemId: Long? = null
     private var existingCreatedAt: Long = System.currentTimeMillis()
+    private var existingQuantity: Double = 0.0
     private var existingPhotoPath: String? = null
     private var addOtherLabel: String = ""
     private var pendingPhotoFile: File? = null
@@ -353,6 +355,7 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
 
     private fun bindItem(entity: InventoryItemEntity) {
         existingCreatedAt = entity.createdAt
+        existingQuantity = entity.quantity
         existingPhotoPath = entity.photoPath
         selectedCategoryId = entity.categoryId
         selectedExpirationDate = entity.expirationDate
@@ -593,13 +596,27 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
         )
 
         viewLifecycleOwner.lifecycleScope.launch {
-            val dao = KeeplyDatabase.getInstance(requireContext()).inventoryItemDao()
+            val db = KeeplyDatabase.getInstance(requireContext())
+            val dao = db.inventoryItemDao()
             if (editingItemId != null) {
                 dao.update(entity)
+                StockChangeLogger.logQuantityEdit(
+                    dao = db.stockChangeEventDao(),
+                    itemId = entity.id,
+                    productName = entity.name,
+                    quantityBefore = existingQuantity,
+                    quantityAfter = safeQuantity
+                )
                 Toast.makeText(requireContext(), R.string.product_updated, Toast.LENGTH_SHORT)
                     .show()
             } else {
-                dao.insert(entity)
+                val newId = dao.insert(entity)
+                StockChangeLogger.logAdd(
+                    dao = db.stockChangeEventDao(),
+                    itemId = newId,
+                    productName = entity.name,
+                    quantity = safeQuantity
+                )
                 Toast.makeText(requireContext(), R.string.product_saved, Toast.LENGTH_SHORT).show()
             }
             parentFragmentManager.popBackStack()

@@ -84,3 +84,45 @@ fun InventoryItem.toEntity(): InventoryItemEntity = InventoryItemEntity(
     createdAt = createdAt,
     updatedAt = updatedAt
 )
+
+fun com.gabow95k.keeply.data.local.entity.ShoppingListEntity.toDomain() =
+    com.gabow95k.keeply.domain.model.ShoppingList(
+        id = id,
+        name = name,
+        sourceType = sourceType,
+        createdAt = createdAt,
+        updatedAt = updatedAt
+    )
+
+fun com.gabow95k.keeply.domain.model.ShoppingList.toEntity() =
+    com.gabow95k.keeply.data.local.entity.ShoppingListEntity(
+        id = id,
+        name = name,
+        sourceType = sourceType,
+        createdAt = createdAt,
+        updatedAt = updatedAt
+    )
+
+fun com.gabow95k.keeply.data.local.entity.ShoppingListItemEntity.toDomain() =
+    com.gabow95k.keeply.domain.model.ShoppingListItem(
+        id = id,
+        listId = listId,
+        name = name,
+        note = note,
+        inventoryItemId = inventoryItemId,
+        isChecked = isChecked,
+        sortOrder = sortOrder,
+        createdAt = createdAt
+    )
+
+fun com.gabow95k.keeply.domain.model.ShoppingListItem.toEntity() =
+    com.gabow95k.keeply.data.local.entity.ShoppingListItemEntity(
+        id = id,
+        listId = listId,
+        name = name,
+        note = note,
+        inventoryItemId = inventoryItemId,
+        isChecked = isChecked,
+        sortOrder = sortOrder,
+        createdAt = createdAt
+    )

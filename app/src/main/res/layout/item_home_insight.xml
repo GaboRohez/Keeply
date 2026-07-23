@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="10dp">
+
+    <TextView
+        android:id="@+id/tvInsightTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/onest"
+        android:textColor="@color/keeply_text_primary"
+        android:textFontWeight="700"
+        android:textSize="14sp"
+        tools:text="Usaste mucho Leche" />
+
+    <TextView
+        android:id="@+id/tvInsightBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/onest"
+        android:textColor="@color/keeply_text_secondary"
+        android:textSize="13sp"
+        tools:text="Restaste 8 unidades este mes" />
+</LinearLayout>

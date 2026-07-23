@@ -3,6 +3,7 @@ package com.gabow95k.keeply.notifications
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.gabow95k.keeply.R
 import com.gabow95k.keeply.data.local.db.KeeplyDatabase
 import com.gabow95k.keeply.data.preferences.KeeplyPreferences
 import java.util.concurrent.TimeUnit
@@ -61,17 +62,44 @@ class InventoryAlertWorker(
             emptyList()
         }
 
-        if (expired.isEmpty() && expiringSoon.isEmpty() && outOfStock.isEmpty() && lowStock.isEmpty()) {
-            return Result.success()
+        KeeplyNotificationChannels.ensureCreated(applicationContext)
+        val notifier = InventoryAlertNotifier(applicationContext)
+
+        if (expired.isNotEmpty() || expiringSoon.isNotEmpty() || outOfStock.isNotEmpty() || lowStock.isNotEmpty()) {
+            notifier.notifyIfNeeded(
+                expiredNames = expired,
+                expiringSoonNames = expiringSoon,
+                outOfStockNames = outOfStock,
+                lowStockNames = lowStock
+            )
         }
 
-        KeeplyNotificationChannels.ensureCreated(applicationContext)
-        InventoryAlertNotifier(applicationContext).notifyIfNeeded(
-            expiredNames = expired,
-            expiringSoonNames = expiringSoon,
-            outOfStockNames = outOfStock,
-            lowStockNames = lowStock
-        )
+        if (prefs.notifyShoppingPrompts) {
+            val calendar = java.util.Calendar.getInstance()
+            val day = calendar.get(java.util.Calendar.DAY_OF_MONTH)
+            val monthKey = calendar.get(java.util.Calendar.YEAR) * 100 +
+                    (calendar.get(java.util.Calendar.MONTH) + 1)
+            val dayKey = monthKey * 100 + day
+            val restockCount = outOfStock.size + lowStock.size
+
+            if (day >= 25 && prefs.lastMonthEndPromptMonth != monthKey) {
+                notifier.notifyShoppingPrompt(
+                    title = applicationContext.getString(R.string.notification_shopping_month_title),
+                    body = applicationContext.getString(R.string.notification_shopping_month_body)
+                )
+                prefs.lastMonthEndPromptMonth = monthKey
+            } else if (restockCount > 0 && prefs.lastLowStockPromptDay != dayKey) {
+                notifier.notifyShoppingPrompt(
+                    title = applicationContext.getString(R.string.notification_shopping_stock_title),
+                    body = applicationContext.getString(
+                        R.string.notification_shopping_stock_body,
+                        restockCount
+                    )
+                )
+                prefs.lastLowStockPromptDay = dayKey
+            }
+        }
+
         return Result.success()
     }
 }

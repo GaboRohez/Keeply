@@ -91,6 +91,10 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <include
+                android:id="@+id/softPrompt"
+                layout="@layout/view_soft_prompt" />
+
             <LinearLayout
                 android:id="@+id/statsRow"
                 android:layout_width="match_parent"
@@ -122,6 +126,10 @@
                     android:layout_marginStart="6dp"
                     android:layout_weight="1" />
             </LinearLayout>
+
+            <include
+                android:id="@+id/monthlyInsights"
+                layout="@layout/view_home_insights" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardSearch"

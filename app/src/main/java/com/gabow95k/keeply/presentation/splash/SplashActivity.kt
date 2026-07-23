@@ -9,18 +9,17 @@ import android.view.LayoutInflater
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.gabow95k.keeply.data.preferences.KeeplyPreferences
 import com.gabow95k.keeply.databinding.ActivitySplashBinding
 import com.gabow95k.keeply.presentation.base.BaseActivity
 import com.gabow95k.keeply.presentation.controller.ControllerActivity
+import com.gabow95k.keeply.presentation.privacy.PrivacyPolicyActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     private val splashHandler = Handler(Looper.getMainLooper())
-    private val navigateRunnable = Runnable {
-        startActivity(Intent(this, ControllerActivity::class.java))
-        finish()
-    }
+    private val navigateRunnable = Runnable { navigateNext() }
 
     override fun inflateBinding(inflater: LayoutInflater): ActivitySplashBinding =
         ActivitySplashBinding.inflate(inflater)
@@ -36,6 +35,17 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         }
 
         splashHandler.postDelayed(navigateRunnable, SPLASH_DELAY_MS)
+    }
+
+    private fun navigateNext() {
+        val prefs = KeeplyPreferences.getInstance(this)
+        val next = if (prefs.hasAcceptedCurrentPrivacy()) {
+            Intent(this, ControllerActivity::class.java)
+        } else {
+            PrivacyPolicyActivity.newGateIntent(this)
+        }
+        startActivity(next)
+        finish()
     }
 
     override fun onDestroy() {

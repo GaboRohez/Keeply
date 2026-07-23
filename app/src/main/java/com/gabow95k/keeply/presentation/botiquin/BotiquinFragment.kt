@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.gabow95k.keeply.R
+import com.gabow95k.keeply.data.local.StockChangeLogger
 import com.gabow95k.keeply.data.local.db.KeeplyDatabase
 import com.gabow95k.keeply.data.local.mapper.toDomain
 import com.gabow95k.keeply.databinding.FragmentBotiquinBinding
@@ -141,7 +142,8 @@ class BotiquinFragment : BaseFragment<FragmentBotiquinBinding>() {
         if (count <= 0) return
 
         viewLifecycleOwner.lifecycleScope.launch {
-            val dao = KeeplyDatabase.getInstance(requireContext()).inventoryItemDao()
+            val db = KeeplyDatabase.getInstance(requireContext())
+            val dao = db.inventoryItemDao()
             val entity = dao.getById(itemId) ?: return@launch
             if (entity.quantity <= 0.0) {
                 Toast.makeText(
@@ -151,12 +153,20 @@ class BotiquinFragment : BaseFragment<FragmentBotiquinBinding>() {
                 ).show()
                 return@launch
             }
-            val newQuantity = (entity.quantity - count.toDouble()).coerceAtLeast(0.0)
+            val before = entity.quantity
+            val newQuantity = (before - count.toDouble()).coerceAtLeast(0.0)
             dao.update(
                 entity.copy(
                     quantity = newQuantity,
                     updatedAt = System.currentTimeMillis()
                 )
+            )
+            StockChangeLogger.logConsume(
+                dao = db.stockChangeEventDao(),
+                itemId = entity.id,
+                productName = entity.name,
+                quantityBefore = before,
+                quantityAfter = newQuantity
             )
             Toast.makeText(
                 requireContext(),

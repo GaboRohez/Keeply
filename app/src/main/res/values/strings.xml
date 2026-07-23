@@ -6,6 +6,7 @@
 
     <string name="nav_botiquin">Inventario</string>
     <string name="nav_home">Inicio</string>
+    <string name="nav_shopping">Compras</string>
     <string name="nav_alerts">Alertas</string>
     <string name="nav_settings">Ajustes</string>
 
@@ -110,6 +111,17 @@
     <string name="home_recent_empty">Aún no hay productos recientes</string>
     <string name="home_add_product">Agregar</string>
     <string name="home_profile_incomplete">Completa tu perfil en Ajustes</string>
+    <string name="home_insights_section">Este mes</string>
+    <string name="home_insights_subtitle">Resumen de uso y recomendaciones</string>
+    <string name="home_insights_most_used_title">Usaste mucho %1$s</string>
+    <string name="home_insights_most_used_body">Restaste %1$s unidad(es) este mes</string>
+    <string name="home_insights_ran_out_title">Se agotó %1$s</string>
+    <string name="home_insights_ran_out_body">Llegó a cero este mes. Conviene reponerlo en tu próxima compra.</string>
+    <string name="home_insights_buy_more_title">Te recomiendo comprar más %1$s</string>
+    <string name="home_insights_buy_more_body">Está con stock bajo o agotado ahora mismo.</string>
+    <string name="home_insights_empty_title">Aún no hay consumo registrado</string>
+    <string name="home_insights_empty_body">Desliza un producto a la derecha en Inventario para restar stock y ver tu resumen aquí.</string>
+    <string name="home_insights_shop_action">Crear lista de compra</string>
     <string name="coming_soon">Próximamente</string>
 
     <string name="settings_section_profile">Perfil</string>
@@ -155,9 +167,20 @@
     <string name="settings_backup_title">Respaldo en Google Drive</string>
     <string name="settings_categories_title">Categorías</string>
     <string name="settings_export_title">Exportar inventario</string>
+    <string name="settings_privacy_title">Aviso de privacidad</string>
+    <string name="settings_privacy_accepted">Aceptado el %1$s</string>
+    <string name="settings_privacy_pending">Pendiente de aceptación</string>
     <string name="settings_coming_soon">Próximamente</string>
     <string name="settings_about_title">Acerca de Keeply</string>
     <string name="settings_version">Versión %1$s</string>
+
+    <string name="privacy_title">Aviso de privacidad</string>
+    <string name="privacy_subtitle">Antes de continuar, lee y acepta cómo Keeply trata tu información.</string>
+    <string name="privacy_accept">Acepto el aviso de privacidad</string>
+    <string name="privacy_decline">No aceptar y salir</string>
+    <string name="privacy_close">Cerrar</string>
+    <string name="privacy_accepted_on">Lo aceptaste el %1$s</string>
+    <string name="privacy_body">Última actualización: julio 2026\n\n1. Quiénes somos\nKeeply es una aplicación de inventario personal orientada a registrar productos del hogar (medicinas, limpieza, cocina y más) en tu dispositivo.\n\n2. Datos que tratamos\nKeeply puede almacenar de forma local:\n• Perfil opcional (nombre, edad, tipo de sangre, teléfono, correo y notas).\n• Inventario (nombre, categoría, marca, presentación, unidad, cantidades, caducidad, código de barras, ubicación, notas y fotos).\n• Preferencias de la app (notificaciones, filtros y opciones personalizadas).\n• Registro de aceptación de este aviso (fecha y versión).\n\n3. Finalidad\nUsamos esos datos solo para:\n• Mostrar y administrar tu inventario.\n• Enviar avisos locales que tú configures (caducidad, stock, etc.).\n• Mejorar la experiencia de captura (foto, OCR y códigos de barras en el dispositivo).\n\n4. Almacenamiento y transferencia\nPor defecto, la información se guarda en el dispositivo. Keeply no crea una cuenta en la nube en esta versión. Si en el futuro se activa respaldo (por ejemplo Google Drive), se te informará y se pedirá consentimiento adicional.\n\n5. Permisos del sistema\n• Cámara: para fotografiar productos y escanear códigos.\n• Notificaciones: solo si las activas en Ajustes.\nPuedes revocar estos permisos en la configuración de Android; algunas funciones dejarán de estar disponibles.\n\n6. Conservación y eliminación\nLos datos permanecen mientras uses la app o hasta que los borres (por ejemplo eliminando productos o desinstalando Keeply).\n\n7. Menores\nSi la app es usada por un menor, debe contar con supervisión de un adulto responsable.\n\n8. Cambios a este aviso\nSi actualizamos el aviso de forma relevante, te pediremos aceptarlo de nuevo antes de continuar.\n\n9. Contacto\nPara dudas sobre privacidad relacionadas con Keeply, contacta al desarrollador a través de la ficha de la aplicación en la tienda donde la descargaste.\n\nAl pulsar “Acepto”, confirmas que leíste y aceptas este aviso.</string>
 
     <string name="profile_field_name">Nombre *</string>
     <string name="profile_field_age">Edad</string>
@@ -180,4 +203,51 @@
     <string name="notification_low_stock_title">Stock bajo</string>
     <string name="notification_low_stock_body">%1$d producto(s): %2$s</string>
     <string name="notification_names_more">%1$s y %2$d más</string>
+
+    <string name="shopping_title">Compras</string>
+    <string name="shopping_empty">Aún no tienes listas.\nCrea una manual o auto-generada.</string>
+    <string name="shopping_create">Nueva lista</string>
+    <string name="shopping_create_manual">Lista vacía</string>
+    <string name="shopping_create_auto">Auto-generar desde inventario</string>
+    <string name="shopping_list_name">Nombre de la lista</string>
+    <string name="shopping_list_name_default">Mi lista</string>
+    <string name="shopping_list_name_auto_default">Reposición</string>
+    <string name="shopping_error_name">Ingresa un nombre</string>
+    <string name="shopping_error_categories">Elige al menos una categoría</string>
+    <string name="shopping_error_criteria">Elige al menos un criterio</string>
+    <string name="shopping_error_no_items">No hay productos que coincidan</string>
+    <string name="shopping_created">Lista creada</string>
+    <string name="shopping_auto_include">Incluir productos</string>
+    <string name="shopping_include_out_of_stock">Agotados</string>
+    <string name="shopping_include_low_stock">Stock bajo</string>
+    <string name="shopping_include_expired">Caducados</string>
+    <string name="shopping_auto_categories">Categorías</string>
+    <string name="shopping_auto_title">Auto-generar lista</string>
+    <string name="shopping_manual_title">Nueva lista</string>
+    <string name="shopping_meta_pending">%1$d pendientes · %2$s</string>
+    <string name="shopping_source_manual">Manual</string>
+    <string name="shopping_source_auto">Auto</string>
+    <string name="shopping_add_item_hint">Agregar producto…</string>
+    <string name="shopping_add">Agregar</string>
+    <string name="shopping_items_empty">Lista vacía. Agrega productos.</string>
+    <string name="shopping_delete_list">Eliminar lista</string>
+    <string name="shopping_delete_list_message">¿Eliminar \"%1$s\" y todos sus ítems?</string>
+    <string name="shopping_deleted">Lista eliminada</string>
+    <string name="shopping_rename_title">Renombrar lista</string>
+    <string name="shopping_renamed">Lista actualizada</string>
+
+    <string name="prompt_dismiss">Ahora no</string>
+    <string name="prompt_end_month_title">Se acerca fin de mes</string>
+    <string name="prompt_end_month_body">¿Quieres crear tu lista de compras del súper?</string>
+    <string name="prompt_end_month_action">Crear lista</string>
+    <string name="prompt_low_stock_title">Hay productos por reponer</string>
+    <string name="prompt_low_stock_body">Tienes %1$d producto(s) con stock bajo o agotados. ¿Generamos una lista?</string>
+    <string name="prompt_low_stock_action">Crear lista</string>
+    <string name="prompt_tip_action">Entendido</string>
+
+    <string name="settings_notify_shopping_prompts">Tips y recordatorios de compras</string>
+    <string name="notification_shopping_month_title">Fin de mes cerca</string>
+    <string name="notification_shopping_month_body">Arma tu lista del súper desde Compras en Keeply</string>
+    <string name="notification_shopping_stock_title">Productos por reponer</string>
+    <string name="notification_shopping_stock_body">Tienes %1$d producto(s) con poco o nada de stock</string>
 </resources>
