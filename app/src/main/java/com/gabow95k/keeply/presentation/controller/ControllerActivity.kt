@@ -2,13 +2,17 @@ package com.gabow95k.keeply.presentation.controller
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
 import com.gabow95k.keeply.R
 import com.gabow95k.keeply.databinding.ActivityControllerBinding
+import com.gabow95k.keeply.presentation.alerts.AlertsFragment
 import com.gabow95k.keeply.presentation.base.BaseActivity
+import com.gabow95k.keeply.presentation.botiquin.BotiquinFragment
+import com.gabow95k.keeply.presentation.home.HomeFragment
+import com.gabow95k.keeply.presentation.settings.SettingsFragment
 
 class ControllerActivity : BaseActivity<ActivityControllerBinding>() {
 
@@ -27,19 +31,60 @@ class ControllerActivity : BaseActivity<ActivityControllerBinding>() {
         }
 
         setupBottomNavigation()
+
+        if (savedInstanceState == null) {
+            showTab(R.id.nav_home)
+            binding.bottomNavigation.selectedItemId = R.id.nav_home
+        }
     }
 
     private fun setupBottomNavigation() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
-            val message = when (item.itemId) {
-                R.id.nav_home -> getString(R.string.nav_home)
-                R.id.nav_botiquin -> getString(R.string.nav_botiquin)
-                R.id.nav_alerts -> getString(R.string.nav_alerts)
-                R.id.nav_settings -> getString(R.string.nav_settings)
-                else -> return@setOnItemSelectedListener false
-            }
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            // Clear form back stack when changing tabs
+            supportFragmentManager.popBackStack(
+                null,
+                androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
+            )
+            showTab(item.itemId)
             true
         }
+    }
+
+    private fun showTab(itemId: Int) {
+        val tag = when (itemId) {
+            R.id.nav_home -> HomeFragment.TAG
+            R.id.nav_botiquin -> BotiquinFragment.TAG
+            R.id.nav_alerts -> AlertsFragment.TAG
+            R.id.nav_settings -> SettingsFragment.TAG
+            else -> return
+        }
+
+        val fragmentManager = supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+
+        listOf(
+            HomeFragment.TAG,
+            BotiquinFragment.TAG,
+            AlertsFragment.TAG,
+            SettingsFragment.TAG
+        ).forEach { existingTag ->
+            fragmentManager.findFragmentByTag(existingTag)?.let { transaction.hide(it) }
+        }
+
+        val existing = fragmentManager.findFragmentByTag(tag)
+        if (existing != null) {
+            transaction.show(existing)
+        } else {
+            transaction.add(R.id.fragmentContainer, createFragment(itemId), tag)
+        }
+        transaction.commit()
+    }
+
+    private fun createFragment(itemId: Int): Fragment = when (itemId) {
+        R.id.nav_home -> HomeFragment.newInstance()
+        R.id.nav_botiquin -> BotiquinFragment.newInstance()
+        R.id.nav_alerts -> AlertsFragment.newInstance()
+        R.id.nav_settings -> SettingsFragment.newInstance()
+        else -> HomeFragment.newInstance()
     }
 }

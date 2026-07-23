@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Keeply</string>
     <string name="splash_title">Keeply</string>
@@ -7,4 +8,40 @@
     <string name="nav_botiquin">Botiquín</string>
     <string name="nav_alerts">Alertas</string>
     <string name="nav_settings">Ajustes</string>
+
+    <string name="botiquin_title">Botiquín</string>
+    <string name="botiquin_empty">Aún no hay productos.\nToca + para agregar uno.</string>
+    <string name="botiquin_add">Agregar producto</string>
+    <string name="botiquin_stock_in_stock">%1$s en stock</string>
+    <string name="botiquin_category_format">(%1$s)</string>
+    <string name="botiquin_no_barcode">Sin código</string>
+
+    <string name="product_form_title">Nuevo producto</string>
+    <string name="product_form_title_edit">Editar producto</string>
+    <string name="product_field_name">Nombre *</string>
+    <string name="product_field_category">Categoría *</string>
+    <string name="product_field_brand">Marca</string>
+    <string name="product_field_form_type">Presentación</string>
+    <string name="product_field_unit">Unidad</string>
+    <string name="product_field_quantity">Cantidad *</string>
+    <string name="product_field_min_quantity">Stock mínimo</string>
+    <string name="product_field_expiration">Fecha de caducidad</string>
+    <string name="product_field_barcode">Código / barcode</string>
+    <string name="product_field_location">Ubicación</string>
+    <string name="product_field_notes">Notas</string>
+    <string name="product_hint_form_type">Ej. cápsula, líquido, tableta</string>
+    <string name="product_hint_unit">Ej. pzas, mg, ml, kg</string>
+    <string name="product_save">Guardar</string>
+    <string name="product_saved">Producto guardado</string>
+    <string name="product_updated">Producto actualizado</string>
+    <string name="product_edit">Editar</string>
+    <string name="product_delete">Eliminar</string>
+    <string name="product_delete_title">Eliminar producto</string>
+    <string name="product_delete_message">¿Seguro que quieres eliminar \"%1$s\"?</string>
+    <string name="product_deleted">Producto eliminado</string>
+    <string name="product_error_name">Ingresa el nombre</string>
+    <string name="product_error_category">Selecciona una categoría</string>
+    <string name="product_error_quantity">Ingresa una cantidad válida</string>
+    <string name="product_clear_expiration">Quitar fecha</string>
+    <string name="coming_soon">Próximamente</string>
 </resources>
