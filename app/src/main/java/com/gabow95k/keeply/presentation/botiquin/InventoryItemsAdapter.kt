@@ -72,8 +72,6 @@ class InventoryItemsAdapter(
                 item.categoryName
             )
             tvStock.text = item.stockLabel
-            tvMeta.text = item.metaLabel
-            tvMeta.isVisible = item.metaLabel.isNotBlank()
             bindConsumeCount(consumeCount)
 
             val hasBarcode = !item.barcode.isNullOrBlank()
@@ -86,8 +84,8 @@ class InventoryItemsAdapter(
 
             Glide.with(ivThumb)
                 .load(item.photoPath)
-                .placeholder(R.drawable.ic_product_placeholder)
-                .error(R.drawable.ic_product_placeholder)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
                 .centerCrop()
                 .into(ivThumb)
 

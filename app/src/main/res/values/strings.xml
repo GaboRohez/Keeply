@@ -228,6 +228,8 @@
     <string name="shopping_source_manual">Manual</string>
     <string name="shopping_source_auto">Auto</string>
     <string name="shopping_add_item_hint">Agregar producto…</string>
+    <string name="shopping_suggestion_label">%1$s · stock %2$s</string>
+    <string name="shopping_item_already_added">Ese producto ya está en la lista</string>
     <string name="shopping_add">Agregar</string>
     <string name="shopping_items_empty">Lista vacía. Agrega productos.</string>
     <string name="shopping_delete_list">Eliminar lista</string>

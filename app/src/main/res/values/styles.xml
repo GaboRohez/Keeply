@@ -24,4 +24,10 @@
         <item name="chipStrokeWidth">0dp</item>
         <item name="ensureMinTouchTargetSize">true</item>
     </style>
+
+    <!-- Evita el tinte azul de elevación de Material 3 en cards blancas -->
+    <style name="ThemeOverlay.Keeply.WhiteCard" parent="">
+        <item name="colorSurface">@android:color/white</item>
+        <item name="elevationOverlayEnabled">false</item>
+    </style>
 </resources>

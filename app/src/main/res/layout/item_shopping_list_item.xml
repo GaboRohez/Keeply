@@ -5,9 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
+    android:layout_margin="2dp"
     app:cardBackgroundColor="@color/keeply_surface"
-    app:cardElevation="1dp"
-    app:shapeAppearanceOverlay="@style/ShapeAppearance.Keeply.SmallCard"
+    app:cardElevation="0dp"
+    android:theme="@style/ThemeOverlay.Keeply.WhiteCard"
     app:strokeWidth="0dp">
 
     <LinearLayout

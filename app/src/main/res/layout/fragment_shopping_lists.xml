@@ -63,6 +63,8 @@
         android:textAllCaps="false"
         app:backgroundTint="@color/keeply_primary"
         app:icon="@drawable/ic_add"
+        android:textColor="@color/white"
+        app:iconTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="@color/keeply_on_primary" />

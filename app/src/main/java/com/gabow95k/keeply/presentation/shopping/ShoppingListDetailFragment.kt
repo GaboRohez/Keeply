@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -22,6 +24,10 @@ import kotlinx.coroutines.launch
 class ShoppingListDetailFragment : BaseFragment<FragmentShoppingListDetailBinding>() {
 
     private var listId: Long = 0L
+    private var selectedInventoryItemId: Long? = null
+    private var productSuggestions: List<ProductSuggestion> = emptyList()
+    private var suggestionsAdapter: ArrayAdapter<String>? = null
+
     private val itemsAdapter = ShoppingItemsAdapter(
         onCheckedChange = { item, checked -> toggleItem(item.id, checked) },
         onDelete = { item -> deleteItem(item.id) }
@@ -40,6 +46,7 @@ class ShoppingListDetailFragment : BaseFragment<FragmentShoppingListDetailBindin
         binding.btnBack.setOnClickListener { parentFragmentManager.popBackStack() }
         binding.btnDeleteList.setOnClickListener { confirmDeleteList() }
         binding.btnAddItem.setOnClickListener { addItem() }
+        setupProductAutocomplete()
         binding.etNewItem.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 addItem()
@@ -49,6 +56,63 @@ class ShoppingListDetailFragment : BaseFragment<FragmentShoppingListDetailBindin
             }
         }
         observeDetail()
+        observeInventorySuggestions()
+    }
+
+    private fun setupProductAutocomplete() {
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_dropdown_item_1line,
+            mutableListOf<String>()
+        )
+        suggestionsAdapter = adapter
+        binding.etNewItem.setAdapter(adapter)
+        binding.etNewItem.threshold = 1
+
+        binding.etNewItem.setOnItemClickListener { parent, _, position, _ ->
+            val label = parent.getItemAtPosition(position) as? String
+                ?: return@setOnItemClickListener
+            val suggestion = productSuggestions.firstOrNull { it.label == label }
+                ?: return@setOnItemClickListener
+            addItem(name = suggestion.name, inventoryItemId = suggestion.id)
+        }
+
+        binding.etNewItem.doAfterTextChanged { text ->
+            val typed = text?.toString().orEmpty()
+            val selected = productSuggestions.firstOrNull { it.id == selectedInventoryItemId }
+            if (selected == null || !selected.name.equals(typed.trim(), ignoreCase = true)) {
+                selectedInventoryItemId = null
+            }
+        }
+    }
+
+    private fun observeInventorySuggestions() {
+        val db = KeeplyDatabase.getInstance(requireContext())
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                db.inventoryItemDao().observeAll().collect { items ->
+                    productSuggestions = items
+                        .sortedBy { it.name.lowercase() }
+                        .map { entity ->
+                            val stock = formatQuantity(entity.quantity)
+                            ProductSuggestion(
+                                id = entity.id,
+                                name = entity.name,
+                                label = getString(
+                                    R.string.shopping_suggestion_label,
+                                    entity.name,
+                                    stock
+                                )
+                            )
+                        }
+                    suggestionsAdapter?.let { adapter ->
+                        adapter.clear()
+                        adapter.addAll(productSuggestions.map { it.label })
+                        adapter.notifyDataSetChanged()
+                    }
+                }
+            }
+        }
     }
 
     private fun observeDetail() {
@@ -82,16 +146,42 @@ class ShoppingListDetailFragment : BaseFragment<FragmentShoppingListDetailBindin
         }
     }
 
-    private fun addItem() {
-        val name = binding.etNewItem.text?.toString()?.trim().orEmpty()
-        if (name.isBlank()) return
+    private fun addItem(
+        name: String = binding.etNewItem.text?.toString()?.trim().orEmpty(),
+        inventoryItemId: Long? = selectedInventoryItemId
+    ) {
+        val trimmedName = name.trim()
+        if (trimmedName.isBlank()) return
         viewLifecycleOwner.lifecycleScope.launch {
             val db = KeeplyDatabase.getInstance(requireContext())
+            val linkedId = inventoryItemId
+                ?: productSuggestions
+                    .firstOrNull { it.name.equals(trimmedName, ignoreCase = true) }
+                    ?.id
+
+            // Evitar duplicar el mismo producto ya presente en la lista
             val existing = db.shoppingListItemDao().getByList(listId)
+            val alreadyInList = existing.any { item ->
+                (linkedId != null && item.inventoryItemId == linkedId) ||
+                        item.name.equals(trimmedName, ignoreCase = true)
+            }
+            if (alreadyInList) {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.shopping_item_already_added,
+                    Toast.LENGTH_SHORT
+                ).show()
+                selectedInventoryItemId = null
+                binding.etNewItem.setText("")
+                binding.etNewItem.dismissDropDown()
+                return@launch
+            }
+
             db.shoppingListItemDao().insert(
                 ShoppingListItemEntity(
                     listId = listId,
-                    name = name,
+                    name = trimmedName,
+                    inventoryItemId = linkedId,
                     sortOrder = existing.size
                 )
             )
@@ -99,7 +189,9 @@ class ShoppingListDetailFragment : BaseFragment<FragmentShoppingListDetailBindin
             if (list != null) {
                 db.shoppingListDao().update(list.copy(updatedAt = System.currentTimeMillis()))
             }
-            binding.etNewItem.text = null
+            selectedInventoryItemId = null
+            binding.etNewItem.setText("")
+            binding.etNewItem.dismissDropDown()
         }
     }
 
@@ -139,6 +231,20 @@ class ShoppingListDetailFragment : BaseFragment<FragmentShoppingListDetailBindin
             }
             .show()
     }
+
+    private fun formatQuantity(quantity: Double): String {
+        return if (quantity % 1.0 == 0.0) {
+            quantity.toInt().toString()
+        } else {
+            quantity.toString()
+        }
+    }
+
+    private data class ProductSuggestion(
+        val id: Long,
+        val name: String,
+        val label: String
+    )
 
     companion object {
         const val TAG = "ShoppingListDetailFragment"
