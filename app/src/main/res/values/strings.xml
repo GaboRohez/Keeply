@@ -2,4 +2,9 @@
     <string name="app_name">Keeply</string>
     <string name="splash_title">Keeply</string>
     <string name="splash_logo_content_description">Logo de Keeply</string>
+
+    <string name="nav_home">Inicio</string>
+    <string name="nav_botiquin">Botiquín</string>
+    <string name="nav_alerts">Alertas</string>
+    <string name="nav_settings">Ajustes</string>
 </resources>

@@ -9,16 +9,16 @@ import android.view.LayoutInflater
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.gabow95k.keeply.MainActivity
 import com.gabow95k.keeply.databinding.ActivitySplashBinding
 import com.gabow95k.keeply.presentation.base.BaseActivity
+import com.gabow95k.keeply.presentation.controller.ControllerActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     private val splashHandler = Handler(Looper.getMainLooper())
     private val navigateRunnable = Runnable {
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(Intent(this, ControllerActivity::class.java))
         finish()
     }
 

@@ -14,8 +14,8 @@
     <!-- ========================= -->
     <!-- Backgrounds / Surfaces    -->
     <!-- ========================= -->
-    <color name="keeply_background">#FFF2F3F7</color>
-    <color name="keeply_on_background">#FF121212</color>
+    <color name="keeply_background">#f1f3f4</color>
+    <color name="keeply_on_background">#6f7271</color>
 
     <color name="keeply_surface">#FFFFFFFF</color>
     <color name="keeply_on_surface">#FF121212</color>
@@ -27,6 +27,8 @@
 
     <!-- Bottom navigation / elevated bars -->
     <color name="keeply_nav_background">#FFFFFFFF</color>
+    <color name="nav_item_selected">#292b2c</color>
+    <color name="nav_item_unselected">#909090</color>
 
     <!-- ========================= -->
     <!-- Text                       -->
