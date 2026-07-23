@@ -53,12 +53,91 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="@color/keeply_surface"
+                app:cardElevation="2dp"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Keeply.Card"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp">
+
+                        <ImageView
+                            android:id="@+id/ivProductPhoto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_item_thumb"
+                            android:contentDescription="@string/product_photo_preview"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_product_placeholder" />
+
+                        <ProgressBar
+                            android:id="@+id/progressPhotoAnalyze"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tvPhotoHint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/onest"
+                        android:text="@string/product_photo_hint"
+                        android:textColor="@color/keeply_text_secondary"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnTakePhoto"
+                            style="@style/Widget.Material3.Button.TonalButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/onest"
+                            android:text="@string/product_take_photo"
+                            android:textAllCaps="false"
+                            app:icon="@drawable/ic_camera"
+                            app:iconGravity="textStart" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnRemovePhoto"
+                            style="@style/Widget.Material3.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:fontFamily="@font/onest"
+                            android:text="@string/product_remove_photo"
+                            android:textAllCaps="false"
+                            android:visibility="gone" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilName"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:hint="@string/product_field_name">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -112,40 +191,38 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilFormType"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="6dp"
                     android:layout_weight="1"
                     android:hint="@string/product_field_form_type">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etFormType"
+                    <AutoCompleteTextView
+                        android:id="@+id/actFormType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/onest"
-                        android:hint="@string/product_hint_form_type"
-                        android:inputType="text"
-                        android:maxLines="1" />
+                        android:inputType="none"
+                        android:padding="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilUnit"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:layout_weight="1"
                     android:hint="@string/product_field_unit">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etUnit"
+                    <AutoCompleteTextView
+                        android:id="@+id/actUnit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/onest"
-                        android:hint="@string/product_hint_unit"
-                        android:inputType="text"
-                        android:maxLines="1" />
+                        android:inputType="none"
+                        android:padding="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -218,7 +295,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:hint="@string/product_field_barcode">
+                android:hint="@string/product_field_barcode"
+                app:endIconContentDescription="@string/product_scan_barcode"
+                app:endIconDrawable="@drawable/ic_barcode"
+                app:endIconMode="custom"
+                app:endIconTint="@color/keeply_primary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etBarcode"
@@ -231,19 +312,19 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilLocation"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="@string/product_field_location">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etLocation"
+                <AutoCompleteTextView
+                    android:id="@+id/actLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/onest"
-                    android:inputType="textCapSentences"
-                    android:maxLines="1" />
+                    android:inputType="none"
+                    android:padding="16dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="product_form_types">
+        <item>Tableta</item>
+        <item>Cápsula</item>
+        <item>Líquido</item>
+        <item>Jarabe</item>
+        <item>Crema</item>
+        <item>Gel</item>
+        <item>Gotas</item>
+        <item>Inyectable</item>
+        <item>Polvo</item>
+        <item>Spray</item>
+        <item>Otro</item>
+    </string-array>
+
+    <string-array name="product_units">
+        <item>pzas</item>
+        <item>mg</item>
+        <item>g</item>
+        <item>ml</item>
+        <item>L</item>
+        <item>kg</item>
+        <item>caja</item>
+        <item>frasco</item>
+        <item>tubo</item>
+        <item>paquete</item>
+    </string-array>
+
+    <string-array name="product_locations">
+        <item>Botiquín</item>
+        <item>Cocina</item>
+        <item>Baño</item>
+        <item>Recámara</item>
+        <item>Cochera</item>
+        <item>Alacena</item>
+        <item>Refrigerador</item>
+        <item>Otro</item>
+    </string-array>
+</resources>

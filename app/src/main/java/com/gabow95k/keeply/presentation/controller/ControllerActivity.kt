@@ -38,6 +38,10 @@ class ControllerActivity : BaseActivity<ActivityControllerBinding>() {
         }
     }
 
+    fun navigateToTab(itemId: Int) {
+        binding.bottomNavigation.selectedItemId = itemId
+    }
+
     private fun setupBottomNavigation() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             // Clear form back stack when changing tabs

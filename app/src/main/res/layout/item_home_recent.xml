@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="@color/keeply_surface"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <ImageView
+            android:id="@+id/ivThumb"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/bg_item_thumb"
+            android:contentDescription="@null"
+            android:padding="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_product_placeholder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/titleRow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@id/tvMeta"
+            app:layout_constraintStart_toEndOf="@id/ivThumb"
+            app:layout_constraintTop_toTopOf="@id/ivThumb">
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/onest"
+                android:maxLines="1"
+                android:textColor="@color/keeply_text_primary"
+                android:textFontWeight="700"
+                android:textSize="15sp"
+                tools:text="Paracetamol" />
+
+            <TextView
+                android:id="@+id/tvCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/onest"
+                android:maxLines="1"
+                android:textColor="@color/keeply_text_secondary"
+                android:textSize="12sp"
+                tools:text="(Medicinas)" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvStock"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/onest"
+            android:textColor="@color/keeply_text_secondary"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@id/tvMeta"
+            app:layout_constraintStart_toStartOf="@id/titleRow"
+            app:layout_constraintTop_toBottomOf="@id/titleRow"
+            tools:text="24 en stock" />
+
+        <ImageView
+            android:id="@+id/ivBarcode"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_barcode"
+            app:layout_constraintBottom_toBottomOf="@id/ivThumb"
+            app:layout_constraintStart_toStartOf="@id/titleRow" />
+
+        <TextView
+            android:id="@+id/tvBarcode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/onest"
+            android:maxLines="1"
+            android:textColor="@color/keeply_text_secondary"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@id/ivBarcode"
+            app:layout_constraintEnd_toStartOf="@id/tvMeta"
+            app:layout_constraintStart_toEndOf="@id/ivBarcode"
+            app:layout_constraintTop_toTopOf="@id/ivBarcode"
+            tools:text="7501234567890" />
+
+        <TextView
+            android:id="@+id/tvMeta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/onest"
+            android:textColor="@color/keeply_text_primary"
+            android:textFontWeight="700"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="500mg" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

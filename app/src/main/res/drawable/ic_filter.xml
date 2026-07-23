@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Vertical slider filter icon matching mockup -->
+    <path
+        android:fillColor="#FF1A1A1A"
+        android:pathData="M7,4h2v4H7V4zM7,12h2v8H7V12zM6,9h4v2H6V9zM15,4h2v8h-2V4zM15,16h2v4h-2V16zM14,13h4v2h-4V13z" />
+</vector>

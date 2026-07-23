@@ -13,13 +13,107 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/onest"
-        android:text="@string/botiquin_title"
+        android:text="@string/inventory_title"
         android:textColor="@color/keeply_text_primary"
         android:textFontWeight="700"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/searchRow"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardSearch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/keeply_surface"
+            app:cardElevation="0dp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Keeply.Search"
+            app:strokeWidth="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@string/inventory_search_hint"
+                    android:src="@drawable/ic_search"
+                    app:tint="@color/keeply_icon_secondary" />
+
+                <EditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:fontFamily="@font/onest"
+                    android:hint="@string/inventory_search_hint"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/keeply_text_primary"
+                    android:textColorHint="@color/keeply_text_tertiary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btnFilter"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="@color/keeply_surface"
+            app:cardElevation="0dp"
+            app:rippleColor="@color/keeply_primary_container"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Keeply.Search"
+            app:strokeWidth="0dp">
+
+            <ImageView
+                android:id="@+id/ivFilter"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/inventory_filter"
+                android:src="@drawable/ic_filter"
+                app:tint="@color/keeply_icon_primary" />
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvFilterChip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/onest"
+        android:textColor="@color/keeply_primary"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchRow"
+        tools:text="Categoría: Medicinas"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/tvEmpty"
@@ -28,14 +122,14 @@
         android:layout_marginHorizontal="32dp"
         android:fontFamily="@font/onest"
         android:gravity="center"
-        android:text="@string/botiquin_empty"
+        android:text="@string/inventory_empty"
         android:textColor="@color/keeply_text_secondary"
         android:textSize="15sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@id/searchRow"
         tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -44,13 +138,13 @@
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:paddingHorizontal="16dp"
-        android:paddingTop="16dp"
+        android:paddingTop="12dp"
         android:paddingBottom="88dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvFilterChip"
         tools:listitem="@layout/item_inventory" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -58,7 +152,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:contentDescription="@string/botiquin_add"
+        android:contentDescription="@string/inventory_add"
         android:src="@android:drawable/ic_input_add"
         app:backgroundTint="@color/keeply_primary"
         app:layout_constraintBottom_toBottomOf="parent"

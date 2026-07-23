@@ -29,6 +29,15 @@ interface InventoryItemDao {
     )
     fun observeSearch(query: String): Flow<List<InventoryItemEntity>>
 
+    @Query("SELECT * FROM inventory_items ORDER BY updatedAt DESC LIMIT :limit")
+    fun observeRecent(limit: Int = 5): Flow<List<InventoryItemEntity>>
+
+    @Query("SELECT COUNT(*) FROM inventory_items")
+    fun observeCount(): Flow<Int>
+
+    @Query("SELECT * FROM inventory_items")
+    suspend fun getAll(): List<InventoryItemEntity>
+
     @Query("SELECT * FROM inventory_items WHERE id = :id LIMIT 1")
     suspend fun getById(id: Long): InventoryItemEntity?
 
