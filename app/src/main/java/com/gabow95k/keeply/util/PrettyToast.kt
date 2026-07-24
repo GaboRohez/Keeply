@@ -104,7 +104,6 @@ object PrettyToast {
             Style.SUCCESS -> {
                 binding.toastContent.setBackgroundResource(R.drawable.bg_toast_success)
                 binding.iconContainer.setBackgroundResource(R.drawable.bg_toast_icon_success)
-                binding.ivToastIcon.setImageResource(R.drawable.ic_toast_success)
                 binding.tvToastTitle.setTextColor(
                     ContextCompat.getColor(context, R.color.keeply_toast_success_text)
                 )
@@ -113,7 +112,6 @@ object PrettyToast {
             Style.ERROR -> {
                 binding.toastContent.setBackgroundResource(R.drawable.bg_toast_error)
                 binding.iconContainer.setBackgroundResource(R.drawable.bg_toast_icon_error)
-                binding.ivToastIcon.setImageResource(R.drawable.ic_toast_error)
                 binding.tvToastTitle.setTextColor(
                     ContextCompat.getColor(context, R.color.keeply_toast_error_text)
                 )
