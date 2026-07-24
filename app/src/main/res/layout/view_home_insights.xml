@@ -22,7 +22,7 @@
             android:id="@+id/tvInsightsSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/onest"
+            app:fontFamily="@font/onest_regular_file"
             android:text="@string/home_insights_subtitle"
             android:textColor="@color/keeply_text_secondary"
             android:textSize="13sp" />
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:layout_marginTop="4dp"
-            android:fontFamily="@font/onest"
+            app:fontFamily="@font/onest_regular_file"
             android:text="@string/home_insights_see_more"
             android:textAllCaps="false"
             android:textColor="@color/keeply_primary"
@@ -66,10 +66,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_bold_file"
                 android:text="@string/home_insights_stats_title"
                 android:textColor="@color/keeply_text_primary"
-                android:textFontWeight="700"
                 android:textSize="14sp" />
 
             <LinearLayout
@@ -93,9 +92,8 @@
                         android:id="@+id/tvStatConsumed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/onest"
+                        app:fontFamily="@font/onest_bold_file"
                         android:textColor="@color/keeply_primary"
-                        android:textFontWeight="700"
                         android:textSize="18sp"
                         tools:text="12" />
 
@@ -103,7 +101,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:fontFamily="@font/onest"
+                        app:fontFamily="@font/onest_regular_file"
                         android:gravity="center"
                         android:text="@string/home_insights_stat_consumed"
                         android:textColor="@color/keeply_text_secondary"
@@ -125,9 +123,8 @@
                         android:id="@+id/tvStatMovements"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/onest"
+                        app:fontFamily="@font/onest_bold_file"
                         android:textColor="@color/keeply_primary"
-                        android:textFontWeight="700"
                         android:textSize="18sp"
                         tools:text="9" />
 
@@ -135,7 +132,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:fontFamily="@font/onest"
+                        app:fontFamily="@font/onest_regular_file"
                         android:gravity="center"
                         android:text="@string/home_insights_stat_movements"
                         android:textColor="@color/keeply_text_secondary"
@@ -157,9 +154,8 @@
                         android:id="@+id/tvStatProducts"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/onest"
+                        app:fontFamily="@font/onest_bold_file"
                         android:textColor="@color/keeply_primary"
-                        android:textFontWeight="700"
                         android:textSize="18sp"
                         tools:text="5" />
 
@@ -167,7 +163,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:fontFamily="@font/onest"
+                        app:fontFamily="@font/onest_regular_file"
                         android:gravity="center"
                         android:text="@string/home_insights_stat_products"
                         android:textColor="@color/keeply_text_secondary"
@@ -179,10 +175,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_bold_file"
                 android:text="@string/home_insights_top_used"
                 android:textColor="@color/keeply_text_primary"
-                android:textFontWeight="700"
                 android:textSize="14sp" />
 
             <TextView
@@ -190,7 +185,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_regular_file"
                 android:text="@string/home_insights_charts_empty"
                 android:textColor="@color/keeply_text_secondary"
                 android:textSize="13sp"
@@ -208,10 +203,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_bold_file"
                 android:text="@string/home_insights_activity_mix"
                 android:textColor="@color/keeply_text_primary"
-                android:textFontWeight="700"
                 android:textSize="14sp" />
 
             <com.gabow95k.keeply.presentation.home.SegmentBarView
@@ -231,7 +225,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawablePadding="6dp"
-                    android:fontFamily="@font/onest"
+                    app:fontFamily="@font/onest_regular_file"
                     android:text="@string/home_insights_legend_consume"
                     android:textColor="@color/keeply_text_secondary"
                     android:textSize="12sp"
@@ -242,7 +236,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawablePadding="6dp"
-                    android:fontFamily="@font/onest"
+                    app:fontFamily="@font/onest_regular_file"
                     android:gravity="center"
                     android:text="@string/home_insights_legend_adjust"
                     android:textColor="@color/keeply_text_secondary"
@@ -254,7 +248,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawablePadding="6dp"
-                    android:fontFamily="@font/onest"
+                    app:fontFamily="@font/onest_regular_file"
                     android:gravity="end"
                     android:text="@string/home_insights_legend_add"
                     android:textColor="@color/keeply_text_secondary"
@@ -268,7 +262,7 @@
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:layout_marginTop="12dp"
-            android:fontFamily="@font/onest"
+            app:fontFamily="@font/onest_regular_file"
             android:text="@string/home_insights_shop_action"
             android:textAllCaps="false"
             android:visibility="gone"

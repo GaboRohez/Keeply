@@ -12,10 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/onest"
+        app:fontFamily="@font/onest_bold_file"
         android:text="@string/home_title"
         android:textColor="@color/keeply_text_primary"
-        android:textFontWeight="700"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,9 +44,8 @@
                 android:id="@+id/tvGreeting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_bold_file"
                 android:textColor="@color/keeply_text_primary"
-                android:textFontWeight="700"
                 android:textSize="24sp"
                 tools:text="Hola, Gabo" />
 
@@ -56,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_regular_file"
                 android:text="@string/home_greeting_subtitle"
                 android:textColor="@color/keeply_text_secondary"
                 android:textSize="14sp" />
@@ -69,7 +67,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_regular_file"
                 android:paddingVertical="2dp"
                 android:text="@string/home_profile_incomplete"
                 android:textColor="@color/keeply_primary"
@@ -87,10 +85,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_bold_file"
                 android:text="@string/home_summary_section"
                 android:textColor="@color/keeply_text_primary"
-                android:textFontWeight="700"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -131,10 +128,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_bold_file"
                 android:text="@string/home_spotlight_section"
                 android:textColor="@color/keeply_text_primary"
-                android:textFontWeight="700"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -166,10 +162,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_bold_file"
                 android:text="@string/home_alerts_section"
                 android:textColor="@color/keeply_text_primary"
-                android:textFontWeight="700"
                 android:textSize="16sp" />
 
             <include
@@ -206,10 +201,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_bold_file"
                 android:text="@string/home_insights_section"
                 android:textColor="@color/keeply_text_primary"
-                android:textFontWeight="700"
                 android:textSize="16sp" />
 
             <include

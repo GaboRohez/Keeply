@@ -24,10 +24,9 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/onest"
+        app:fontFamily="@font/onest_bold_file"
         android:text="@string/settings_profile_title"
         android:textColor="@color/keeply_text_primary"
-        android:textFontWeight="700"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/btnBack"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,6 +52,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                style="@style/Widget.Keeply.FieldLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_field_name" />
+
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -66,20 +71,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:fontFamily="@font/onest"
-                    android:hint="@string/profile_field_name"
+                    app:fontFamily="@font/onest_medium_file"
                     android:inputType="textPersonName|textCapWords"
                     android:maxLines="1"
                     android:paddingHorizontal="16dp"
                     android:textColor="@color/keeply_text_primary"
-                    android:textColorHint="@color/keeply_text_tertiary"
                     android:textSize="15sp" />
             </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                style="@style/Widget.Keeply.FieldLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/profile_field_age" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="12dp"
                 app:cardBackgroundColor="@color/keeply_surface"
                 app:cardElevation="0dp"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Keeply.Search"
@@ -90,20 +99,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:fontFamily="@font/onest"
-                    android:hint="@string/profile_field_age"
+                    app:fontFamily="@font/onest_medium_file"
                     android:inputType="number"
                     android:maxLines="1"
                     android:paddingHorizontal="16dp"
                     android:textColor="@color/keeply_text_primary"
-                    android:textColorHint="@color/keeply_text_tertiary"
                     android:textSize="15sp" />
             </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                style="@style/Widget.Keeply.FieldLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/profile_field_blood_type" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="12dp"
                 app:cardBackgroundColor="@color/keeply_surface"
                 app:cardElevation="0dp"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Keeply.Search"
@@ -114,21 +127,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:fontFamily="@font/onest"
-                    android:hint="@string/profile_field_blood_type"
+                    app:fontFamily="@font/onest_medium_file"
                     android:inputType="textCapCharacters"
                     android:maxLength="5"
                     android:maxLines="1"
                     android:paddingHorizontal="16dp"
                     android:textColor="@color/keeply_text_primary"
-                    android:textColorHint="@color/keeply_text_tertiary"
                     android:textSize="15sp" />
             </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                style="@style/Widget.Keeply.FieldLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/profile_field_phone" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="12dp"
                 app:cardBackgroundColor="@color/keeply_surface"
                 app:cardElevation="0dp"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Keeply.Search"
@@ -139,20 +156,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:fontFamily="@font/onest"
-                    android:hint="@string/profile_field_phone"
+                    app:fontFamily="@font/onest_medium_file"
                     android:inputType="phone"
                     android:maxLines="1"
                     android:paddingHorizontal="16dp"
                     android:textColor="@color/keeply_text_primary"
-                    android:textColorHint="@color/keeply_text_tertiary"
                     android:textSize="15sp" />
             </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                style="@style/Widget.Keeply.FieldLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/profile_field_email" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="12dp"
                 app:cardBackgroundColor="@color/keeply_surface"
                 app:cardElevation="0dp"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Keeply.Search"
@@ -163,20 +184,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:fontFamily="@font/onest"
-                    android:hint="@string/profile_field_email"
+                    app:fontFamily="@font/onest_medium_file"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:paddingHorizontal="16dp"
                     android:textColor="@color/keeply_text_primary"
-                    android:textColorHint="@color/keeply_text_tertiary"
                     android:textSize="15sp" />
             </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                style="@style/Widget.Keeply.FieldLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/profile_field_notes" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
                 app:cardBackgroundColor="@color/keeply_surface"
                 app:cardElevation="0dp"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Keeply.Search"
@@ -187,16 +212,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:fontFamily="@font/onest"
+                    app:fontFamily="@font/onest_medium_file"
                     android:gravity="top"
-                    android:hint="@string/profile_field_notes"
                     android:inputType="textMultiLine"
                     android:minHeight="96dp"
                     android:minLines="3"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="14dp"
                     android:textColor="@color/keeply_text_primary"
-                    android:textColorHint="@color/keeply_text_tertiary"
                     android:textSize="15sp" />
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
@@ -208,7 +231,7 @@
         android:layout_height="56dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="16dp"
-        android:fontFamily="@font/onest"
+        app:fontFamily="@font/onest_bold_file"
         android:text="@string/product_save"
         android:textAllCaps="false"
         app:backgroundTint="@color/keeply_primary"

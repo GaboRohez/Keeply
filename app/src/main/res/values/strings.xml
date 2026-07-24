@@ -42,6 +42,7 @@
 
     <string name="product_form_title">Nuevo producto</string>
     <string name="product_form_title_edit">Editar producto</string>
+    <string name="product_field_photo">Foto</string>
     <string name="product_field_name">Nombre *</string>
     <string name="product_field_category">Categoría *</string>
     <string name="product_field_brand">Marca</string>

@@ -31,9 +31,8 @@
                 android:id="@+id/tvAlertTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_bold_file"
                 android:textColor="@color/keeply_text_primary"
-                android:textFontWeight="700"
                 android:textSize="15sp"
                 tools:text="Productos caducados" />
 
@@ -42,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_regular_file"
                 android:textColor="@color/keeply_text_secondary"
                 android:textSize="13sp"
                 tools:text="2 productos" />
@@ -53,10 +52,9 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:background="@drawable/bg_item_thumb"
-            android:fontFamily="@font/onest"
+            app:fontFamily="@font/onest_bold_file"
             android:gravity="center"
             android:textColor="@color/keeply_text_primary"
-            android:textFontWeight="700"
             android:textSize="13sp"
             tools:text="2" />
 
@@ -64,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:fontFamily="@font/onest"
+            app:fontFamily="@font/onest_bold_file"
             android:text="@string/settings_chevron"
             android:textColor="@color/keeply_text_tertiary"
             android:textSize="20sp" />

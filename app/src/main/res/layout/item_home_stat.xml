@@ -21,9 +21,8 @@
             android:id="@+id/tvStatValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/onest"
+            app:fontFamily="@font/onest_bold_file"
             android:textColor="@color/keeply_text_primary"
-            android:textFontWeight="700"
             android:textSize="22sp"
             tools:text="12" />
 
@@ -32,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:fontFamily="@font/onest"
+            app:fontFamily="@font/onest_regular_file"
             android:gravity="center"
             android:textColor="@color/keeply_text_secondary"
             android:textSize="11sp"

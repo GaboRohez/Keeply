@@ -33,8 +33,8 @@
         <item name="android:windowLightNavigationBar">true</item>
 
         <!-- Typography -->
-        <item name="fontFamily">@font/onest</item>
-        <item name="android:fontFamily">@font/onest</item>
+        <item name="fontFamily">@font/onest_regular_file</item>
+        <item name="android:fontFamily">@font/onest_regular_file</item>
 
         <item name="textAppearanceDisplayLarge">@style/TextAppearance.Keeply.DisplayLarge</item>
         <item name="textAppearanceDisplayMedium">@style/TextAppearance.Keeply.DisplayMedium</item>
@@ -53,9 +53,19 @@
 
     <style name="Theme.Keeply" parent="Base.Theme.Keeply" />
 
-    <style name="Theme.Keeply.Splash" parent="Theme.Keeply">
+    <!-- Splash de sistema (Android 12+) + handoff a la pantalla SplashActivity -->
+    <style name="Theme.Keeply.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_screen_icon</item>
+        <item name="windowSplashScreenAnimationDuration">0</item>
+        <item name="postSplashScreenTheme">@style/Theme.Keeply.Splash.Content</item>
+    </style>
+
+    <style name="Theme.Keeply.Splash.Content" parent="Theme.Keeply">
         <item name="android:windowBackground">@drawable/bg_splash</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
     </style>
 </resources>

@@ -52,10 +52,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_bold_file"
                 android:maxLines="2"
                 android:textColor="@color/keeply_toast_success_text"
-                android:textFontWeight="700"
                 android:textSize="14sp"
                 tools:text="Producto guardado" />
 
@@ -65,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:ellipsize="end"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_regular_file"
                 android:maxLines="3"
                 android:textColor="@color/keeply_text_secondary"
                 android:textSize="12sp"

@@ -1,12 +1,12 @@
 package com.gabow95k.keeply.presentation.splash
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import androidx.activity.enableEdgeToEdge
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.gabow95k.keeply.data.preferences.KeeplyPreferences
@@ -15,7 +15,6 @@ import com.gabow95k.keeply.presentation.base.BaseActivity
 import com.gabow95k.keeply.presentation.controller.ControllerActivity
 import com.gabow95k.keeply.presentation.privacy.PrivacyPolicyActivity
 
-@SuppressLint("CustomSplashScreen")
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     private val splashHandler = Handler(Looper.getMainLooper())
@@ -25,6 +24,13 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         ActivitySplashBinding.inflate(inflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Debe ir antes de super.onCreate: reemplaza el splash del sistema (icono launcher)
+        // por el de Keeply y hace el handoff sin “doble splash”.
+        val splashScreen = installSplashScreen()
+        splashScreen.setOnExitAnimationListener { splashScreenViewProvider ->
+            splashScreenViewProvider.remove()
+        }
+
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 

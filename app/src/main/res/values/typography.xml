@@ -1,74 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="TextAppearance.Keeply" parent="TextAppearance.Material3.BodyLarge">
-        <item name="fontFamily">@font/onest</item>
-        <item name="android:fontFamily">@font/onest</item>
+    <!--
+      textFontWeight/textStyle stay at normal/400 so Material does not rematch
+      weights across faces. Each Onest TTF uses a unique family name
+      (OnestBold, OnestMedium, …) so bold/medium/regular stay distinct.
+    -->
+    <style name="TextAppearance.Keeply" parent="TextAppearance.Material3.BodyMedium">
+        <item name="fontFamily">@font/onest_regular_file</item>
+        <item name="android:fontFamily">@font/onest_regular_file</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="TextAppearance.Keeply.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
-        <item name="fontFamily">@font/onest</item>
-        <item name="android:fontFamily">@font/onest</item>
-        <item name="android:textFontWeight">700</item>
+        <item name="fontFamily">@font/onest_bold_file</item>
+        <item name="android:fontFamily">@font/onest_bold_file</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="TextAppearance.Keeply.DisplayMedium" parent="TextAppearance.Material3.DisplayMedium">
-        <item name="fontFamily">@font/onest</item>
-        <item name="android:fontFamily">@font/onest</item>
-        <item name="android:textFontWeight">700</item>
+        <item name="fontFamily">@font/onest_bold_file</item>
+        <item name="android:fontFamily">@font/onest_bold_file</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="TextAppearance.Keeply.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
-        <item name="fontFamily">@font/onest</item>
-        <item name="android:fontFamily">@font/onest</item>
-        <item name="android:textFontWeight">700</item>
+        <item name="fontFamily">@font/onest_bold_file</item>
+        <item name="android:fontFamily">@font/onest_bold_file</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="TextAppearance.Keeply.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
-        <item name="fontFamily">@font/onest</item>
-        <item name="android:fontFamily">@font/onest</item>
-        <item name="android:textFontWeight">600</item>
+        <item name="fontFamily">@font/onest_semibold_file</item>
+        <item name="android:fontFamily">@font/onest_semibold_file</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="TextAppearance.Keeply.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
-        <item name="fontFamily">@font/onest</item>
-        <item name="android:fontFamily">@font/onest</item>
-        <item name="android:textFontWeight">600</item>
+        <item name="fontFamily">@font/onest_semibold_file</item>
+        <item name="android:fontFamily">@font/onest_semibold_file</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="TextAppearance.Keeply.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
-        <item name="fontFamily">@font/onest</item>
-        <item name="android:fontFamily">@font/onest</item>
-        <item name="android:textFontWeight">600</item>
+        <item name="fontFamily">@font/onest_semibold_file</item>
+        <item name="android:fontFamily">@font/onest_semibold_file</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="TextAppearance.Keeply.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
-        <item name="fontFamily">@font/onest</item>
-        <item name="android:fontFamily">@font/onest</item>
+        <item name="fontFamily">@font/onest_regular_file</item>
+        <item name="android:fontFamily">@font/onest_regular_file</item>
         <item name="android:textFontWeight">400</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="TextAppearance.Keeply.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
-        <item name="fontFamily">@font/onest</item>
-        <item name="android:fontFamily">@font/onest</item>
+        <item name="fontFamily">@font/onest_regular_file</item>
+        <item name="android:fontFamily">@font/onest_regular_file</item>
         <item name="android:textFontWeight">400</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="TextAppearance.Keeply.BodySmall" parent="TextAppearance.Material3.BodySmall">
-        <item name="fontFamily">@font/onest</item>
-        <item name="android:fontFamily">@font/onest</item>
+        <item name="fontFamily">@font/onest_regular_file</item>
+        <item name="android:fontFamily">@font/onest_regular_file</item>
         <item name="android:textFontWeight">400</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="TextAppearance.Keeply.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
-        <item name="fontFamily">@font/onest</item>
-        <item name="android:fontFamily">@font/onest</item>
-        <item name="android:textFontWeight">500</item>
+        <item name="fontFamily">@font/onest_medium_file</item>
+        <item name="android:fontFamily">@font/onest_medium_file</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="TextAppearance.Keeply.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
-        <item name="fontFamily">@font/onest</item>
-        <item name="android:fontFamily">@font/onest</item>
-        <item name="android:textFontWeight">500</item>
+        <item name="fontFamily">@font/onest_medium_file</item>
+        <item name="android:fontFamily">@font/onest_medium_file</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textStyle">normal</item>
     </style>
 </resources>

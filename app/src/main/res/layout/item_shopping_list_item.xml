@@ -35,7 +35,7 @@
                 android:id="@+id/tvItemName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_regular_file"
                 android:textColor="@color/keeply_text_primary"
                 android:textSize="15sp"
                 tools:text="Leche" />
@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_regular_file"
                 android:textColor="@color/keeply_text_secondary"
                 android:textSize="12sp"
                 android:visibility="gone"

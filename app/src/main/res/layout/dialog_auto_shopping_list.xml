@@ -12,6 +12,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            style="@style/Widget.Keeply.FieldLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/shopping_list_name" />
+
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -25,13 +31,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:fontFamily="@font/onest"
-                android:hint="@string/shopping_list_name"
+                app:fontFamily="@font/onest_medium_file"
                 android:inputType="textCapSentences"
                 android:maxLines="1"
                 android:paddingHorizontal="16dp"
                 android:textColor="@color/keeply_text_primary"
-                android:textColorHint="@color/keeply_text_tertiary"
                 android:textSize="15sp" />
         </com.google.android.material.card.MaterialCardView>
 
@@ -39,10 +43,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:fontFamily="@font/onest"
+            app:fontFamily="@font/onest_bold_file"
             android:text="@string/shopping_auto_include"
             android:textColor="@color/keeply_text_primary"
-            android:textFontWeight="600"
             android:textSize="14sp" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
@@ -50,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:fontFamily="@font/onest"
+            app:fontFamily="@font/onest_regular_file"
             android:text="@string/shopping_include_out_of_stock" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
@@ -58,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:fontFamily="@font/onest"
+            app:fontFamily="@font/onest_regular_file"
             android:text="@string/shopping_include_low_stock" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
@@ -66,17 +69,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="false"
-            android:fontFamily="@font/onest"
+            app:fontFamily="@font/onest_regular_file"
             android:text="@string/shopping_include_expired" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/onest"
+            app:fontFamily="@font/onest_bold_file"
             android:text="@string/shopping_auto_categories"
             android:textColor="@color/keeply_text_primary"
-            android:textFontWeight="600"
             android:textSize="14sp" />
 
         <com.google.android.material.chip.ChipGroup

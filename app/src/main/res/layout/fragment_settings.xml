@@ -12,10 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/onest"
+        app:fontFamily="@font/onest_bold_file"
         android:text="@string/nav_settings"
         android:textColor="@color/keeply_text_primary"
-        android:textFontWeight="700"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,10 +42,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_bold_file"
                 android:text="@string/settings_section_profile"
                 android:textColor="@color/keeply_text_primary"
-                android:textFontWeight="700"
                 android:textSize="16sp" />
 
             <com.google.android.material.card.MaterialCardView
@@ -75,10 +73,9 @@
                         android:layout_width="44dp"
                         android:layout_height="44dp"
                         android:background="@drawable/bg_item_thumb"
-                        android:fontFamily="@font/onest"
+                        app:fontFamily="@font/onest_bold_file"
                         android:gravity="center"
                         android:textColor="@color/keeply_primary"
-                        android:textFontWeight="700"
                         android:textSize="18sp"
                         tools:text="G" />
 
@@ -93,9 +90,8 @@
                             android:id="@+id/tvProfileName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/onest"
+                            app:fontFamily="@font/onest_bold_file"
                             android:textColor="@color/keeply_text_primary"
-                            android:textFontWeight="600"
                             android:textSize="16sp"
                             tools:text="Gabo" />
 
@@ -104,7 +100,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
-                            android:fontFamily="@font/onest"
+                            app:fontFamily="@font/onest_regular_file"
                             android:text="@string/settings_profile_edit"
                             android:textColor="@color/keeply_text_secondary"
                             android:textSize="13sp" />
@@ -113,7 +109,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/onest"
+                        app:fontFamily="@font/onest_bold_file"
                         android:text="@string/settings_chevron"
                         android:textColor="@color/keeply_text_tertiary"
                         android:textSize="22sp" />
@@ -124,10 +120,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_bold_file"
                 android:text="@string/settings_section_notifications"
                 android:textColor="@color/keeply_text_primary"
-                android:textFontWeight="700"
                 android:textSize="16sp" />
 
             <com.google.android.material.card.MaterialCardView
@@ -163,17 +158,16 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/onest"
+                                app:fontFamily="@font/onest_bold_file"
                                 android:text="@string/settings_notifications_master"
                                 android:textColor="@color/keeply_text_primary"
-                                android:textFontWeight="600"
                                 android:textSize="15sp" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:fontFamily="@font/onest"
+                                app:fontFamily="@font/onest_bold_file"
                                 android:text="@string/settings_notifications_master_desc"
                                 android:textColor="@color/keeply_text_secondary"
                                 android:textSize="12sp" />
@@ -209,7 +203,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:fontFamily="@font/onest"
+                                app:fontFamily="@font/onest_regular_file"
                                 android:text="@string/settings_notify_expired"
                                 android:textColor="@color/keeply_text_primary"
                                 android:textSize="14sp" />
@@ -244,7 +238,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:fontFamily="@font/onest"
+                                app:fontFamily="@font/onest_regular_file"
                                 android:text="@string/settings_notify_expiring"
                                 android:textColor="@color/keeply_text_primary"
                                 android:textSize="14sp" />
@@ -279,7 +273,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:fontFamily="@font/onest"
+                                app:fontFamily="@font/onest_regular_file"
                                 android:text="@string/settings_notify_out_of_stock"
                                 android:textColor="@color/keeply_text_primary"
                                 android:textSize="14sp" />
@@ -314,7 +308,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:fontFamily="@font/onest"
+                                app:fontFamily="@font/onest_regular_file"
                                 android:text="@string/settings_notify_low_stock"
                                 android:textColor="@color/keeply_text_primary"
                                 android:textSize="14sp" />
@@ -349,7 +343,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:fontFamily="@font/onest"
+                                app:fontFamily="@font/onest_regular_file"
                                 android:text="@string/settings_notify_shopping_prompts"
                                 android:textColor="@color/keeply_text_primary"
                                 android:textSize="14sp" />
@@ -385,10 +379,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="22dp"
-                    android:fontFamily="@font/onest"
+                    app:fontFamily="@font/onest_bold_file"
                     android:text="@string/settings_section_schedule"
                     android:textColor="@color/keeply_text_primary"
-                    android:textFontWeight="700"
                     android:textSize="16sp" />
 
                 <com.google.android.material.card.MaterialCardView
@@ -410,17 +403,16 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/onest"
+                            app:fontFamily="@font/onest_bold_file"
                             android:text="@string/settings_schedule_frequency"
                             android:textColor="@color/keeply_text_primary"
-                            android:textFontWeight="600"
                             android:textSize="15sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
-                            android:fontFamily="@font/onest"
+                            app:fontFamily="@font/onest_bold_file"
                             android:text="@string/settings_schedule_frequency_desc"
                             android:textColor="@color/keeply_text_secondary"
                             android:textSize="12sp" />
@@ -459,17 +451,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:fontFamily="@font/onest"
+                            app:fontFamily="@font/onest_bold_file"
                             android:text="@string/settings_schedule_times"
                             android:textColor="@color/keeply_text_primary"
-                            android:textFontWeight="600"
                             android:textSize="15sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
-                            android:fontFamily="@font/onest"
+                            app:fontFamily="@font/onest_bold_file"
                             android:text="@string/settings_schedule_times_desc"
                             android:textColor="@color/keeply_text_secondary"
                             android:textSize="12sp" />
@@ -508,10 +499,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:fontFamily="@font/onest"
+                            app:fontFamily="@font/onest_bold_file"
                             android:text="@string/settings_schedule_slots"
                             android:textColor="@color/keeply_text_primary"
-                            android:textFontWeight="600"
                             android:textSize="15sp" />
 
                         <TextView
@@ -519,7 +509,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
-                            android:fontFamily="@font/onest"
+                            app:fontFamily="@font/onest_regular_file"
                             android:textColor="@color/keeply_text_secondary"
                             android:textSize="12sp" />
 
@@ -560,10 +550,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_bold_file"
                 android:text="@string/settings_section_alerts"
                 android:textColor="@color/keeply_text_primary"
-                android:textFontWeight="700"
                 android:textSize="16sp" />
 
             <com.google.android.material.card.MaterialCardView
@@ -585,17 +574,16 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/onest"
+                        app:fontFamily="@font/onest_bold_file"
                         android:text="@string/settings_expiring_days_title"
                         android:textColor="@color/keeply_text_primary"
-                        android:textFontWeight="600"
                         android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:fontFamily="@font/onest"
+                        app:fontFamily="@font/onest_regular_file"
                         android:text="@string/settings_expiring_days_desc"
                         android:textColor="@color/keeply_text_secondary"
                         android:textSize="12sp" />
@@ -636,10 +624,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
-                android:fontFamily="@font/onest"
+                app:fontFamily="@font/onest_bold_file"
                 android:text="@string/settings_section_data"
                 android:textColor="@color/keeply_text_primary"
-                android:textFontWeight="700"
                 android:textSize="16sp" />
 
             <com.google.android.material.card.MaterialCardView
@@ -665,6 +652,7 @@
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
+                        android:visibility="gone"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:paddingHorizontal="16dp"
@@ -679,17 +667,16 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/onest"
+                                app:fontFamily="@font/onest_regular_file"
                                 android:text="@string/settings_backup_title"
                                 android:textColor="@color/keeply_text_primary"
-                                android:textFontWeight="600"
                                 android:textSize="15sp" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:fontFamily="@font/onest"
+                                app:fontFamily="@font/onest_regular_file"
                                 android:text="@string/settings_coming_soon"
                                 android:textColor="@color/keeply_text_secondary"
                                 android:textSize="12sp" />
@@ -698,13 +685,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/onest"
+                            app:fontFamily="@font/onest_bold_file"
                             android:text="@string/settings_chevron"
                             android:textColor="@color/keeply_text_tertiary"
                             android:textSize="22sp" />
                     </LinearLayout>
 
                     <View
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginHorizontal="16dp"
@@ -717,6 +705,7 @@
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
+                        android:visibility="gone"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:paddingHorizontal="16dp"
@@ -731,17 +720,16 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/onest"
+                                app:fontFamily="@font/onest_regular_file"
                                 android:text="@string/settings_categories_title"
                                 android:textColor="@color/keeply_text_primary"
-                                android:textFontWeight="600"
                                 android:textSize="15sp" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:fontFamily="@font/onest"
+                                app:fontFamily="@font/onest_regular_file"
                                 android:text="@string/settings_coming_soon"
                                 android:textColor="@color/keeply_text_secondary"
                                 android:textSize="12sp" />
@@ -750,7 +738,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/onest"
+                            app:fontFamily="@font/onest_bold_file"
                             android:text="@string/settings_chevron"
                             android:textColor="@color/keeply_text_tertiary"
                             android:textSize="22sp" />
@@ -759,11 +747,13 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
+                        android:visibility="gone"
                         android:layout_marginHorizontal="16dp"
                         android:background="@color/keeply_divider" />
 
                     <LinearLayout
                         android:id="@+id/rowExport"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
@@ -783,17 +773,16 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/onest"
+                                app:fontFamily="@font/onest_regular_file"
                                 android:text="@string/settings_export_title"
                                 android:textColor="@color/keeply_text_primary"
-                                android:textFontWeight="600"
                                 android:textSize="15sp" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:fontFamily="@font/onest"
+                                app:fontFamily="@font/onest_regular_file"
                                 android:text="@string/settings_coming_soon"
                                 android:textColor="@color/keeply_text_secondary"
                                 android:textSize="12sp" />
@@ -802,13 +791,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/onest"
+                            app:fontFamily="@font/onest_bold_file"
                             android:text="@string/settings_chevron"
                             android:textColor="@color/keeply_text_tertiary"
                             android:textSize="22sp" />
                     </LinearLayout>
 
                     <View
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginHorizontal="16dp"
@@ -835,10 +825,9 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/onest"
+                                app:fontFamily="@font/onest_bold_file"
                                 android:text="@string/settings_privacy_title"
                                 android:textColor="@color/keeply_text_primary"
-                                android:textFontWeight="600"
                                 android:textSize="15sp" />
 
                             <TextView
@@ -846,7 +835,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:fontFamily="@font/onest"
+                                app:fontFamily="@font/onest_regular_file"
                                 android:textColor="@color/keeply_text_secondary"
                                 android:textSize="12sp"
                                 tools:text="Aceptado el 23/07/2026 12:00" />
@@ -855,7 +844,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/onest"
+                            app:fontFamily="@font/onest_bold_file"
                             android:text="@string/settings_chevron"
                             android:textColor="@color/keeply_text_tertiary"
                             android:textSize="22sp" />
@@ -885,10 +874,9 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/onest"
+                                app:fontFamily="@font/onest_bold_file"
                                 android:text="@string/settings_about_title"
                                 android:textColor="@color/keeply_text_primary"
-                                android:textFontWeight="600"
                                 android:textSize="15sp" />
 
                             <TextView
@@ -896,7 +884,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:fontFamily="@font/onest"
+                                app:fontFamily="@font/onest_regular_file"
                                 android:textColor="@color/keeply_text_secondary"
                                 android:textSize="12sp"
                                 tools:text="Versión 1.0" />

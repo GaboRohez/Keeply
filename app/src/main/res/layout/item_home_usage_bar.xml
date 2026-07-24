@@ -19,10 +19,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:fontFamily="@font/onest"
+            app:fontFamily="@font/onest_bold_file"
             android:maxLines="1"
             android:textColor="@color/keeply_text_primary"
-            android:textFontWeight="600"
             android:textSize="13sp"
             tools:text="Leche entera" />
 
@@ -31,9 +30,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:fontFamily="@font/onest"
+            app:fontFamily="@font/onest_bold_file"
             android:textColor="@color/keeply_primary"
-            android:textFontWeight="700"
             android:textSize="13sp"
             tools:text="8" />
     </LinearLayout>

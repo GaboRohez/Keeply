@@ -5,5 +5,5 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:checkable="true"
-    android:fontFamily="@font/onest"
+    app:fontFamily="@font/onest_regular_file"
     app:checkedIconVisible="true" />

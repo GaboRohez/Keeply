@@ -60,4 +60,14 @@
         <item name="colorSurface">@android:color/white</item>
         <item name="elevationOverlayEnabled">false</item>
     </style>
+
+    <style name="Widget.Keeply.FieldLabel" parent="@android:style/Widget.TextView">
+        <item name="android:fontFamily">@font/onest_medium_file</item>
+        <item name="fontFamily">@font/onest_medium_file</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/keeply_text_secondary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:paddingBottom">6dp</item>
+    </style>
 </resources>

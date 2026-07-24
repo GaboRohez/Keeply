@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:paddingHorizontal="24dp"
     android:paddingTop="8dp"
-    android:paddingBottom="4dp">
+    android:paddingBottom="4dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilCategoryName"
@@ -17,7 +18,7 @@
             android:id="@+id/etCategoryName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/onest"
+            app:fontFamily="@font/onest_medium_file"
             android:inputType="textCapWords"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
