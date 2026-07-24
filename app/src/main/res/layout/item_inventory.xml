@@ -91,6 +91,8 @@
         android:id="@+id/cardForeground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
         android:theme="@style/ThemeOverlay.Keeply.WhiteCard"
         app:cardBackgroundColor="@android:color/white"
         android:layout_margin="2dp"
