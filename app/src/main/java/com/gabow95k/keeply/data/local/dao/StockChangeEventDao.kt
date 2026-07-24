@@ -29,4 +29,13 @@ interface StockChangeEventDao {
         """
     )
     suspend fun getSince(since: Long): List<StockChangeEventEntity>
+
+    @Query(
+        """
+        SELECT * FROM stock_change_events
+        ORDER BY createdAt DESC
+        LIMIT 1
+        """
+    )
+    fun observeLatest(): Flow<List<StockChangeEventEntity>>
 }

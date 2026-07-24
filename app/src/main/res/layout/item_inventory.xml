@@ -69,7 +69,8 @@
                     android:elevation="2dp"
                     android:padding="10dp"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_edit" />
+                    android:src="@drawable/ic_edit"
+                    app:tint="#FF3B56D6" />
 
                 <ImageButton
                     android:id="@+id/btnDelete"
@@ -81,7 +82,8 @@
                     android:elevation="2dp"
                     android:padding="10dp"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_delete" />
+                    android:src="@drawable/ic_delete"
+                    app:tint="#FFE57373" />
             </LinearLayout>
         </FrameLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -120,10 +122,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginEnd="8dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                app:layout_constraintEnd_toStartOf="@id/tvMeta"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivThumb"
                 app:layout_constraintTop_toTopOf="@id/ivThumb">
 
@@ -157,11 +158,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:layout_marginEnd="8dp"
                 android:fontFamily="@font/onest"
                 android:textColor="@color/keeply_text_secondary"
                 android:textSize="13sp"
-                app:layout_constraintEnd_toStartOf="@id/tvMeta"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/titleRow"
                 app:layout_constraintTop_toBottomOf="@id/titleRow"
                 tools:text="24 en stock" />
@@ -180,13 +180,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginEnd="8dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/onest"
                 android:maxLines="1"
                 android:textColor="@color/keeply_text_secondary"
                 android:textSize="11sp"
                 app:layout_constraintBottom_toBottomOf="@id/ivBarcode"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivBarcode"
                 app:layout_constraintTop_toTopOf="@id/ivBarcode"
                 tools:text="7501234567890" />

@@ -37,7 +37,8 @@
                 android:layout_height="18dp"
                 android:layout_gravity="center"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_toast_success" />
+                android:src="@drawable/ic_toast_success"
+                app:tint="@color/keeply_on_primary" />
         </FrameLayout>
 
         <LinearLayout

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvBarLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:fontFamily="@font/onest"
+            android:maxLines="1"
+            android:textColor="@color/keeply_text_primary"
+            android:textFontWeight="600"
+            android:textSize="13sp"
+            tools:text="Leche entera" />
+
+        <TextView
+            android:id="@+id/tvBarValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/onest"
+            android:textColor="@color/keeply_primary"
+            android:textFontWeight="700"
+            android:textSize="13sp"
+            tools:text="8" />
+    </LinearLayout>
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:max="100"
+        app:indicatorColor="@color/keeply_primary"
+        app:trackColor="@color/keeply_surface_variant"
+        app:trackCornerRadius="8dp"
+        app:trackThickness="10dp"
+        tools:progress="70" />
+</LinearLayout>

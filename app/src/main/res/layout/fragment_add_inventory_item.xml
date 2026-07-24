@@ -15,7 +15,7 @@
         android:layout_marginTop="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@null"
-        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        android:src="@drawable/chevron_left"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/keeply_text_primary" />
@@ -79,8 +79,8 @@
                             android:layout_height="match_parent"
                             android:background="@drawable/bg_item_thumb"
                             android:contentDescription="@string/product_photo_preview"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ic_product_placeholder" />
+                            android:scaleType="centerInside"
+                            android:src="@drawable/placeholder" />
 
                         <ProgressBar
                             android:id="@+id/progressPhotoAnalyze"

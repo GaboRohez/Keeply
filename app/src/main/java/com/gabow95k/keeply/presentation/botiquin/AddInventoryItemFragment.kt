@@ -186,11 +186,11 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
         if (hasPhoto) {
             Glide.with(binding.ivProductPhoto)
                 .load(path)
-                .centerCrop()
-                .placeholder(R.drawable.ic_product_placeholder)
+                .centerInside()
+                .placeholder(R.drawable.placeholder)
                 .into(binding.ivProductPhoto)
         } else {
-            binding.ivProductPhoto.setImageResource(R.drawable.ic_product_placeholder)
+            binding.ivProductPhoto.setImageResource(R.drawable.placeholder)
         }
     }
 

@@ -14,6 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -32,6 +33,235 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:orientation="vertical" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnInsightsMore"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/onest"
+            android:text="@string/home_insights_see_more"
+            android:textAllCaps="false"
+            android:textColor="@color/keeply_primary"
+            app:icon="@drawable/ic_expand_more"
+            app:iconGravity="textEnd"
+            app:iconTint="@color/keeply_primary" />
+
+        <LinearLayout
+            android:id="@+id/insightsExpanded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="4dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/keeply_divider" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/onest"
+                android:text="@string/home_insights_stats_title"
+                android:textColor="@color/keeply_text_primary"
+                android:textFontWeight="700"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_item_thumb"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="12dp">
+
+                    <TextView
+                        android:id="@+id/tvStatConsumed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/onest"
+                        android:textColor="@color/keeply_primary"
+                        android:textFontWeight="700"
+                        android:textSize="18sp"
+                        tools:text="12" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/onest"
+                        android:gravity="center"
+                        android:text="@string/home_insights_stat_consumed"
+                        android:textColor="@color/keeply_text_secondary"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_item_thumb"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="12dp">
+
+                    <TextView
+                        android:id="@+id/tvStatMovements"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/onest"
+                        android:textColor="@color/keeply_primary"
+                        android:textFontWeight="700"
+                        android:textSize="18sp"
+                        tools:text="9" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/onest"
+                        android:gravity="center"
+                        android:text="@string/home_insights_stat_movements"
+                        android:textColor="@color/keeply_text_secondary"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_item_thumb"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="12dp">
+
+                    <TextView
+                        android:id="@+id/tvStatProducts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/onest"
+                        android:textColor="@color/keeply_primary"
+                        android:textFontWeight="700"
+                        android:textSize="18sp"
+                        tools:text="5" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/onest"
+                        android:gravity="center"
+                        android:text="@string/home_insights_stat_products"
+                        android:textColor="@color/keeply_text_secondary"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:fontFamily="@font/onest"
+                android:text="@string/home_insights_top_used"
+                android:textColor="@color/keeply_text_primary"
+                android:textFontWeight="700"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvTopUsedEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/onest"
+                android:text="@string/home_insights_charts_empty"
+                android:textColor="@color/keeply_text_secondary"
+                android:textSize="13sp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/usageBarsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:fontFamily="@font/onest"
+                android:text="@string/home_insights_activity_mix"
+                android:textColor="@color/keeply_text_primary"
+                android:textFontWeight="700"
+                android:textSize="14sp" />
+
+            <com.gabow95k.keeply.presentation.home.SegmentBarView
+                android:id="@+id/segmentActivity"
+                android:layout_width="match_parent"
+                android:layout_height="14dp"
+                android:layout_marginTop="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="6dp"
+                    android:fontFamily="@font/onest"
+                    android:text="@string/home_insights_legend_consume"
+                    android:textColor="@color/keeply_text_secondary"
+                    android:textSize="12sp"
+                    app:drawableStartCompat="@drawable/bg_legend_consume" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="6dp"
+                    android:fontFamily="@font/onest"
+                    android:gravity="center"
+                    android:text="@string/home_insights_legend_adjust"
+                    android:textColor="@color/keeply_text_secondary"
+                    android:textSize="12sp"
+                    app:drawableStartCompat="@drawable/bg_legend_adjust" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="6dp"
+                    android:fontFamily="@font/onest"
+                    android:gravity="end"
+                    android:text="@string/home_insights_legend_add"
+                    android:textColor="@color/keeply_text_secondary"
+                    android:textSize="12sp"
+                    app:drawableStartCompat="@drawable/bg_legend_add" />
+            </LinearLayout>
+        </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnInsightsShop"

@@ -4,42 +4,45 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.gabow95k.keeply.R
 import com.gabow95k.keeply.data.local.db.KeeplyDatabase
-import com.gabow95k.keeply.data.local.mapper.toDomain
+import com.gabow95k.keeply.data.local.entity.InventoryItemEntity
+import com.gabow95k.keeply.data.local.entity.StockChangeEventEntity
 import com.gabow95k.keeply.data.preferences.KeeplyPreferences
 import com.gabow95k.keeply.databinding.FragmentHomeBinding
 import com.gabow95k.keeply.databinding.ItemHomeAlertCardBinding
 import com.gabow95k.keeply.databinding.ItemHomeInsightBinding
 import com.gabow95k.keeply.databinding.ItemHomeStatBinding
+import com.gabow95k.keeply.databinding.ItemHomeUsageBarBinding
 import com.gabow95k.keeply.insights.InsightCard
 import com.gabow95k.keeply.insights.InsightKind
 import com.gabow95k.keeply.insights.MonthlyInsights
 import com.gabow95k.keeply.insights.MonthlyInsightsEvaluator
 import com.gabow95k.keeply.presentation.base.BaseFragment
-import com.gabow95k.keeply.presentation.botiquin.AddInventoryItemFragment
-import com.gabow95k.keeply.presentation.botiquin.InventoryItemUi
 import com.gabow95k.keeply.presentation.controller.ControllerActivity
 import com.gabow95k.keeply.prompts.SoftPrompt
 import com.gabow95k.keeply.prompts.SoftPromptEvaluator
 import com.gabow95k.keeply.prompts.SoftPromptType
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import java.util.Calendar
 import java.util.concurrent.TimeUnit
+import kotlin.math.ceil
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    private val recentAdapter = HomeRecentAdapter()
     private var expiredProductNames: List<String> = emptyList()
     private var expiringProductLines: List<String> = emptyList()
     private var lowStockProductLines: List<String> = emptyList()
     private var outOfStockProductNames: List<String> = emptyList()
+    private var insightsExpanded = false
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -49,15 +52,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvRecent.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvRecent.adapter = recentAdapter
-
-        binding.tvViewAll.setOnClickListener {
-            (activity as? ControllerActivity)?.navigateToTab(R.id.nav_botiquin)
-        }
-        binding.btnAddProduct.setOnClickListener { openAddProduct() }
         binding.tvProfileHint.setOnClickListener {
             (activity as? ControllerActivity)?.navigateToTab(R.id.nav_settings)
+        }
+        binding.monthlyInsights.btnInsightsMore.setOnClickListener {
+            insightsExpanded = !insightsExpanded
+            applyInsightsExpandedUi()
         }
 
         binding.cardExpiredAlert.root.setOnClickListener {
@@ -89,6 +89,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             )
         }
 
+        applyInsightsExpandedUi()
         observeHomeData()
     }
 
@@ -104,30 +105,45 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 combine(
-                    db.userProfileDao().observeProfile(),
-                    db.inventoryItemDao().observeAll(),
-                    db.categoryDao().observeAll(),
-                    db.inventoryItemDao().observeRecent(RECENT_LIMIT),
-                    db.stockChangeEventDao().observeSince(monthStart)
-                ) { profile, allItems, categories, recent, monthEvents ->
-                    val expiredItems = allItems.filter { entity ->
+                    combine(
+                        db.userProfileDao().observeProfile(),
+                        db.inventoryItemDao().observeAll(),
+                        db.stockChangeEventDao().observeSince(monthStart)
+                    ) { profile, allItems, monthEvents ->
+                        HomeRaw(
+                            profileName = profile?.name?.takeIf { it.isNotBlank() },
+                            allItems = allItems,
+                            monthEvents = monthEvents
+                        )
+                    },
+                    db.stockChangeEventDao().observeLatest()
+                ) { raw, latestEvents ->
+                    val latestEvent = latestEvents.firstOrNull()
+                    val expiredItems = raw.allItems.filter { entity ->
                         val date = entity.expirationDate ?: return@filter false
                         date < now
                     }
-                    val expiringItems = allItems.filter { entity ->
+                    val expiringItems = raw.allItems.filter { entity ->
                         val date = entity.expirationDate ?: return@filter false
                         date in now..expiringLimit
                     }
-                    val lowStockItems = allItems.filter { entity ->
+                    val lowStockItems = raw.allItems.filter { entity ->
                         val min = entity.minQuantity ?: return@filter false
                         entity.quantity > 0.0 && entity.quantity <= min
                     }
-                    val outOfStockItems = allItems.filter { it.quantity <= 0.0 }
-                    val insights = MonthlyInsightsEvaluator.evaluate(monthEvents, allItems)
+                    val outOfStockItems = raw.allItems.filter { it.quantity <= 0.0 }
+                    val insights = MonthlyInsightsEvaluator.evaluate(raw.monthEvents, raw.allItems)
+                    val nextExpiry = raw.allItems
+                        .mapNotNull { item ->
+                            val date = item.expirationDate ?: return@mapNotNull null
+                            if (date < startOfDay(now)) null else item to date
+                        }
+                        .minByOrNull { it.second }
+                        ?.first
 
                     HomeUiState(
-                        userName = profile?.name?.takeIf { it.isNotBlank() },
-                        totalCount = allItems.size,
+                        userName = raw.profileName,
+                        totalCount = raw.allItems.size,
                         expiredCount = expiredItems.size,
                         expiringCount = expiringItems.size,
                         lowStockCount = lowStockItems.size,
@@ -142,30 +158,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                             )
                         },
                         outOfStockNames = outOfStockItems.map { it.name },
-                        insights = insights,
-                        recentItems = recent.map { entity ->
-                            val item = entity.toDomain()
-                            val categoryName = categories
-                                .firstOrNull { it.id == item.categoryId }
-                                ?.name
-                                .orEmpty()
-                            InventoryItemUi(
-                                id = item.id,
-                                name = item.name,
-                                categoryId = item.categoryId,
-                                categoryName = categoryName,
-                                quantity = item.quantity,
-                                stockLabel = getString(
-                                    R.string.botiquin_stock_in_stock,
-                                    formatQuantity(item.quantity)
-                                ),
-                                barcode = item.barcode,
-                                metaLabel = item.unit?.takeIf { it.isNotBlank() }
-                                    ?: item.formType?.takeIf { it.isNotBlank() }
-                                    ?: "",
-                                photoPath = item.photoPath
-                            )
-                        }
+                        nextExpiry = nextExpiry?.let { buildNextExpiry(it, now) },
+                        lastActivity = latestEvent?.let { buildLastActivity(it, now) },
+                        insights = insights
                     )
                 }.collect { state ->
                     bindState(state)
@@ -212,27 +207,161 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         bindAlertCard(
             binding.cardExpiredAlert,
             title = getString(R.string.home_alert_expired_title),
-            count = state.expiredCount
+            count = state.expiredCount,
+            tone = AlertTone.EXPIRED
         )
         bindAlertCard(
             binding.cardExpiringAlert,
             title = getString(R.string.home_alert_expiring_title),
-            count = state.expiringCount
+            count = state.expiringCount,
+            tone = AlertTone.EXPIRING
         )
         bindAlertCard(
             binding.cardLowStockAlert,
             title = getString(R.string.home_alert_low_stock_title),
-            count = state.lowStockCount
+            count = state.lowStockCount,
+            tone = AlertTone.LOW_STOCK
         )
         bindAlertCard(
             binding.cardOutOfStockAlert,
             title = getString(R.string.home_alert_out_of_stock_title),
-            count = state.outOfStockCount
+            count = state.outOfStockCount,
+            tone = AlertTone.OUT_OF_STOCK
         )
 
-        bindRecent(state.recentItems)
+        bindNextExpiry(state.nextExpiry)
+        bindLastActivity(state.lastActivity)
         bindInsights(state.insights)
         bindSoftPrompt(state)
+    }
+
+    private fun bindNextExpiry(spotlight: SpotlightUi?) {
+        val card = binding.cardNextExpiry
+        card.tvSpotlightEyebrow.text = getString(R.string.home_next_expiry_eyebrow)
+        if (spotlight == null) {
+            applySpotlightSurface(card.root, urgent = false)
+            card.tvSpotlightEyebrow.setTextColor(
+                ContextCompat.getColor(requireContext(), R.color.keeply_primary)
+            )
+            card.tvSpotlightTitle.text = getString(R.string.home_next_expiry_empty_title)
+            card.tvSpotlightSubtitle.text = getString(R.string.home_next_expiry_empty_body)
+            card.tvSpotlightBadge.isVisible = false
+            return
+        }
+        applySpotlightSurface(card.root, urgent = spotlight.daysLeft <= 3)
+        card.tvSpotlightTitle.text = spotlight.title
+        card.tvSpotlightSubtitle.text = spotlight.subtitle
+        card.tvSpotlightBadge.isVisible = true
+        card.tvSpotlightBadge.text = spotlight.badge
+        card.tvSpotlightEyebrow.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                if (spotlight.daysLeft <= 3) R.color.keeply_on_warning_container
+                else R.color.keeply_primary
+            )
+        )
+    }
+
+    private fun bindLastActivity(spotlight: SpotlightUi?) {
+        val card = binding.cardLastActivity
+        applySpotlightSurface(card.root, urgent = false)
+        card.tvSpotlightEyebrow.text = getString(R.string.home_last_activity_eyebrow)
+        card.tvSpotlightEyebrow.setTextColor(
+            ContextCompat.getColor(requireContext(), R.color.keeply_primary)
+        )
+        if (spotlight == null) {
+            card.tvSpotlightTitle.text = getString(R.string.home_last_activity_empty_title)
+            card.tvSpotlightSubtitle.text = getString(R.string.home_last_activity_empty_body)
+            card.tvSpotlightBadge.isVisible = false
+            return
+        }
+        card.tvSpotlightTitle.text = spotlight.title
+        card.tvSpotlightSubtitle.text = spotlight.subtitle
+        card.tvSpotlightBadge.isVisible = true
+        card.tvSpotlightBadge.text = spotlight.badge
+    }
+
+    private fun applySpotlightSurface(card: MaterialCardView, urgent: Boolean) {
+        val colorRes = if (urgent) {
+            R.color.keeply_warning_container
+        } else {
+            R.color.keeply_surface
+        }
+        card.setCardBackgroundColor(ContextCompat.getColor(requireContext(), colorRes))
+    }
+
+    private fun buildNextExpiry(item: InventoryItemEntity, now: Long): SpotlightUi {
+        val expiration = item.expirationDate ?: return SpotlightUi(
+            title = item.name,
+            subtitle = "",
+            badge = "",
+            daysLeft = 0
+        )
+        val daysLeft = daysUntil(now, expiration).coerceAtLeast(0)
+        val subtitle = when (daysLeft) {
+            0 -> getString(R.string.home_next_expiry_today)
+            1 -> getString(R.string.home_next_expiry_tomorrow)
+            else -> getString(R.string.home_next_expiry_in_days, daysLeft)
+        }
+        val badge = when (daysLeft) {
+            0 -> getString(R.string.home_next_expiry_badge_today)
+            else -> getString(R.string.home_next_expiry_badge_days, daysLeft)
+        }
+        return SpotlightUi(
+            title = item.name,
+            subtitle = subtitle,
+            badge = badge,
+            daysLeft = daysLeft
+        )
+    }
+
+    private fun buildLastActivity(event: StockChangeEventEntity, now: Long): SpotlightUi {
+        val amount = formatQuantity(event.delta)
+        val subtitle = when (event.changeType) {
+            StockChangeEventEntity.TYPE_CONSUME -> getString(
+                R.string.home_last_activity_consume,
+                amount
+            )
+
+            StockChangeEventEntity.TYPE_ADJUST_DOWN -> getString(
+                R.string.home_last_activity_adjust_down
+            )
+
+            StockChangeEventEntity.TYPE_ADJUST_UP -> getString(
+                R.string.home_last_activity_adjust_up
+            )
+
+            StockChangeEventEntity.TYPE_ADD -> getString(R.string.home_last_activity_add)
+            else -> ""
+        }
+        val daysAgo = daysUntil(event.createdAt, now).coerceAtLeast(0)
+        val badge = when (daysAgo) {
+            0 -> getString(R.string.home_last_activity_time_today)
+            1 -> getString(R.string.home_last_activity_time_yesterday)
+            else -> getString(R.string.home_last_activity_time_days, daysAgo)
+        }
+        return SpotlightUi(
+            title = event.productName,
+            subtitle = subtitle,
+            badge = badge,
+            daysLeft = Int.MAX_VALUE
+        )
+    }
+
+    private fun startOfDay(millis: Long): Long {
+        return Calendar.getInstance().apply {
+            timeInMillis = millis
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.timeInMillis
+    }
+
+    private fun daysUntil(fromMillis: Long, toMillis: Long): Int {
+        val from = startOfDay(fromMillis)
+        val to = startOfDay(toMillis)
+        return ceil((to - from).toDouble() / TimeUnit.DAYS.toMillis(1)).toInt()
     }
 
     private fun bindInsights(insights: MonthlyInsights) {
@@ -252,10 +381,47 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             container.addView(row.root)
         }
 
+        val stats = insights.stats
+        card.tvStatConsumed.text = formatQuantity(stats.totalConsumed)
+        card.tvStatMovements.text = stats.movementCount.toString()
+        card.tvStatProducts.text = stats.productsTouched.toString()
+
+        val barsContainer = card.usageBarsContainer
+        barsContainer.removeAllViews()
+        val hasTop = stats.topProducts.isNotEmpty()
+        card.tvTopUsedEmpty.isVisible = !hasTop
+        barsContainer.isVisible = hasTop
+        stats.topProducts.forEach { bar ->
+            val row = ItemHomeUsageBarBinding.inflate(layoutInflater, barsContainer, false)
+            row.tvBarLabel.text = bar.productName
+            row.tvBarValue.text = formatQuantity(bar.amount)
+            row.progressBar.progress = bar.progressPercent
+            barsContainer.addView(row.root)
+        }
+
+        card.segmentActivity.setShares(
+            consume = stats.consumeShare,
+            adjust = stats.adjustShare,
+            add = stats.addShare
+        )
+
         card.btnInsightsShop.isVisible = insights.showShoppingCta
         card.btnInsightsShop.setOnClickListener {
             (activity as? ControllerActivity)?.navigateToShoppingAutoGenerate()
         }
+    }
+
+    private fun applyInsightsExpandedUi() {
+        val card = binding.monthlyInsights
+        card.insightsExpanded.isVisible = insightsExpanded
+        card.btnInsightsMore.text = getString(
+            if (insightsExpanded) R.string.home_insights_see_less
+            else R.string.home_insights_see_more
+        )
+        card.btnInsightsMore.setIconResource(
+            if (insightsExpanded) R.drawable.ic_expand_less
+            else R.drawable.ic_expand_more
+        )
     }
 
     private fun insightCopy(insight: InsightCard): Pair<String, String> {
@@ -340,11 +506,61 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun bindAlertCard(
         cardBinding: ItemHomeAlertCardBinding,
         title: String,
-        count: Int
+        count: Int,
+        tone: AlertTone
     ) {
+        val active = count > 0
+        val backgroundRes = if (active) tone.containerColor else R.color.keeply_surface
+        val titleColorRes = if (active) tone.onContainerColor else R.color.keeply_text_primary
+        val countColorRes = if (active) tone.onContainerColor else R.color.keeply_text_secondary
+        val badgeBgRes = if (active) tone.badgeColor else R.color.keeply_surface_variant
+
+        cardBinding.root.setCardBackgroundColor(
+            ContextCompat.getColor(requireContext(), backgroundRes)
+        )
         cardBinding.tvAlertTitle.text = title
+        cardBinding.tvAlertTitle.setTextColor(
+            ContextCompat.getColor(requireContext(), titleColorRes)
+        )
         cardBinding.tvAlertCount.text = getString(R.string.home_alert_count, count)
+        cardBinding.tvAlertCount.setTextColor(
+            ContextCompat.getColor(requireContext(), countColorRes)
+        )
         cardBinding.tvAlertBadge.text = count.toString()
+        cardBinding.tvAlertBadge.setTextColor(
+            ContextCompat.getColor(requireContext(), titleColorRes)
+        )
+        val badgeBg =
+            ContextCompat.getDrawable(requireContext(), R.drawable.bg_item_thumb)?.mutate()
+        badgeBg?.setTint(ContextCompat.getColor(requireContext(), badgeBgRes))
+        cardBinding.tvAlertBadge.background = badgeBg
+    }
+
+    private enum class AlertTone(
+        val containerColor: Int,
+        val onContainerColor: Int,
+        val badgeColor: Int
+    ) {
+        EXPIRED(
+            containerColor = R.color.keeply_error_container,
+            onContainerColor = R.color.keeply_on_error_container,
+            badgeColor = R.color.white
+        ),
+        EXPIRING(
+            containerColor = R.color.keeply_warning_container,
+            onContainerColor = R.color.keeply_on_warning_container,
+            badgeColor = R.color.white
+        ),
+        LOW_STOCK(
+            containerColor = R.color.keeply_primary_container,
+            onContainerColor = R.color.keeply_on_primary_container,
+            badgeColor = R.color.white
+        ),
+        OUT_OF_STOCK(
+            containerColor = R.color.keeply_error_container,
+            onContainerColor = R.color.keeply_on_error_container,
+            badgeColor = R.color.white
+        )
     }
 
     private fun showProductsAlert(
@@ -370,19 +586,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         statBinding.tvStatLabel.text = label
     }
 
-    private fun bindRecent(items: List<InventoryItemUi>) {
-        recentAdapter.submitList(items)
-        binding.tvRecentEmpty.isVisible = items.isEmpty()
-        binding.rvRecent.isVisible = items.isNotEmpty()
-    }
-
-    private fun openAddProduct() {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, AddInventoryItemFragment.newInstance())
-            .addToBackStack(AddInventoryItemFragment.TAG)
-            .commit()
-    }
-
     private fun formatQuantity(quantity: Double): String {
         return if (quantity % 1.0 == 0.0) {
             quantity.toInt().toString()
@@ -390,6 +593,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             quantity.toString()
         }
     }
+
+    private data class HomeRaw(
+        val profileName: String?,
+        val allItems: List<InventoryItemEntity>,
+        val monthEvents: List<StockChangeEventEntity>
+    )
+
+    private data class SpotlightUi(
+        val title: String,
+        val subtitle: String,
+        val badge: String,
+        val daysLeft: Int
+    )
 
     private data class HomeUiState(
         val userName: String?,
@@ -402,13 +618,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         val expiringLines: List<String>,
         val lowStockLines: List<String>,
         val outOfStockNames: List<String>,
-        val insights: MonthlyInsights,
-        val recentItems: List<InventoryItemUi>
+        val nextExpiry: SpotlightUi?,
+        val lastActivity: SpotlightUi?,
+        val insights: MonthlyInsights
     )
 
     companion object {
         const val TAG = "HomeFragment"
-        private const val RECENT_LIMIT = 5
         fun newInstance(): HomeFragment = HomeFragment()
     }
 }

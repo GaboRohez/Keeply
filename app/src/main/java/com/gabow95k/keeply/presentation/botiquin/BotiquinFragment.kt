@@ -31,6 +31,7 @@ class BotiquinFragment : BaseFragment<FragmentBotiquinBinding>() {
     private var categories: List<Category> = emptyList()
     private var searchQuery: String = ""
     private var selectedCategoryId: Long? = null
+    private var currentSort: InventorySort = InventorySort.NAME_ASC
 
     private var consumeSessionItemId: Long? = null
     private var consumeSessionCount: Int = 0
@@ -51,6 +52,7 @@ class BotiquinFragment : BaseFragment<FragmentBotiquinBinding>() {
         binding.rvItems.adapter = itemsAdapter
         binding.fabAdd.setOnClickListener { openAddProductForm() }
         binding.btnFilter.setOnClickListener { showCategoryFilterDialog() }
+        binding.btnSort.setOnClickListener { showSortDialog() }
         binding.tvFilterChip.setOnClickListener {
             selectedCategoryId = null
             applyFilters()
@@ -60,6 +62,7 @@ class BotiquinFragment : BaseFragment<FragmentBotiquinBinding>() {
             applyFilters()
         }
         setupSwipe()
+        updateSortUi()
         observeItems()
     }
 
@@ -225,11 +228,23 @@ class BotiquinFragment : BaseFragment<FragmentBotiquinBinding>() {
             matchesCategory && matchesQuery
         }
 
-        itemsAdapter.submitList(filtered)
+        val sorted = when (currentSort) {
+            InventorySort.NAME_ASC -> filtered.sortedBy { it.name.lowercase() }
+            InventorySort.NAME_DESC -> filtered.sortedByDescending { it.name.lowercase() }
+            InventorySort.STOCK_ASC -> filtered.sortedWith(
+                compareBy<InventoryItemUi> { it.quantity }.thenBy { it.name.lowercase() }
+            )
+
+            InventorySort.STOCK_DESC -> filtered.sortedWith(
+                compareByDescending<InventoryItemUi> { it.quantity }.thenBy { it.name.lowercase() }
+            )
+        }
+
+        itemsAdapter.submitList(sorted)
 
         val hasFilters = query.isNotEmpty() || selectedCategoryId != null
-        binding.tvEmpty.isVisible = filtered.isEmpty()
-        binding.rvItems.isVisible = filtered.isNotEmpty()
+        binding.tvEmpty.isVisible = sorted.isEmpty()
+        binding.rvItems.isVisible = sorted.isNotEmpty()
         binding.tvEmpty.setText(
             if (hasFilters && allItems.isNotEmpty()) {
                 R.string.inventory_empty_filtered
@@ -238,6 +253,7 @@ class BotiquinFragment : BaseFragment<FragmentBotiquinBinding>() {
             }
         )
         updateFilterUi()
+        updateSortUi()
     }
 
     private fun updateFilterUi() {
@@ -253,6 +269,43 @@ class BotiquinFragment : BaseFragment<FragmentBotiquinBinding>() {
             if (categoryId != null) R.color.keeply_primary else R.color.keeply_icon_primary
         )
         binding.ivFilter.setColorFilter(tint)
+    }
+
+    private fun updateSortUi() {
+        val label = sortLabel(currentSort)
+        binding.tvSortChip.text = getString(R.string.inventory_sort_active, label)
+        val tint = ContextCompat.getColor(
+            requireContext(),
+            if (currentSort != InventorySort.NAME_ASC) R.color.keeply_primary
+            else R.color.keeply_icon_primary
+        )
+        binding.ivSort.setColorFilter(tint)
+    }
+
+    private fun sortLabel(sort: InventorySort): String = when (sort) {
+        InventorySort.NAME_ASC -> getString(R.string.inventory_sort_name_asc)
+        InventorySort.NAME_DESC -> getString(R.string.inventory_sort_name_desc)
+        InventorySort.STOCK_ASC -> getString(R.string.inventory_sort_stock_asc)
+        InventorySort.STOCK_DESC -> getString(R.string.inventory_sort_stock_desc)
+    }
+
+    private fun showSortDialog() {
+        val options = arrayOf(
+            getString(R.string.inventory_sort_name_asc),
+            getString(R.string.inventory_sort_name_desc),
+            getString(R.string.inventory_sort_stock_asc),
+            getString(R.string.inventory_sort_stock_desc)
+        )
+        val checked = currentSort.ordinal
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.inventory_sort_title)
+            .setSingleChoiceItems(options, checked) { dialog, which ->
+                currentSort = InventorySort.entries[which]
+                applyFilters()
+                dialog.dismiss()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     private fun showCategoryFilterDialog() {

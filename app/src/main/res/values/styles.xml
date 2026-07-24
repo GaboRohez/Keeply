@@ -24,14 +24,25 @@
     <style name="MaterialAlertDialog.Keeply" parent="MaterialAlertDialog.Material3">
         <item name="shapeAppearance">@style/ShapeAppearance.Keeply.Dialog</item>
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Keeply.Dialog</item>
-        <item name="backgroundTint">@color/keeply_surface</item>
+        <!-- Blanco sólido: evita el macro M3 (?colorSurfaceContainerHigh) teñido de primary -->
+        <item name="backgroundTint">@android:color/white</item>
     </style>
 
     <!-- Solo shape/colores: estilos de título/botón rompían layout_width en m3_alert_dialog -->
     <style name="ThemeOverlay.Keeply.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="alertDialogStyle">@style/MaterialAlertDialog.Keeply</item>
-        <item name="colorSurface">@color/keeply_surface</item>
+        <!-- Sin esto, MaterialShapeDrawable tintea el fondo con colorPrimary (azul) -->
+        <item name="elevationOverlayEnabled">false</item>
+        <item name="elevationOverlayColor">@android:color/transparent</item>
+        <item name="android:colorBackground">@android:color/white</item>
+        <item name="colorSurface">@android:color/white</item>
+        <item name="colorSurfaceBright">@android:color/white</item>
+        <item name="colorSurfaceContainer">@android:color/white</item>
+        <item name="colorSurfaceContainerLow">@android:color/white</item>
+        <item name="colorSurfaceContainerHigh">@android:color/white</item>
+        <item name="colorSurfaceContainerHighest">@android:color/white</item>
         <item name="colorOnSurface">@color/keeply_text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/keeply_text_secondary</item>
         <item name="colorPrimary">@color/keeply_primary</item>
     </style>
 

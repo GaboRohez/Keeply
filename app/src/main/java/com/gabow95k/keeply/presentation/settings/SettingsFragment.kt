@@ -24,6 +24,7 @@ import com.gabow95k.keeply.notifications.NotificationScheduleEvaluator
 import com.gabow95k.keeply.presentation.base.BaseFragment
 import com.gabow95k.keeply.presentation.privacy.PrivacyPolicyActivity
 import com.gabow95k.keeply.util.PrettyToast
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -157,6 +158,37 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         }
         binding.switchShoppingPrompts.setOnCheckedChangeListener { _, isChecked ->
             if (!suppressSwitchCallbacks) prefs.notifyShoppingPrompts = isChecked
+        }
+
+        binding.btnInfoExpired.setOnClickListener {
+            showNotifyInfo(
+                R.string.settings_notify_expired,
+                R.string.settings_notify_expired_info
+            )
+        }
+        binding.btnInfoExpiring.setOnClickListener {
+            showNotifyInfo(
+                R.string.settings_notify_expiring,
+                R.string.settings_notify_expiring_info
+            )
+        }
+        binding.btnInfoOutOfStock.setOnClickListener {
+            showNotifyInfo(
+                R.string.settings_notify_out_of_stock,
+                R.string.settings_notify_out_of_stock_info
+            )
+        }
+        binding.btnInfoLowStock.setOnClickListener {
+            showNotifyInfo(
+                R.string.settings_notify_low_stock,
+                R.string.settings_notify_low_stock_info
+            )
+        }
+        binding.btnInfoShoppingPrompts.setOnClickListener {
+            showNotifyInfo(
+                R.string.settings_notify_shopping_prompts,
+                R.string.settings_notify_shopping_prompts_info
+            )
         }
 
         binding.chipGroupCadence.setOnCheckedStateChangeListener { _, checkedIds ->
@@ -315,6 +347,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         binding.chipSlotMorning.isEnabled = slotsEditable
         binding.chipSlotAfternoon.isEnabled = slotsEditable
         binding.chipSlotEvening.isEnabled = slotsEditable
+    }
+
+    private fun showNotifyInfo(titleRes: Int, messageRes: Int) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(titleRes)
+            .setMessage(messageRes)
+            .setPositiveButton(R.string.home_alert_accept, null)
+            .show()
     }
 
     private fun showComingSoon() {

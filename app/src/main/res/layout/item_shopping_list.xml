@@ -34,7 +34,8 @@
                 android:elevation="2dp"
                 android:padding="10dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_edit" />
+                android:src="@drawable/ic_edit"
+                app:tint="#FF3B56D6" />
 
             <ImageButton
                 android:id="@+id/btnDelete"
@@ -46,7 +47,8 @@
                 android:elevation="2dp"
                 android:padding="10dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_delete" />
+                android:src="@drawable/ic_delete"
+                app:tint="#FFE57373" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 

@@ -11,3 +11,10 @@ data class InventoryItemUi(
     val metaLabel: String,
     val photoPath: String?
 )
+
+enum class InventorySort {
+    NAME_ASC,
+    NAME_DESC,
+    STOCK_ASC,
+    STOCK_DESC
+}

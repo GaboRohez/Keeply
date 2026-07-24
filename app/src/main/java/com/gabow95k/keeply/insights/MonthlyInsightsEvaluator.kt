@@ -3,6 +3,7 @@ package com.gabow95k.keeply.insights
 import com.gabow95k.keeply.data.local.entity.InventoryItemEntity
 import com.gabow95k.keeply.data.local.entity.StockChangeEventEntity
 import java.util.Calendar
+import kotlin.math.roundToInt
 
 enum class InsightKind {
     MOST_USED,
@@ -18,15 +19,36 @@ data class InsightCard(
     val showShoppingCta: Boolean = false
 )
 
+data class UsageBarStat(
+    val productName: String,
+    val amount: Double,
+    val progressPercent: Int
+)
+
+data class MonthlyUsageStats(
+    val totalConsumed: Double,
+    val movementCount: Int,
+    val productsTouched: Int,
+    val consumeShare: Float,
+    val adjustShare: Float,
+    val addShare: Float,
+    val topProducts: List<UsageBarStat>
+) {
+    val hasChartData: Boolean
+        get() = movementCount > 0
+}
+
 data class MonthlyInsights(
     val monthLabelKey: Int,
     val cards: List<InsightCard>,
-    val showShoppingCta: Boolean
+    val showShoppingCta: Boolean,
+    val stats: MonthlyUsageStats
 )
 
 object MonthlyInsightsEvaluator {
 
     private const val MAX_CARDS = 3
+    private const val MAX_TOP_PRODUCTS = 5
 
     fun monthStartMillis(now: Long = System.currentTimeMillis()): Long {
         val calendar = Calendar.getInstance().apply {
@@ -113,7 +135,71 @@ object MonthlyInsightsEvaluator {
         return MonthlyInsights(
             monthLabelKey = Calendar.getInstance().get(Calendar.MONTH),
             cards = limited,
-            showShoppingCta = limited.any { it.showShoppingCta }
+            showShoppingCta = limited.any { it.showShoppingCta },
+            stats = buildStats(events)
+        )
+    }
+
+    private fun buildStats(events: List<StockChangeEventEntity>): MonthlyUsageStats {
+        if (events.isEmpty()) {
+            return MonthlyUsageStats(
+                totalConsumed = 0.0,
+                movementCount = 0,
+                productsTouched = 0,
+                consumeShare = 0f,
+                adjustShare = 0f,
+                addShare = 0f,
+                topProducts = emptyList()
+            )
+        }
+
+        var consumeEvents = 0
+        var adjustEvents = 0
+        var addEvents = 0
+        var totalConsumed = 0.0
+        val consumedByName = linkedMapOf<String, Double>()
+
+        events.forEach { event ->
+            when (event.changeType) {
+                StockChangeEventEntity.TYPE_CONSUME -> {
+                    consumeEvents++
+                    totalConsumed += event.delta
+                    consumedByName[event.productName] =
+                        (consumedByName[event.productName] ?: 0.0) + event.delta
+                }
+
+                StockChangeEventEntity.TYPE_ADJUST_DOWN -> {
+                    adjustEvents++
+                    totalConsumed += event.delta
+                    consumedByName[event.productName] =
+                        (consumedByName[event.productName] ?: 0.0) + event.delta
+                }
+
+                StockChangeEventEntity.TYPE_ADJUST_UP -> adjustEvents++
+                StockChangeEventEntity.TYPE_ADD -> addEvents++
+            }
+        }
+
+        val totalTyped = (consumeEvents + adjustEvents + addEvents).coerceAtLeast(1).toFloat()
+        val ranked = consumedByName.entries
+            .sortedByDescending { it.value }
+            .take(MAX_TOP_PRODUCTS)
+        val maxAmount = ranked.firstOrNull()?.value?.takeIf { it > 0.0 } ?: 1.0
+
+        return MonthlyUsageStats(
+            totalConsumed = totalConsumed,
+            movementCount = events.size,
+            productsTouched = events.map { it.productName }.distinct().size,
+            consumeShare = consumeEvents / totalTyped,
+            adjustShare = adjustEvents / totalTyped,
+            addShare = addEvents / totalTyped,
+            topProducts = ranked.map { (name, amount) ->
+                UsageBarStat(
+                    productName = name,
+                    amount = amount,
+                    progressPercent = ((amount / maxAmount) * 100.0).roundToInt().coerceIn(0, 100)
+                )
+            }
         )
     }
 }

@@ -184,7 +184,7 @@ class ShoppingListsFragment : BaseFragment<FragmentShoppingListsBinding>() {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 val name = dialogBinding.etListName.text?.toString()?.trim().orEmpty()
                 if (name.isBlank()) {
-                    dialogBinding.tilListName.error = getString(R.string.shopping_error_name)
+                    PrettyToast.error(binding.root, R.string.shopping_error_name)
                     return@setOnClickListener
                 }
                 val selectedCategories = mutableSetOf<Long>()

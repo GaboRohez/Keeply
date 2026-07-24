@@ -214,6 +214,18 @@
                                 android:textColor="@color/keeply_text_primary"
                                 android:textSize="14sp" />
 
+                            <ImageButton
+                                android:id="@+id/btnInfoExpired"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_marginEnd="4dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/settings_notify_info_cd"
+                                android:padding="6dp"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/ic_info"
+                                app:tint="@color/keeply_icon_secondary" />
+
                             <com.google.android.material.materialswitch.MaterialSwitch
                                 android:id="@+id/switchExpired"
                                 android:layout_width="wrap_content"
@@ -236,6 +248,18 @@
                                 android:text="@string/settings_notify_expiring"
                                 android:textColor="@color/keeply_text_primary"
                                 android:textSize="14sp" />
+
+                            <ImageButton
+                                android:id="@+id/btnInfoExpiring"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_marginEnd="4dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/settings_notify_info_cd"
+                                android:padding="6dp"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/ic_info"
+                                app:tint="@color/keeply_icon_secondary" />
 
                             <com.google.android.material.materialswitch.MaterialSwitch
                                 android:id="@+id/switchExpiring"
@@ -260,6 +284,18 @@
                                 android:textColor="@color/keeply_text_primary"
                                 android:textSize="14sp" />
 
+                            <ImageButton
+                                android:id="@+id/btnInfoOutOfStock"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_marginEnd="4dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/settings_notify_info_cd"
+                                android:padding="6dp"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/ic_info"
+                                app:tint="@color/keeply_icon_secondary" />
+
                             <com.google.android.material.materialswitch.MaterialSwitch
                                 android:id="@+id/switchOutOfStock"
                                 android:layout_width="wrap_content"
@@ -283,6 +319,18 @@
                                 android:textColor="@color/keeply_text_primary"
                                 android:textSize="14sp" />
 
+                            <ImageButton
+                                android:id="@+id/btnInfoLowStock"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_marginEnd="4dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/settings_notify_info_cd"
+                                android:padding="6dp"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/ic_info"
+                                app:tint="@color/keeply_icon_secondary" />
+
                             <com.google.android.material.materialswitch.MaterialSwitch
                                 android:id="@+id/switchLowStock"
                                 android:layout_width="wrap_content"
@@ -305,6 +353,18 @@
                                 android:text="@string/settings_notify_shopping_prompts"
                                 android:textColor="@color/keeply_text_primary"
                                 android:textSize="14sp" />
+
+                            <ImageButton
+                                android:id="@+id/btnInfoShoppingPrompts"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_marginEnd="4dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/settings_notify_info_cd"
+                                android:padding="6dp"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/ic_info"
+                                app:tint="@color/keeply_icon_secondary" />
 
                             <com.google.android.material.materialswitch.MaterialSwitch
                                 android:id="@+id/switchShoppingPrompts"
