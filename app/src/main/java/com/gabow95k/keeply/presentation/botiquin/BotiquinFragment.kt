@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
@@ -20,6 +18,8 @@ import com.gabow95k.keeply.data.local.mapper.toDomain
 import com.gabow95k.keeply.databinding.FragmentBotiquinBinding
 import com.gabow95k.keeply.domain.model.Category
 import com.gabow95k.keeply.presentation.base.BaseFragment
+import com.gabow95k.keeply.util.PrettyToast
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
@@ -102,20 +102,18 @@ class BotiquinFragment : BaseFragment<FragmentBotiquinBinding>() {
         }
 
         if (maxAvailable <= 0) {
-            Toast.makeText(
-                requireContext(),
-                getString(R.string.inventory_consume_empty, item.name),
-                Toast.LENGTH_SHORT
-            ).show()
+            PrettyToast.error(
+                binding.root,
+                getString(R.string.inventory_consume_empty, item.name)
+            )
             return
         }
 
         if (consumeSessionCount >= maxAvailable) {
-            Toast.makeText(
-                requireContext(),
-                getString(R.string.inventory_consume_limit, maxAvailable, item.name),
-                Toast.LENGTH_SHORT
-            ).show()
+            PrettyToast.error(
+                binding.root,
+                getString(R.string.inventory_consume_limit, maxAvailable, item.name)
+            )
             scheduleConsumeCommit()
             return
         }
@@ -146,11 +144,10 @@ class BotiquinFragment : BaseFragment<FragmentBotiquinBinding>() {
             val dao = db.inventoryItemDao()
             val entity = dao.getById(itemId) ?: return@launch
             if (entity.quantity <= 0.0) {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.inventory_consume_empty, entity.name),
-                    Toast.LENGTH_SHORT
-                ).show()
+                PrettyToast.error(
+                    binding.root,
+                    getString(R.string.inventory_consume_empty, entity.name)
+                )
                 return@launch
             }
             val before = entity.quantity
@@ -168,15 +165,14 @@ class BotiquinFragment : BaseFragment<FragmentBotiquinBinding>() {
                 quantityBefore = before,
                 quantityAfter = newQuantity
             )
-            Toast.makeText(
-                requireContext(),
+            PrettyToast.success(
+                binding.root,
                 getString(
                     R.string.inventory_consume_done,
                     count,
                     getString(R.string.botiquin_stock_in_stock, formatQuantity(newQuantity))
-                ),
-                Toast.LENGTH_SHORT
-            ).show()
+                )
+            )
         }
     }
 
@@ -269,7 +265,7 @@ class BotiquinFragment : BaseFragment<FragmentBotiquinBinding>() {
             ?.plus(1)
             ?: 0
 
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.inventory_filter_title)
             .setSingleChoiceItems(labels.toTypedArray(), checkedIndex) { dialog, which ->
                 selectedCategoryId = if (which == 0) {
@@ -300,7 +296,7 @@ class BotiquinFragment : BaseFragment<FragmentBotiquinBinding>() {
     }
 
     private fun confirmDelete(item: InventoryItemUi) {
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.product_delete_title)
             .setMessage(getString(R.string.product_delete_message, item.name))
             .setNegativeButton(android.R.string.cancel, null)
@@ -312,7 +308,7 @@ class BotiquinFragment : BaseFragment<FragmentBotiquinBinding>() {
         viewLifecycleOwner.lifecycleScope.launch {
             KeeplyDatabase.getInstance(requireContext()).inventoryItemDao().deleteById(itemId)
             swipeCallback?.closeOpenItem(binding.rvItems)
-            Toast.makeText(requireContext(), R.string.product_deleted, Toast.LENGTH_SHORT).show()
+            PrettyToast.success(binding.root, R.string.product_deleted)
         }
     }
 

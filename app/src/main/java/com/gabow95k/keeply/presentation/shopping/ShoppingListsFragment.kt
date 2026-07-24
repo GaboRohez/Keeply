@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
@@ -22,7 +21,9 @@ import com.gabow95k.keeply.databinding.FragmentShoppingListsBinding
 import com.gabow95k.keeply.domain.model.Category
 import com.gabow95k.keeply.presentation.base.BaseFragment
 import com.gabow95k.keeply.shopping.ShoppingListGenerator
+import com.gabow95k.keeply.util.PrettyToast
 import com.google.android.material.chip.Chip
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -111,7 +112,7 @@ class ShoppingListsFragment : BaseFragment<FragmentShoppingListsBinding>() {
     }
 
     private fun showCreateOptions() {
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.shopping_create)
             .setItems(
                 arrayOf(
@@ -130,18 +131,13 @@ class ShoppingListsFragment : BaseFragment<FragmentShoppingListsBinding>() {
             setText(R.string.shopping_list_name_default)
             setPadding(48, 32, 48, 32)
         }
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.shopping_manual_title)
             .setView(input)
             .setPositiveButton(R.string.dialog_option_create) { _, _ ->
                 val name = input.text?.toString()?.trim().orEmpty()
                 if (name.isBlank()) {
-                    Toast.makeText(
-                        requireContext(),
-                        R.string.shopping_error_name,
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
+                    PrettyToast.error(binding.root, R.string.shopping_error_name)
                     return@setPositiveButton
                 }
                 createManualList(name)
@@ -177,7 +173,7 @@ class ShoppingListsFragment : BaseFragment<FragmentShoppingListsBinding>() {
             dialogBinding.chipGroupCategories.addView(chip)
         }
 
-        val dialog = AlertDialog.Builder(requireContext())
+        val dialog = MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.shopping_auto_title)
             .setView(dialogBinding.root)
             .setPositiveButton(R.string.dialog_option_create, null)
@@ -197,22 +193,14 @@ class ShoppingListsFragment : BaseFragment<FragmentShoppingListsBinding>() {
                     if (chip.isChecked) selectedCategories += chip.tag as Long
                 }
                 if (selectedCategories.isEmpty()) {
-                    Toast.makeText(
-                        requireContext(),
-                        R.string.shopping_error_categories,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    PrettyToast.error(binding.root, R.string.shopping_error_categories)
                     return@setOnClickListener
                 }
                 val out = dialogBinding.checkOutOfStock.isChecked
                 val low = dialogBinding.checkLowStock.isChecked
                 val expired = dialogBinding.checkExpired.isChecked
                 if (!out && !low && !expired) {
-                    Toast.makeText(
-                        requireContext(),
-                        R.string.shopping_error_criteria,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    PrettyToast.error(binding.root, R.string.shopping_error_criteria)
                     return@setOnClickListener
                 }
                 createAutoList(
@@ -237,7 +225,7 @@ class ShoppingListsFragment : BaseFragment<FragmentShoppingListsBinding>() {
                     sourceType = ShoppingListEntity.SOURCE_MANUAL
                 )
             )
-            Toast.makeText(requireContext(), R.string.shopping_created, Toast.LENGTH_SHORT).show()
+            PrettyToast.success(binding.root, R.string.shopping_created)
             openList(id)
         }
     }
@@ -262,11 +250,7 @@ class ShoppingListsFragment : BaseFragment<FragmentShoppingListsBinding>() {
                 )
             )
             if (generated.isEmpty()) {
-                Toast.makeText(
-                    requireContext(),
-                    R.string.shopping_error_no_items,
-                    Toast.LENGTH_SHORT
-                ).show()
+                PrettyToast.error(binding.root, R.string.shopping_error_no_items)
                 return@launch
             }
             val listId = db.shoppingListDao().insert(
@@ -286,7 +270,7 @@ class ShoppingListsFragment : BaseFragment<FragmentShoppingListsBinding>() {
                     )
                 }
             )
-            Toast.makeText(requireContext(), R.string.shopping_created, Toast.LENGTH_SHORT).show()
+            PrettyToast.success(binding.root, R.string.shopping_created)
             openList(listId)
         }
     }
@@ -306,18 +290,13 @@ class ShoppingListsFragment : BaseFragment<FragmentShoppingListsBinding>() {
             setSelection(list.name.length)
             setPadding(48, 32, 48, 32)
         }
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.shopping_rename_title)
             .setView(input)
             .setPositiveButton(R.string.product_save) { _, _ ->
                 val name = input.text?.toString()?.trim().orEmpty()
                 if (name.isBlank()) {
-                    Toast.makeText(
-                        requireContext(),
-                        R.string.shopping_error_name,
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
+                    PrettyToast.error(binding.root, R.string.shopping_error_name)
                     return@setPositiveButton
                 }
                 renameList(list.id, name)
@@ -336,13 +315,13 @@ class ShoppingListsFragment : BaseFragment<FragmentShoppingListsBinding>() {
                     updatedAt = System.currentTimeMillis()
                 )
             )
-            Toast.makeText(requireContext(), R.string.shopping_renamed, Toast.LENGTH_SHORT).show()
+            PrettyToast.success(binding.root, R.string.shopping_renamed)
         }
     }
 
     private fun confirmDeleteList(list: ShoppingListUi) {
         swipeCallback?.closeOpenItem(binding.rvLists)
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.shopping_delete_list)
             .setMessage(getString(R.string.shopping_delete_list_message, list.name))
             .setNegativeButton(android.R.string.cancel, null)
@@ -351,8 +330,7 @@ class ShoppingListsFragment : BaseFragment<FragmentShoppingListsBinding>() {
                     KeeplyDatabase.getInstance(requireContext())
                         .shoppingListDao()
                         .deleteById(list.id)
-                    Toast.makeText(requireContext(), R.string.shopping_deleted, Toast.LENGTH_SHORT)
-                        .show()
+                    PrettyToast.success(binding.root, R.string.shopping_deleted)
                 }
             }
             .show()

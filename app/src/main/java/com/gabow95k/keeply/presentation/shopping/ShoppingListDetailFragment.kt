@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Lifecycle
@@ -18,6 +16,8 @@ import com.gabow95k.keeply.data.local.db.KeeplyDatabase
 import com.gabow95k.keeply.data.local.entity.ShoppingListItemEntity
 import com.gabow95k.keeply.databinding.FragmentShoppingListDetailBinding
 import com.gabow95k.keeply.presentation.base.BaseFragment
+import com.gabow95k.keeply.util.PrettyToast
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
@@ -166,11 +166,7 @@ class ShoppingListDetailFragment : BaseFragment<FragmentShoppingListDetailBindin
                         item.name.equals(trimmedName, ignoreCase = true)
             }
             if (alreadyInList) {
-                Toast.makeText(
-                    requireContext(),
-                    R.string.shopping_item_already_added,
-                    Toast.LENGTH_SHORT
-                ).show()
+                PrettyToast.error(binding.root, R.string.shopping_item_already_added)
                 selectedInventoryItemId = null
                 binding.etNewItem.setText("")
                 binding.etNewItem.dismissDropDown()
@@ -216,7 +212,7 @@ class ShoppingListDetailFragment : BaseFragment<FragmentShoppingListDetailBindin
 
     private fun confirmDeleteList() {
         val name = binding.tvTitle.text?.toString().orEmpty()
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.shopping_delete_list)
             .setMessage(getString(R.string.shopping_delete_list_message, name))
             .setNegativeButton(android.R.string.cancel, null)
@@ -224,8 +220,7 @@ class ShoppingListDetailFragment : BaseFragment<FragmentShoppingListDetailBindin
                 viewLifecycleOwner.lifecycleScope.launch {
                     KeeplyDatabase.getInstance(requireContext()).shoppingListDao()
                         .deleteById(listId)
-                    Toast.makeText(requireContext(), R.string.shopping_deleted, Toast.LENGTH_SHORT)
-                        .show()
+                    PrettyToast.success(binding.root, R.string.shopping_deleted)
                     parentFragmentManager.popBackStack()
                 }
             }

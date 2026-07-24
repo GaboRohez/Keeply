@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
-import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -30,6 +28,7 @@ import com.gabow95k.keeply.presentation.controller.ControllerActivity
 import com.gabow95k.keeply.prompts.SoftPrompt
 import com.gabow95k.keeply.prompts.SoftPromptEvaluator
 import com.gabow95k.keeply.prompts.SoftPromptType
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
@@ -37,9 +36,10 @@ import java.util.concurrent.TimeUnit
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val recentAdapter = HomeRecentAdapter()
-    private var allRecentItems: List<InventoryItemUi> = emptyList()
     private var expiredProductNames: List<String> = emptyList()
+    private var expiringProductLines: List<String> = emptyList()
     private var lowStockProductLines: List<String> = emptyList()
+    private var outOfStockProductNames: List<String> = emptyList()
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -59,9 +59,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.tvProfileHint.setOnClickListener {
             (activity as? ControllerActivity)?.navigateToTab(R.id.nav_settings)
         }
-        binding.etSearch.doAfterTextChanged { query ->
-            filterRecent(query?.toString().orEmpty())
-        }
 
         binding.cardExpiredAlert.root.setOnClickListener {
             showProductsAlert(
@@ -70,11 +67,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 lines = expiredProductNames
             )
         }
+        binding.cardExpiringAlert.root.setOnClickListener {
+            showProductsAlert(
+                titleRes = R.string.home_alert_dialog_expiring_title,
+                emptyMessageRes = R.string.home_alert_empty_expiring,
+                lines = expiringProductLines
+            )
+        }
         binding.cardLowStockAlert.root.setOnClickListener {
             showProductsAlert(
                 titleRes = R.string.home_alert_dialog_low_stock_title,
                 emptyMessageRes = R.string.home_alert_empty_low_stock,
                 lines = lowStockProductLines
+            )
+        }
+        binding.cardOutOfStockAlert.root.setOnClickListener {
+            showProductsAlert(
+                titleRes = R.string.home_alert_dialog_out_of_stock_title,
+                emptyMessageRes = R.string.home_alert_empty_out_of_stock,
+                lines = outOfStockProductNames
             )
         }
 
@@ -103,24 +114,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         val date = entity.expirationDate ?: return@filter false
                         date < now
                     }
+                    val expiringItems = allItems.filter { entity ->
+                        val date = entity.expirationDate ?: return@filter false
+                        date in now..expiringLimit
+                    }
                     val lowStockItems = allItems.filter { entity ->
                         val min = entity.minQuantity ?: return@filter false
                         entity.quantity > 0.0 && entity.quantity <= min
                     }
-                    val outOfStockCount = allItems.count { it.quantity <= 0.0 }
+                    val outOfStockItems = allItems.filter { it.quantity <= 0.0 }
                     val insights = MonthlyInsightsEvaluator.evaluate(monthEvents, allItems)
 
                     HomeUiState(
                         userName = profile?.name?.takeIf { it.isNotBlank() },
                         totalCount = allItems.size,
                         expiredCount = expiredItems.size,
-                        expiringCount = allItems.count {
-                            val date = it.expirationDate ?: return@count false
-                            date in now..expiringLimit
-                        },
+                        expiringCount = expiringItems.size,
                         lowStockCount = lowStockItems.size,
-                        outOfStockCount = outOfStockCount,
+                        outOfStockCount = outOfStockItems.size,
                         expiredNames = expiredItems.map { it.name },
+                        expiringLines = expiringItems.map { it.name },
                         lowStockLines = lowStockItems.map { entity ->
                             getString(
                                 R.string.home_alert_item_low_stock,
@@ -128,6 +141,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                                 formatQuantity(entity.quantity)
                             )
                         },
+                        outOfStockNames = outOfStockItems.map { it.name },
                         insights = insights,
                         recentItems = recent.map { entity ->
                             val item = entity.toDomain()
@@ -187,7 +201,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         expiredProductNames = state.expiredNames.map { name ->
             getString(R.string.home_alert_item_expired, name)
         }
+        expiringProductLines = state.expiringLines.map { name ->
+            getString(R.string.home_alert_item_expiring, name)
+        }
         lowStockProductLines = state.lowStockLines
+        outOfStockProductNames = state.outOfStockNames.map { name ->
+            getString(R.string.home_alert_item_out_of_stock, name)
+        }
 
         bindAlertCard(
             binding.cardExpiredAlert,
@@ -195,13 +215,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             count = state.expiredCount
         )
         bindAlertCard(
+            binding.cardExpiringAlert,
+            title = getString(R.string.home_alert_expiring_title),
+            count = state.expiringCount
+        )
+        bindAlertCard(
             binding.cardLowStockAlert,
             title = getString(R.string.home_alert_low_stock_title),
             count = state.lowStockCount
         )
+        bindAlertCard(
+            binding.cardOutOfStockAlert,
+            title = getString(R.string.home_alert_out_of_stock_title),
+            count = state.outOfStockCount
+        )
 
-        allRecentItems = state.recentItems
-        filterRecent(binding.etSearch.text?.toString().orEmpty())
+        bindRecent(state.recentItems)
         bindInsights(state.insights)
         bindSoftPrompt(state)
     }
@@ -329,7 +358,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             lines.joinToString(separator = "\n")
         }
 
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(titleRes)
             .setMessage(message)
             .setPositiveButton(R.string.home_alert_accept, null)
@@ -341,19 +370,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         statBinding.tvStatLabel.text = label
     }
 
-    private fun filterRecent(query: String) {
-        val filtered = if (query.isBlank()) {
-            allRecentItems
-        } else {
-            allRecentItems.filter {
-                it.name.contains(query, ignoreCase = true) ||
-                        it.categoryName.contains(query, ignoreCase = true) ||
-                        it.barcode?.contains(query, ignoreCase = true) == true
-            }
-        }
-        recentAdapter.submitList(filtered)
-        binding.tvRecentEmpty.isVisible = filtered.isEmpty()
-        binding.rvRecent.isVisible = filtered.isNotEmpty()
+    private fun bindRecent(items: List<InventoryItemUi>) {
+        recentAdapter.submitList(items)
+        binding.tvRecentEmpty.isVisible = items.isEmpty()
+        binding.rvRecent.isVisible = items.isNotEmpty()
     }
 
     private fun openAddProduct() {
@@ -379,7 +399,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         val lowStockCount: Int,
         val outOfStockCount: Int,
         val expiredNames: List<String>,
+        val expiringLines: List<String>,
         val lowStockLines: List<String>,
+        val outOfStockNames: List<String>,
         val insights: MonthlyInsights,
         val recentItems: List<InventoryItemUi>
     )

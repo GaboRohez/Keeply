@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -32,10 +31,12 @@ import com.gabow95k.keeply.domain.model.Category
 import com.gabow95k.keeply.presentation.base.BaseFragment
 import com.gabow95k.keeply.scanner.ProductLabelAnalyzer
 import com.gabow95k.keeply.scanner.ProductLabelHints
+import com.gabow95k.keeply.util.PrettyToast
 import com.gabow95k.keeply.util.ProductPhotoStore
 import com.google.android.gms.common.moduleinstall.ModuleInstall
 import com.google.android.gms.common.moduleinstall.ModuleInstallRequest
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
@@ -73,11 +74,11 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
         if (granted) {
             launchCamera()
         } else {
-            Toast.makeText(
-                requireContext(),
+            PrettyToast.error(
+                binding.root,
                 R.string.product_photo_camera_denied,
-                Toast.LENGTH_LONG
-            ).show()
+                long = true
+            )
         }
     }
 
@@ -88,11 +89,7 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
         if (!success || file == null || !file.exists()) {
             file?.delete()
             pendingPhotoFile = null
-            Toast.makeText(
-                requireContext(),
-                R.string.product_photo_capture_failed,
-                Toast.LENGTH_SHORT
-            ).show()
+            PrettyToast.error(binding.root, R.string.product_photo_capture_failed)
             return@registerForActivityResult
         }
 
@@ -126,7 +123,7 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
         binding.btnBack.setOnClickListener { parentFragmentManager.popBackStack() }
         binding.etExpiration.setOnClickListener { showExpirationPicker() }
         binding.btnSave.setOnClickListener { saveProduct() }
-        binding.tilBarcode.setEndIconOnClickListener { startBarcodeScan() }
+        binding.btnScanBarcode.setOnClickListener { startBarcodeScan() }
         binding.btnTakePhoto.setOnClickListener { requestCameraAndCapture() }
         binding.btnRemovePhoto.setOnClickListener { removePhoto() }
 
@@ -220,11 +217,8 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
             binding.tvPhotoHint.setText(R.string.product_photo_hint)
 
             val filled = applyLabelHints(hints)
-            Toast.makeText(
-                requireContext(),
-                if (filled) R.string.product_photo_filled else R.string.product_photo_no_data,
-                Toast.LENGTH_SHORT
-            ).show()
+            if (filled) PrettyToast.success(binding.root, R.string.product_photo_filled)
+            else PrettyToast.error(binding.root, R.string.product_photo_no_data)
         }
     }
 
@@ -309,7 +303,7 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
             } else {
                 selectedCategoryId = categories[position].id
                 binding.actCategory.setText(categories[position].name, false)
-                binding.tilCategory.error = null
+                binding.actCategory.error = null
             }
         }
         binding.actCategory.setOnClickListener { binding.actCategory.showDropDown() }
@@ -397,7 +391,7 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
         target: AutoCompleteTextView
     ) {
         val dialogBinding = DialogAddOptionBinding.inflate(layoutInflater)
-        val dialog = AlertDialog.Builder(requireContext())
+        val dialog = MaterialAlertDialogBuilder(requireContext())
             .setTitle(titleRes)
             .setView(dialogBinding.root)
             .setPositiveButton(R.string.dialog_option_create, null)
@@ -432,7 +426,7 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
 
     private fun showAddCategoryDialog() {
         val dialogBinding = DialogAddCategoryBinding.inflate(layoutInflater)
-        val dialog = AlertDialog.Builder(requireContext())
+        val dialog = MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.dialog_category_title)
             .setView(dialogBinding.root)
             .setPositiveButton(R.string.dialog_option_create, null)
@@ -466,11 +460,7 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
                     )
                     categories = dao.getAll().map { it.toDomain() }
                     refreshCategoryAdapter(selectId = newId)
-                    Toast.makeText(
-                        requireContext(),
-                        R.string.dialog_category_created,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    PrettyToast.success(binding.root, R.string.dialog_category_created)
                     dialog.dismiss()
                 }
             }
@@ -510,18 +500,10 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
                 }
             }
             .addOnCanceledListener {
-                Toast.makeText(
-                    requireContext(),
-                    R.string.product_barcode_scan_canceled,
-                    Toast.LENGTH_SHORT
-                ).show()
+                PrettyToast.error(binding.root, R.string.product_barcode_scan_canceled)
             }
             .addOnFailureListener {
-                Toast.makeText(
-                    requireContext(),
-                    R.string.product_barcode_scan_failed,
-                    Toast.LENGTH_SHORT
-                ).show()
+                PrettyToast.error(binding.root, R.string.product_barcode_scan_failed)
             }
     }
 
@@ -545,25 +527,25 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
 
         var hasError = false
         if (name.isEmpty()) {
-            binding.tilName.error = getString(R.string.product_error_name)
+            binding.etName.error = getString(R.string.product_error_name)
             hasError = true
         } else {
-            binding.tilName.error = null
+            binding.etName.error = null
         }
 
         if (categoryId == null) {
-            binding.tilCategory.error = getString(R.string.product_error_category)
+            binding.actCategory.error = getString(R.string.product_error_category)
             hasError = true
         } else {
-            binding.tilCategory.error = null
+            binding.actCategory.error = null
         }
 
         val quantity = quantityText.toDoubleOrNull()
         if (quantity == null || quantity < 0) {
-            binding.tilQuantity.error = getString(R.string.product_error_quantity)
+            binding.etQuantity.error = getString(R.string.product_error_quantity)
             hasError = true
         } else {
-            binding.tilQuantity.error = null
+            binding.etQuantity.error = null
         }
 
         if (hasError) return
@@ -607,8 +589,7 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
                     quantityBefore = existingQuantity,
                     quantityAfter = safeQuantity
                 )
-                Toast.makeText(requireContext(), R.string.product_updated, Toast.LENGTH_SHORT)
-                    .show()
+                PrettyToast.success(binding.root, R.string.product_updated)
             } else {
                 val newId = dao.insert(entity)
                 StockChangeLogger.logAdd(
@@ -617,7 +598,7 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
                     productName = entity.name,
                     quantity = safeQuantity
                 )
-                Toast.makeText(requireContext(), R.string.product_saved, Toast.LENGTH_SHORT).show()
+                PrettyToast.success(binding.root, R.string.product_saved)
             }
             parentFragmentManager.popBackStack()
         }

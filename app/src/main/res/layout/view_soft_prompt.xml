@@ -5,7 +5,7 @@
     android:id="@+id/cardSoftPrompt"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="14dp"
+    android:layout_marginTop="16dp"
     android:visibility="gone"
     app:cardBackgroundColor="@color/keeply_primary_container"
     app:cardElevation="0dp"
@@ -63,6 +63,7 @@
                 android:fontFamily="@font/onest"
                 android:textAllCaps="false"
                 app:backgroundTint="@color/keeply_primary"
+                app:cornerRadius="28dp"
                 tools:text="Crear lista" />
         </LinearLayout>
     </LinearLayout>

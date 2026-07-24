@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.gabow95k.keeply.R
 import com.gabow95k.keeply.data.local.db.KeeplyDatabase
 import com.gabow95k.keeply.data.local.entity.UserProfileEntity
 import com.gabow95k.keeply.databinding.FragmentEditProfileBinding
 import com.gabow95k.keeply.presentation.base.BaseFragment
+import com.gabow95k.keeply.util.PrettyToast
 import kotlinx.coroutines.launch
 
 class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
@@ -68,7 +68,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
                     updatedAt = System.currentTimeMillis()
                 )
             )
-            Toast.makeText(requireContext(), R.string.profile_saved, Toast.LENGTH_SHORT).show()
+            PrettyToast.success(binding.root, R.string.profile_saved)
             parentFragmentManager.popBackStack()
         }
     }

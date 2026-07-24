@@ -47,6 +47,15 @@
     <color name="keeply_success_container">#FF1B3D2C</color>
     <color name="keeply_on_success_container">#FFC8EBD8</color>
 
+    <color name="keeply_toast_success_bg">@color/keeply_primary_container</color>
+    <color name="keeply_toast_success_stroke">@color/keeply_primary</color>
+    <color name="keeply_toast_success_text">@color/keeply_on_primary_container</color>
+    <color name="keeply_toast_success_icon_bg">@color/keeply_primary</color>
+    <color name="keeply_toast_error_bg">@color/keeply_error_container</color>
+    <color name="keeply_toast_error_stroke">@color/keeply_on_error_container</color>
+    <color name="keeply_toast_error_text">@color/keeply_on_error_container</color>
+    <color name="keeply_toast_error_icon_bg">@color/keeply_error</color>
+
     <color name="keeply_warning">#FFFFC107</color>
     <color name="keeply_on_warning">#FF2A1E00</color>
     <color name="keeply_warning_container">#FF4A3700</color>

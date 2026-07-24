@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
@@ -24,6 +23,7 @@ import com.gabow95k.keeply.notifications.InventoryAlertScheduler
 import com.gabow95k.keeply.notifications.NotificationScheduleEvaluator
 import com.gabow95k.keeply.presentation.base.BaseFragment
 import com.gabow95k.keeply.presentation.privacy.PrivacyPolicyActivity
+import com.gabow95k.keeply.util.PrettyToast
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -44,11 +44,11 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
             suppressSwitchCallbacks = true
             binding.switchNotifications.isChecked = false
             suppressSwitchCallbacks = false
-            Toast.makeText(
-                requireContext(),
+            PrettyToast.error(
+                binding.root,
                 R.string.settings_notifications_permission_denied,
-                Toast.LENGTH_LONG
-            ).show()
+                long = true
+            )
             updateNotificationOptionsEnabled(false)
         }
     }
@@ -285,11 +285,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         InventoryAlertScheduler.schedule(requireContext())
         InventoryAlertScheduler.runOnceNow(requireContext())
         updateNotificationOptionsEnabled(true)
-        Toast.makeText(
-            requireContext(),
-            R.string.settings_notifications_enabled,
-            Toast.LENGTH_SHORT
-        ).show()
+        PrettyToast.success(binding.root, R.string.settings_notifications_enabled)
     }
 
     private fun rescheduleIfEnabled() {
@@ -322,7 +318,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     }
 
     private fun showComingSoon() {
-        Toast.makeText(requireContext(), R.string.settings_coming_soon, Toast.LENGTH_SHORT).show()
+        PrettyToast.success(binding.root, R.string.settings_coming_soon)
     }
 
     private fun openEditProfile() {

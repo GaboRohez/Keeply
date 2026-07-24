@@ -8,7 +8,8 @@
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="@color/keeply_surface"
-    app:cardElevation="2dp"
+    app:cardElevation="0dp"
+    app:rippleColor="@color/keeply_primary_container"
     app:shapeAppearanceOverlay="@style/ShapeAppearance.Keeply.Card"
     app:strokeWidth="0dp">
 
@@ -17,7 +18,8 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="14dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -39,7 +41,7 @@
                 android:id="@+id/tvAlertCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="2dp"
                 android:fontFamily="@font/onest"
                 android:textColor="@color/keeply_text_secondary"
                 android:textSize="13sp"
@@ -48,14 +50,23 @@
 
         <TextView
             android:id="@+id/tvAlertBadge"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:background="@drawable/bg_item_thumb"
             android:fontFamily="@font/onest"
             android:gravity="center"
             android:textColor="@color/keeply_text_primary"
             android:textFontWeight="700"
-            android:textSize="14sp"
+            android:textSize="13sp"
             tools:text="2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/onest"
+            android:text="@string/settings_chevron"
+            android:textColor="@color/keeply_text_tertiary"
+            android:textSize="20sp" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

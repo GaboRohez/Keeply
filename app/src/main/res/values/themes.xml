@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Keeply" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Colors (inventory mockup) -->
@@ -47,6 +47,8 @@
         <item name="textAppearanceBodySmall">@style/TextAppearance.Keeply.BodySmall</item>
         <item name="textAppearanceLabelLarge">@style/TextAppearance.Keeply.LabelLarge</item>
         <item name="textAppearanceLabelMedium">@style/TextAppearance.Keeply.LabelMedium</item>
+
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Keeply.MaterialAlertDialog</item>
     </style>
 
     <style name="Theme.Keeply" parent="Base.Theme.Keeply" />

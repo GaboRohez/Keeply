@@ -27,7 +27,7 @@
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:fillViewport="true"
-        android:paddingBottom="24dp"
+        android:paddingBottom="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,68 +38,66 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="20dp"
-            android:paddingTop="16dp">
+            android:paddingTop="20dp">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardGreeting"
+            <!-- Saludo: tipografía limpia, sin card -->
+            <TextView
+                android:id="@+id/tvGreeting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/keeply_surface"
-                app:cardElevation="2dp"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.Keeply.Card"
-                app:strokeWidth="0dp">
+                android:fontFamily="@font/onest"
+                android:textColor="@color/keeply_text_primary"
+                android:textFontWeight="700"
+                android:textSize="24sp"
+                tools:text="Hola, Gabo" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
+            <TextView
+                android:id="@+id/tvGreetingSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/onest"
+                android:text="@string/home_greeting_subtitle"
+                android:textColor="@color/keeply_text_secondary"
+                android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/tvGreeting"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/onest"
-                        android:textColor="@color/keeply_text_primary"
-                        android:textFontWeight="700"
-                        android:textSize="20sp"
-                        tools:text="Hola, Gabo" />
-
-                    <TextView
-                        android:id="@+id/tvGreetingSubtitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:fontFamily="@font/onest"
-                        android:text="@string/home_greeting_subtitle"
-                        android:textColor="@color/keeply_text_secondary"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tvProfileHint"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/onest"
-                        android:text="@string/home_profile_incomplete"
-                        android:textColor="@color/keeply_primary"
-                        android:textSize="13sp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:visibility="gone"
-                        tools:visibility="visible" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:id="@+id/tvProfileHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/onest"
+                android:paddingVertical="2dp"
+                android:text="@string/home_profile_incomplete"
+                android:textColor="@color/keeply_primary"
+                android:textSize="13sp"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <include
                 android:id="@+id/softPrompt"
                 layout="@layout/view_soft_prompt" />
 
+            <!-- Resumen -->
+            <TextView
+                android:id="@+id/tvSummaryLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/onest"
+                android:text="@string/home_summary_section"
+                android:textColor="@color/keeply_text_primary"
+                android:textFontWeight="700"
+                android:textSize="16sp" />
+
             <LinearLayout
                 android:id="@+id/statsRow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <include
@@ -127,61 +125,17 @@
                     android:layout_weight="1" />
             </LinearLayout>
 
-            <include
-                android:id="@+id/monthlyInsights"
-                layout="@layout/view_home_insights" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardSearch"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="16dp"
-                app:cardBackgroundColor="@color/keeply_surface"
-                app:cardElevation="2dp"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.Keeply.Search"
-                app:strokeWidth="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="16dp">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:contentDescription="@string/home_search_hint"
-                        android:src="@drawable/ic_search" />
-
-                    <EditText
-                        android:id="@+id/etSearch"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:fontFamily="@font/onest"
-                        android:hint="@string/home_search_hint"
-                        android:imeOptions="actionSearch"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:textColor="@color/keeply_text_primary"
-                        android:textColorHint="@color/keeply_text_tertiary"
-                        android:textSize="15sp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
+            <!-- Alertas -->
             <TextView
                 android:id="@+id/tvAlertsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="24dp"
                 android:fontFamily="@font/onest"
                 android:text="@string/home_alerts_section"
                 android:textColor="@color/keeply_text_primary"
                 android:textFontWeight="700"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <include
                 android:id="@+id/cardExpiredAlert"
@@ -191,16 +145,47 @@
                 android:layout_marginTop="10dp" />
 
             <include
+                android:id="@+id/cardExpiringAlert"
+                layout="@layout/item_home_alert_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" />
+
+            <include
                 android:id="@+id/cardLowStockAlert"
                 layout="@layout/item_home_alert_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="8dp" />
 
+            <include
+                android:id="@+id/cardOutOfStockAlert"
+                layout="@layout/item_home_alert_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" />
+
+            <!-- Este mes -->
+            <TextView
+                android:id="@+id/tvInsightsSectionLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/onest"
+                android:text="@string/home_insights_section"
+                android:textColor="@color/keeply_text_primary"
+                android:textFontWeight="700"
+                android:textSize="16sp" />
+
+            <include
+                android:id="@+id/monthlyInsights"
+                layout="@layout/view_home_insights" />
+
+            <!-- Recientes -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="24dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -213,7 +198,7 @@
                     android:text="@string/home_recent_section"
                     android:textColor="@color/keeply_text_primary"
                     android:textFontWeight="700"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tvViewAll"
@@ -223,8 +208,8 @@
                     android:fontFamily="@font/onest"
                     android:padding="4dp"
                     android:text="@string/home_view_all"
-                    android:textColor="@color/keeply_text_secondary"
-                    android:textFontWeight="500"
+                    android:textColor="@color/keeply_primary"
+                    android:textFontWeight="600"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -254,13 +239,13 @@
                 android:id="@+id/btnAddProduct"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/onest"
                 android:text="@string/home_add_product"
                 android:textAllCaps="false"
                 android:textFontWeight="600"
                 app:backgroundTint="@color/keeply_primary"
-                app:cornerRadius="16dp"
+                app:cornerRadius="28dp"
                 app:icon="@drawable/ic_add"
                 app:iconGravity="textStart" />
         </LinearLayout>
