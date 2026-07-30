@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Brand stays vivid on dark -->
+    <color name="keeply_primary">#FF7B90F6</color>
+    <color name="keeply_primary_dark">#FF4F6CF1</color>
+    <color name="keeply_primary_light">#FFA5B3F9</color>
+    <color name="keeply_on_primary">#FF0E1638</color>
+    <color name="keeply_primary_container">#FF243056</color>
+    <color name="keeply_on_primary_container">#FFDCE2FF</color>
+
+    <color name="keeply_background">#FF0F1117</color>
+    <color name="keeply_on_background">#FFA8ABB3</color>
+
+    <color name="keeply_surface">#FF1A1D26</color>
+    <color name="keeply_on_surface">#FFF2F3F7</color>
+    <color name="keeply_surface_variant">#FF242833</color>
+    <color name="keeply_on_surface_variant">#FFB0B4BF</color>
+
+    <color name="keeply_surface_tint">#FF222840</color>
+
+    <color name="keeply_nav_background">#FF1A1D26</color>
+    <color name="nav_item_selected">#FFF2F3F7</color>
+    <color name="nav_item_unselected">#FF8A8E99</color>
+
+    <color name="keeply_text_primary">#FFF2F3F7</color>
+    <color name="keeply_text_secondary">#FFA0A4B0</color>
+    <color name="keeply_text_tertiary">#FF7A7F8C</color>
+    <color name="keeply_text_disabled">#FF5A5F6B</color>
+    <color name="keeply_text_on_primary">#FF0E1638</color>
+    <color name="keeply_text_link">#FF9AABFF</color>
+
+    <color name="keeply_icon_primary">#FFF2F3F7</color>
+    <color name="keeply_icon_secondary">#FF8A8E99</color>
+    <color name="keeply_icon_active">#FF7B90F6</color>
+    <color name="keeply_icon_on_primary">#FF0E1638</color>
+
+    <color name="keeply_outline">#FF2E3340</color>
+    <color name="keeply_outline_variant">#FF252933</color>
+    <color name="keeply_divider">#FF2A2F3A</color>
+
+    <color name="keeply_error">#FFFF8A80</color>
+    <color name="keeply_on_error">#FF3B0A0A</color>
+    <color name="keeply_error_container">#FF4A1C1C</color>
+    <color name="keeply_on_error_container">#FFFFDAD6</color>
+
+    <color name="keeply_success">#FF6BCF9B</color>
+    <color name="keeply_on_success">#FF0A2A1A</color>
+    <color name="keeply_success_container">#FF1A3B2C</color>
+    <color name="keeply_on_success_container">#FFC8F0DC</color>
+
+    <color name="keeply_toast_success_bg">@color/keeply_primary_container</color>
+    <color name="keeply_toast_success_stroke">@color/keeply_primary</color>
+    <color name="keeply_toast_success_text">@color/keeply_on_primary_container</color>
+    <color name="keeply_toast_success_icon_bg">@color/keeply_primary</color>
+    <color name="keeply_toast_error_bg">@color/keeply_error_container</color>
+    <color name="keeply_toast_error_stroke">@color/keeply_error</color>
+    <color name="keeply_toast_error_text">@color/keeply_on_error_container</color>
+    <color name="keeply_toast_error_icon_bg">@color/keeply_error</color>
+
+    <color name="keeply_warning">#FFFFC857</color>
+    <color name="keeply_on_warning">#FF2A1C00</color>
+    <color name="keeply_warning_container">#FF3D2E10</color>
+    <color name="keeply_on_warning_container">#FFFFE8B8</color>
+
+    <color name="keeply_shadow">#66000000</color>
+    <color name="keeply_scrim">#CC000000</color>
+
+    <color name="splash_background">@color/keeply_primary_dark</color>
+    <color name="splash_text">@color/keeply_on_primary_container</color>
+
+</resources>

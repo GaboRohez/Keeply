@@ -2,6 +2,7 @@ package com.gabow95k.keeply.presentation.controller
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -41,6 +42,7 @@ class ControllerActivity : BaseActivity<ActivityControllerBinding>() {
         }
 
         setupBottomNavigation()
+        setupBackPress()
 
         if (savedInstanceState == null) {
             showTab(R.id.nav_home)
@@ -74,6 +76,27 @@ class ControllerActivity : BaseActivity<ActivityControllerBinding>() {
             showTab(item.itemId)
             true
         }
+    }
+
+    private fun setupBackPress() {
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    when {
+                        supportFragmentManager.backStackEntryCount > 0 -> {
+                            supportFragmentManager.popBackStack()
+                        }
+
+                        binding.bottomNavigation.selectedItemId != R.id.nav_home -> {
+                            binding.bottomNavigation.selectedItemId = R.id.nav_home
+                        }
+
+                        else -> finish()
+                    }
+                }
+            }
+        )
     }
 
     private fun showTab(itemId: Int) {

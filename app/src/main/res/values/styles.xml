@@ -24,8 +24,8 @@
     <style name="MaterialAlertDialog.Keeply" parent="MaterialAlertDialog.Material3">
         <item name="shapeAppearance">@style/ShapeAppearance.Keeply.Dialog</item>
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Keeply.Dialog</item>
-        <!-- Blanco sólido: evita el macro M3 (?colorSurfaceContainerHigh) teñido de primary -->
-        <item name="backgroundTint">@android:color/white</item>
+        <!-- Surface sólido: evita el macro M3 teñido de primary -->
+        <item name="backgroundTint">@color/keeply_surface</item>
     </style>
 
     <!-- Solo shape/colores: estilos de título/botón rompían layout_width en m3_alert_dialog -->
@@ -34,13 +34,13 @@
         <!-- Sin esto, MaterialShapeDrawable tintea el fondo con colorPrimary (azul) -->
         <item name="elevationOverlayEnabled">false</item>
         <item name="elevationOverlayColor">@android:color/transparent</item>
-        <item name="android:colorBackground">@android:color/white</item>
-        <item name="colorSurface">@android:color/white</item>
-        <item name="colorSurfaceBright">@android:color/white</item>
-        <item name="colorSurfaceContainer">@android:color/white</item>
-        <item name="colorSurfaceContainerLow">@android:color/white</item>
-        <item name="colorSurfaceContainerHigh">@android:color/white</item>
-        <item name="colorSurfaceContainerHighest">@android:color/white</item>
+        <item name="android:colorBackground">@color/keeply_surface</item>
+        <item name="colorSurface">@color/keeply_surface</item>
+        <item name="colorSurfaceBright">@color/keeply_surface</item>
+        <item name="colorSurfaceContainer">@color/keeply_surface</item>
+        <item name="colorSurfaceContainerLow">@color/keeply_surface</item>
+        <item name="colorSurfaceContainerHigh">@color/keeply_surface</item>
+        <item name="colorSurfaceContainerHighest">@color/keeply_surface</item>
         <item name="colorOnSurface">@color/keeply_text_primary</item>
         <item name="colorOnSurfaceVariant">@color/keeply_text_secondary</item>
         <item name="colorPrimary">@color/keeply_primary</item>
@@ -55,9 +55,9 @@
         <item name="ensureMinTouchTargetSize">true</item>
     </style>
 
-    <!-- Evita el tinte azul de elevación de Material 3 en cards blancas -->
+    <!-- Evita el tinte de elevación de Material 3 en cards -->
     <style name="ThemeOverlay.Keeply.WhiteCard" parent="">
-        <item name="colorSurface">@android:color/white</item>
+        <item name="colorSurface">@color/keeply_surface</item>
         <item name="elevationOverlayEnabled">false</item>
     </style>
 
