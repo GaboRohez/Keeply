@@ -37,4 +37,11 @@
         <item>Refrigerador</item>
         <item>Otro</item>
     </string-array>
+
+    <string-array name="feature_tips">
+        <item>Puedes deslizar una tarjeta a la derecha varias veces para restar stock rápido.</item>
+        <item>Toma una foto o elígela de tu galería, recórtala y deja que Keeply intente leer su etiqueta.</item>
+        <item>Activa notificaciones en Ajustes para enterarte de caducados y stock bajo.</item>
+        <item>Usa el filtro de categorías en Inventario para encontrar productos más rápido.</item>
+    </string-array>
 </resources>

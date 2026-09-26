@@ -18,12 +18,7 @@ data class SoftPrompt(
 
 object SoftPromptEvaluator {
 
-    private val tips = listOf(
-        "Puedes deslizar una card a la derecha varias veces para restar stock rápido.",
-        "Toma una foto al crear un producto: Keeply intenta prellenar nombre, marca y caducidad.",
-        "Activa notificaciones en Ajustes para enterarte de caducados y stock bajo.",
-        "Usa el filtro de categorías en Inventario para encontrar productos más rápido."
-    )
+    const val TIP_COUNT = 4
 
     fun evaluate(
         prefs: KeeplyPreferences,
@@ -46,13 +41,8 @@ object SoftPromptEvaluator {
         }
 
         if (prefs.lastTipPromptDay != dayKey) {
-            val tipIndex = prefs.nextTipIndex % tips.size
-            return SoftPrompt(
-                type = SoftPromptType.FEATURE_TIP,
-                title = "Tip Keeply",
-                body = tips[tipIndex],
-                primaryLabel = "Entendido"
-            )
+            val tipIndex = prefs.nextTipIndex.mod(TIP_COUNT)
+            return titleFor(SoftPromptType.FEATURE_TIP, tipIndex)
         }
 
         return null

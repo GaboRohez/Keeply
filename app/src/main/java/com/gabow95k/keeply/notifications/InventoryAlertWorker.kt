@@ -91,8 +91,9 @@ class InventoryAlertWorker(
             } else if (restockCount > 0 && prefs.lastLowStockPromptDay != dayKey) {
                 notifier.notifyShoppingPrompt(
                     title = applicationContext.getString(R.string.notification_shopping_stock_title),
-                    body = applicationContext.getString(
-                        R.string.notification_shopping_stock_body,
+                    body = applicationContext.resources.getQuantityString(
+                        R.plurals.notification_shopping_stock_body,
+                        restockCount,
                         restockCount
                     )
                 )

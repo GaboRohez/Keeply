@@ -32,7 +32,10 @@
     <string name="inventory_consume_label">Use</string>
     <string name="inventory_consume_done">−%1$d · Stock: %2$s</string>
     <string name="inventory_consume_empty">No stock left of \"%1$s\"</string>
-    <string name="inventory_consume_limit">Only %1$d left of \"%2$s\"</string>
+    <plurals name="inventory_consume_limit">
+        <item quantity="one">Only %1$d left of \"%2$s\"</item>
+        <item quantity="other">Only %1$d left of \"%2$s\"</item>
+    </plurals>
     <string name="botiquin_title">Inventory</string>
     <string name="botiquin_empty">No products yet.\nTap + to add one.</string>
     <string name="botiquin_add">Add product</string>
@@ -56,11 +59,23 @@
     <string name="product_field_notes">Notes</string>
     <string name="product_hint_form_type">E.g. capsule, liquid, tablet</string>
     <string name="product_hint_unit">E.g. pcs, mg, ml, kg</string>
-    <string name="product_take_photo">Take photo</string>
+    <string name="product_add_photo">Add photo</string>
     <string name="product_change_photo">Change photo</string>
     <string name="product_remove_photo">Remove</string>
     <string name="product_photo_preview">Product photo</string>
-    <string name="product_photo_hint">The photo is saved with the product and we try to read name, brand, expiration, form, unit, and barcode.</string>
+    <string name="product_photo_hint">Take a photo or choose one from your gallery. You can move and crop it before saving.</string>
+    <string name="product_photo_source_title">Add photo</string>
+    <string name="product_photo_source_camera">Take with camera</string>
+    <string name="product_photo_source_gallery">Choose from gallery</string>
+    <string name="product_photo_preparing">Preparing image…</string>
+    <string name="product_photo_load_failed">Could not open the image</string>
+    <string name="product_photo_crop_failed">Could not save the crop</string>
+    <string name="product_crop_title">Adjust photo</string>
+    <string name="product_crop_instructions">Drag the image with one finger and pinch to zoom. Only the content inside the rounded frame will be saved.</string>
+    <string name="product_crop_preview">Photo crop area</string>
+    <string name="product_crop_zoom">Zoom</string>
+    <string name="product_crop_reset">Center</string>
+    <string name="product_crop_use">Use image</string>
     <string name="product_photo_analyzing">Analyzing label…</string>
     <string name="product_photo_filled">Fields prefilled from the photo</string>
     <string name="product_photo_no_data">Photo saved. No readable data detected</string>
@@ -93,6 +108,9 @@
     <string name="product_error_name">Enter a name</string>
     <string name="product_error_category">Select a category</string>
     <string name="product_error_quantity">Enter a valid quantity</string>
+    <string name="product_error_min_quantity">Enter a valid minimum stock</string>
+    <string name="product_error_barcode">Use between 8 and 14 digits</string>
+    <string name="input_error_too_long">Text exceeds the allowed length</string>
     <string name="product_clear_expiration">Clear date</string>
     <string name="home_title">Home</string>
     <string name="home_greeting">Hi, %1$s</string>
@@ -105,7 +123,10 @@
     <string name="home_next_expiry_empty_body">When a product has an expiration date, you\'ll see it here.</string>
     <string name="home_next_expiry_today">Expires today</string>
     <string name="home_next_expiry_tomorrow">Expires tomorrow</string>
-    <string name="home_next_expiry_in_days">Expires in %1$d days</string>
+    <plurals name="home_next_expiry_in_days">
+        <item quantity="one">Expires in %1$d day</item>
+        <item quantity="other">Expires in %1$d days</item>
+    </plurals>
     <string name="home_next_expiry_badge_today">Today</string>
     <string name="home_next_expiry_badge_days">%1$dd</string>
     <string name="home_last_activity_eyebrow">Last activity</string>
@@ -128,7 +149,10 @@
     <string name="home_alert_expiring_title">Expiring soon</string>
     <string name="home_alert_low_stock_title">Low stock</string>
     <string name="home_alert_out_of_stock_title">Out of stock</string>
-    <string name="home_alert_count">%1$d product(s)</string>
+    <plurals name="home_alert_count">
+        <item quantity="one">%1$d product</item>
+        <item quantity="other">%1$d products</item>
+    </plurals>
     <string name="home_alert_empty_expired">No expired products</string>
     <string name="home_alert_empty_expiring">No products expiring soon</string>
     <string name="home_alert_empty_low_stock">No products with low stock</string>
@@ -233,7 +257,7 @@
     <string name="privacy_decline">Decline and exit</string>
     <string name="privacy_close">Close</string>
     <string name="privacy_accepted_on">You accepted on %1$s</string>
-    <string name="privacy_body">Last updated: July 2026\n\n1. Who we are\nKeeply is a personal inventory app for tracking household products (medicines, cleaning, kitchen, and more) on your device.\n\n2. Data we process\nKeeply may store locally:\n• Optional profile (name, age, blood type, phone, email, and notes).\n• Inventory (name, category, brand, form, unit, quantities, expiration, barcode, location, notes, and photos).\n• App preferences (notifications, filters, and custom options).\n• Record of acceptance of this notice (date and version).\n\n3. Purpose\nWe use that data only to:\n• Display and manage your inventory.\n• Send local alerts you configure (expiration, stock, etc.).\n• Improve capture (photo, OCR, and barcodes on device).\n\n4. Storage and transfer\nBy default, information is stored on the device. Keeply does not create a cloud account in this version. If backup is enabled in the future (for example Google Drive), you will be informed and additional consent will be requested.\n\n5. System permissions\n• Camera: to photograph products and scan codes.\n• Notifications: only if you enable them in Settings.\nYou can revoke these permissions in Android settings; some features will become unavailable.\n\n6. Retention and deletion\nData remains while you use the app or until you delete it (for example by removing products or uninstalling Keeply).\n\n7. Minors\nIf the app is used by a minor, it must be under the supervision of a responsible adult.\n\n8. Changes to this notice\nIf we update this notice in a material way, we will ask you to accept it again before continuing.\n\n9. Contact\nFor privacy questions related to Keeply, contact the developer through the app listing in the store where you downloaded it.\n\nBy tapping “I accept”, you confirm that you have read and accept this notice.</string>
+    <string name="privacy_body">Last updated: September 2026\n\n1. Who we are\nKeeply is a personal inventory app for tracking household products (medicines, cleaning, kitchen, and more) on your device.\n\n2. Data we process\nKeeply may store locally:\n• Optional profile (name, age, blood type, phone, email, and notes).\n• Inventory (name, category, brand, form, unit, quantities, expiration, barcode, location, notes, and photos).\n• App preferences (notifications, filters, and custom options).\n• Record of acceptance of this notice (date and version).\n\n3. Purpose\nWe use that data only to:\n• Display and manage your inventory.\n• Send local alerts you configure (expiration, stock, etc.).\n• Improve capture (photo, OCR, and barcodes on device).\n\n4. Storage and transfers\nYour profile and inventory data are stored locally. Keeply does not create an account or back up that data to the cloud in this version. ML Kit processes images, text and codes on device; Google does not receive the content or results. ML Kit SDKs may send encrypted device and app information, per-installation identifiers and technical usage metrics to Google for diagnostics, security and service improvements. We do not sell or share your personal data for advertising.\n\n5. System permissions\n• Camera: to photograph products and scan codes.\n• Photos: the system picker only grants access to the image you choose, not to your whole gallery.\n• Notifications: only if you enable them in Settings.\nYou can revoke these permissions in Android settings; some features will become unavailable.\n\n6. Retention and deletion\nData remains while you use the app or until you delete it (for example by removing products or uninstalling Keeply).\n\n7. Minors\nKeeply is intended for a general audience and is not specifically directed at children under 13. If a minor uses it, they should be supervised by a responsible adult.\n\n8. Changes to this notice\nIf we update this notice in a material way, we will ask you to accept it again before continuing.\n\n9. Contact\nFor privacy questions related to Keeply, use the contact email published on the Google Play listing.\n\nBy tapping “I accept”, you confirm that you have read and accept this notice.</string>
 
     <string name="profile_field_name">Name *</string>
     <string name="profile_field_age">Age</string>
@@ -243,19 +267,37 @@
     <string name="profile_field_notes">Notes / allergies</string>
     <string name="profile_error_name">Enter your name</string>
     <string name="profile_error_age">Invalid age</string>
+    <string name="profile_error_blood_type">Use A+, A-, B+, B-, AB+, AB-, O+, or O-</string>
+    <string name="profile_error_phone">Enter a valid phone number with 7 to 15 digits</string>
+    <string name="profile_error_email">Enter a valid email address</string>
     <string name="profile_saved">Profile saved</string>
 
     <string name="notification_channel_inventory">Inventory alerts</string>
     <string name="notification_channel_inventory_desc">Expiration, low stock, and out of stock products</string>
     <string name="notification_expired_title">Expired products</string>
-    <string name="notification_expired_body">%1$d product(s): %2$s</string>
+    <plurals name="notification_expired_body">
+        <item quantity="one">%1$d product: %2$s</item>
+        <item quantity="other">%1$d products: %2$s</item>
+    </plurals>
     <string name="notification_expiring_title">Expiring soon</string>
-    <string name="notification_expiring_body">%1$d product(s): %2$s</string>
+    <plurals name="notification_expiring_body">
+        <item quantity="one">%1$d product: %2$s</item>
+        <item quantity="other">%1$d products: %2$s</item>
+    </plurals>
     <string name="notification_out_of_stock_title">Out of stock products</string>
-    <string name="notification_out_of_stock_body">%1$d product(s): %2$s</string>
+    <plurals name="notification_out_of_stock_body">
+        <item quantity="one">%1$d product: %2$s</item>
+        <item quantity="other">%1$d products: %2$s</item>
+    </plurals>
     <string name="notification_low_stock_title">Low stock</string>
-    <string name="notification_low_stock_body">%1$d product(s): %2$s</string>
-    <string name="notification_names_more">%1$s and %2$d more</string>
+    <plurals name="notification_low_stock_body">
+        <item quantity="one">%1$d product: %2$s</item>
+        <item quantity="other">%1$d products: %2$s</item>
+    </plurals>
+    <plurals name="notification_names_more">
+        <item quantity="one">%1$s and %2$d more</item>
+        <item quantity="other">%1$s and %2$d more</item>
+    </plurals>
 
     <string name="shopping_title">Shopping</string>
     <string name="shopping_empty">You don\'t have any lists yet.\nCreate one manually or auto-generate.</string>
@@ -274,10 +316,16 @@
     <string name="shopping_include_out_of_stock">Out of stock</string>
     <string name="shopping_include_low_stock">Low stock</string>
     <string name="shopping_include_expired">Expired</string>
+    <string name="shopping_reason_out_of_stock">Out of stock</string>
+    <string name="shopping_reason_low_stock">Low stock</string>
+    <string name="shopping_reason_expired">Expired</string>
     <string name="shopping_auto_categories">Categories</string>
     <string name="shopping_auto_title">Auto-generate list</string>
     <string name="shopping_manual_title">New list</string>
-    <string name="shopping_meta_pending">%1$d pending · %2$s</string>
+    <plurals name="shopping_meta_pending">
+        <item quantity="one">%1$d pending · %2$s</item>
+        <item quantity="other">%1$d pending · %2$s</item>
+    </plurals>
     <string name="shopping_source_manual">Manual</string>
     <string name="shopping_source_auto">Auto</string>
     <string name="shopping_add_item_hint">Add product…</string>
@@ -296,14 +344,21 @@
     <string name="prompt_end_month_body">Want to create your grocery shopping list?</string>
     <string name="prompt_end_month_action">Create list</string>
     <string name="prompt_low_stock_title">Products need restocking</string>
-    <string name="prompt_low_stock_body">You have %1$d product(s) with low or out of stock. Generate a list?</string>
+    <plurals name="prompt_low_stock_body">
+        <item quantity="one">You have %1$d product with low or no stock. Generate a list?</item>
+        <item quantity="other">You have %1$d products with low or no stock. Generate a list?</item>
+    </plurals>
     <string name="prompt_low_stock_action">Create list</string>
     <string name="prompt_tip_action">Got it</string>
+    <string name="prompt_tip_title">Keeply tip</string>
 
     <string name="settings_notify_shopping_prompts">Shopping tips &amp; reminders</string>
     <string name="settings_notify_shopping_prompts_info">Get suggestions to build your list: for example near month-end, or when several products are low or out of stock based on what you usually use.</string>
     <string name="notification_shopping_month_title">End of month nearby</string>
     <string name="notification_shopping_month_body">Build your grocery list from Shopping in Keeply</string>
     <string name="notification_shopping_stock_title">Products to restock</string>
-    <string name="notification_shopping_stock_body">You have %1$d product(s) with little or no stock</string>
+    <plurals name="notification_shopping_stock_body">
+        <item quantity="one">You have %1$d product with little or no stock</item>
+        <item quantity="other">You have %1$d products with little or no stock</item>
+    </plurals>
 </resources>

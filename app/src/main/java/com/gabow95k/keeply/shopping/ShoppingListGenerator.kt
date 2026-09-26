@@ -9,7 +9,10 @@ object ShoppingListGenerator {
         val includeOutOfStock: Boolean,
         val includeLowStock: Boolean,
         val includeExpired: Boolean,
-        val nowMillis: Long = System.currentTimeMillis()
+        val nowMillis: Long = System.currentTimeMillis(),
+        val outOfStockLabel: String = "Agotado",
+        val lowStockLabel: String = "Stock bajo",
+        val expiredLabel: String = "Caducado"
     )
 
     data class GeneratedItem(
@@ -55,19 +58,21 @@ object ShoppingListGenerator {
 
     private fun buildNote(item: InventoryItemEntity, criteria: Criteria): String? {
         val reasons = mutableListOf<String>()
-        if (criteria.includeOutOfStock && item.quantity <= 0.0) reasons += "Agotado"
+        if (criteria.includeOutOfStock && item.quantity <= 0.0) {
+            reasons += criteria.outOfStockLabel
+        }
         if (criteria.includeLowStock &&
             item.quantity > 0.0 &&
             item.minQuantity != null &&
             item.quantity <= item.minQuantity
         ) {
-            reasons += "Stock bajo"
+            reasons += criteria.lowStockLabel
         }
         if (criteria.includeExpired &&
             item.expirationDate != null &&
             item.expirationDate < criteria.nowMillis
         ) {
-            reasons += "Caducado"
+            reasons += criteria.expiredLabel
         }
         return reasons.takeIf { it.isNotEmpty() }?.joinToString(" · ")
     }

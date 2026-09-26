@@ -17,6 +17,7 @@ import com.gabow95k.keeply.data.local.entity.ShoppingListItemEntity
 import com.gabow95k.keeply.databinding.FragmentShoppingListDetailBinding
 import com.gabow95k.keeply.presentation.base.BaseFragment
 import com.gabow95k.keeply.util.PrettyToast
+import com.gabow95k.keeply.util.InputValidation
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
@@ -151,7 +152,11 @@ class ShoppingListDetailFragment : BaseFragment<FragmentShoppingListDetailBindin
         inventoryItemId: Long? = selectedInventoryItemId
     ) {
         val trimmedName = name.trim()
-        if (trimmedName.isBlank()) return
+        if (!InputValidation.isValidRequiredText(trimmedName)) {
+            binding.etNewItem.error = getString(R.string.shopping_error_name)
+            return
+        }
+        binding.etNewItem.error = null
         viewLifecycleOwner.lifecycleScope.launch {
             val db = KeeplyDatabase.getInstance(requireContext())
             val linkedId = inventoryItemId

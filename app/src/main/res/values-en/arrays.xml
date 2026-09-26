@@ -37,4 +37,11 @@
         <item>Fridge</item>
         <item>Other</item>
     </string-array>
+
+    <string-array name="feature_tips">
+        <item>Swipe a card right more than once to reduce stock quickly.</item>
+        <item>Take or choose a photo, crop it, and let Keeply try to read its label details.</item>
+        <item>Enable notifications in Settings to learn about expired and low-stock products.</item>
+        <item>Use the category filter in Inventory to find products faster.</item>
+    </string-array>
 </resources>

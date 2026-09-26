@@ -26,6 +26,7 @@ import com.gabow95k.keeply.data.preferences.LookupOptionType
 import com.gabow95k.keeply.data.preferences.LookupOptionsStore
 import com.gabow95k.keeply.databinding.DialogAddCategoryBinding
 import com.gabow95k.keeply.databinding.DialogAddOptionBinding
+import com.gabow95k.keeply.databinding.DialogCropProductPhotoBinding
 import com.gabow95k.keeply.databinding.FragmentAddInventoryItemBinding
 import com.gabow95k.keeply.domain.model.Category
 import com.gabow95k.keeply.presentation.base.BaseFragment
@@ -33,6 +34,7 @@ import com.gabow95k.keeply.scanner.ProductLabelAnalyzer
 import com.gabow95k.keeply.scanner.ProductLabelHints
 import com.gabow95k.keeply.util.PrettyToast
 import com.gabow95k.keeply.util.ProductPhotoStore
+import com.gabow95k.keeply.util.InputValidation
 import com.google.android.gms.common.moduleinstall.ModuleInstall
 import com.google.android.gms.common.moduleinstall.ModuleInstallRequest
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -61,6 +63,8 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
     private var existingCreatedAt: Long = System.currentTimeMillis()
     private var existingQuantity: Double = 0.0
     private var existingPhotoPath: String? = null
+    private var originalPhotoPath: String? = null
+    private var photoChangesCommitted = false
     private var addOtherLabel: String = ""
     private var pendingPhotoFile: File? = null
 
@@ -93,14 +97,14 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
             return@registerForActivityResult
         }
 
-        val previous = existingPhotoPath
-        existingPhotoPath = file.absolutePath
-        if (previous != null && previous != existingPhotoPath) {
-            ProductPhotoStore.deleteIfOwned(requireContext(), previous)
-        }
         pendingPhotoFile = null
-        bindPhotoPreview(existingPhotoPath)
-        analyzeCapturedPhoto(file)
+        showPhotoCropper(Uri.fromFile(file), temporarySource = file)
+    }
+
+    private val selectPhotoLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri ->
+        if (uri != null) showPhotoCropper(uri, temporarySource = null)
     }
 
     override fun inflateBinding(
@@ -124,7 +128,7 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
         binding.etExpiration.setOnClickListener { showExpirationPicker() }
         binding.btnSave.setOnClickListener { saveProduct() }
         binding.btnScanBarcode.setOnClickListener { startBarcodeScan() }
-        binding.btnTakePhoto.setOnClickListener { requestCameraAndCapture() }
+        binding.btnTakePhoto.setOnClickListener { showPhotoSourceChooser() }
         binding.btnRemovePhoto.setOnClickListener { removePhoto() }
 
         setupLookupDropdown(
@@ -149,6 +153,12 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
     }
 
     override fun onDestroyView() {
+        if (!photoChangesCommitted && !requireActivity().isChangingConfigurations &&
+            existingPhotoPath != originalPhotoPath
+        ) {
+            ProductPhotoStore.deleteIfOwned(requireContext(), existingPhotoPath)
+            existingPhotoPath = originalPhotoPath
+        }
         labelAnalyzer?.close()
         labelAnalyzer = null
         super.onDestroyView()
@@ -164,6 +174,22 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
         }
     }
 
+    private fun showPhotoSourceChooser() {
+        val options = arrayOf(
+            getString(R.string.product_photo_source_camera),
+            getString(R.string.product_photo_source_gallery)
+        )
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.product_photo_source_title)
+            .setItems(options) { _, selected ->
+                when (selected) {
+                    0 -> requestCameraAndCapture()
+                    1 -> selectPhotoLauncher.launch("image/*")
+                }
+            }
+            .show()
+    }
+
     private fun launchCamera() {
         val file = ProductPhotoStore.createPhotoFile(requireContext())
         pendingPhotoFile = file
@@ -172,7 +198,9 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
     }
 
     private fun removePhoto() {
-        ProductPhotoStore.deleteIfOwned(requireContext(), existingPhotoPath)
+        if (existingPhotoPath != originalPhotoPath) {
+            ProductPhotoStore.deleteIfOwned(requireContext(), existingPhotoPath)
+        }
         existingPhotoPath = null
         bindPhotoPreview(null)
     }
@@ -181,17 +209,113 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
         val hasPhoto = !path.isNullOrBlank()
         binding.btnRemovePhoto.isVisible = hasPhoto
         binding.btnTakePhoto.setText(
-            if (hasPhoto) R.string.product_change_photo else R.string.product_take_photo
+            if (hasPhoto) R.string.product_change_photo else R.string.product_add_photo
         )
         if (hasPhoto) {
             Glide.with(binding.ivProductPhoto)
                 .load(path)
-                .centerInside()
+                .centerCrop()
                 .placeholder(R.drawable.placeholder)
                 .into(binding.ivProductPhoto)
         } else {
             binding.ivProductPhoto.setImageResource(R.drawable.placeholder)
         }
+    }
+
+    private fun showPhotoCropper(source: Uri, temporarySource: File?) {
+        binding.progressPhotoAnalyze.isVisible = true
+        binding.tvPhotoHint.setText(R.string.product_photo_preparing)
+        binding.btnTakePhoto.isEnabled = false
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            val sourceBitmap = withContext(Dispatchers.IO) {
+                runCatching { ProductPhotoStore.decodeForCrop(requireContext(), source) }
+            }.getOrElse {
+                temporarySource?.delete()
+                binding.progressPhotoAnalyze.isVisible = false
+                binding.btnTakePhoto.isEnabled = true
+                binding.tvPhotoHint.setText(R.string.product_photo_hint)
+                PrettyToast.error(binding.root, R.string.product_photo_load_failed)
+                return@launch
+            }
+
+            binding.progressPhotoAnalyze.isVisible = false
+            binding.btnTakePhoto.isEnabled = true
+            binding.tvPhotoHint.setText(R.string.product_photo_hint)
+            showPhotoCropDialog(sourceBitmap, temporarySource)
+        }
+    }
+
+    private fun showPhotoCropDialog(sourceBitmap: android.graphics.Bitmap, temporarySource: File?) {
+        val dialogBinding = DialogCropProductPhotoBinding.inflate(layoutInflater)
+        dialogBinding.cropImageView.setBitmap(sourceBitmap)
+        dialogBinding.cropImageView.onZoomChanged = { value ->
+            if (kotlin.math.abs(dialogBinding.sliderZoom.value - value) > 0.01f) {
+                dialogBinding.sliderZoom.value = value
+            }
+        }
+        dialogBinding.sliderZoom.addOnChangeListener { _, value, fromUser ->
+            if (fromUser) dialogBinding.cropImageView.setZoom(value)
+        }
+        dialogBinding.btnResetCrop.setOnClickListener {
+            dialogBinding.cropImageView.resetTransform()
+            dialogBinding.sliderZoom.value = ProductPhotoCropView.MIN_ZOOM
+        }
+
+        var accepted = false
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.product_crop_title)
+            .setView(dialogBinding.root)
+            .setPositiveButton(R.string.product_crop_use, null)
+            .setNegativeButton(R.string.dialog_option_cancel, null)
+            .create()
+
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val cropped = dialogBinding.cropImageView.renderCrop(
+                    PHOTO_OUTPUT_WIDTH,
+                    PHOTO_OUTPUT_HEIGHT
+                )
+                if (cropped == null) {
+                    PrettyToast.error(binding.root, R.string.product_photo_crop_failed)
+                    return@setOnClickListener
+                }
+
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val savedFile = withContext(Dispatchers.IO) {
+                        runCatching {
+                            ProductPhotoStore.saveCroppedBitmap(requireContext(), cropped)
+                        }
+                    }
+                    cropped.recycle()
+                    savedFile.onSuccess { file ->
+                        accepted = true
+                        temporarySource?.delete()
+                        applyCroppedPhoto(file)
+                        dialog.dismiss()
+                    }.onFailure {
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = true
+                        PrettyToast.error(binding.root, R.string.product_photo_crop_failed)
+                    }
+                }
+            }
+        }
+        dialog.setOnDismissListener {
+            if (!accepted) temporarySource?.delete()
+            if (!sourceBitmap.isRecycled) sourceBitmap.recycle()
+        }
+        dialog.show()
+    }
+
+    private fun applyCroppedPhoto(file: File) {
+        val previousDraft = existingPhotoPath
+        if (previousDraft != null && previousDraft != originalPhotoPath) {
+            ProductPhotoStore.deleteIfOwned(requireContext(), previousDraft)
+        }
+        existingPhotoPath = file.absolutePath
+        bindPhotoPreview(existingPhotoPath)
+        analyzeCapturedPhoto(file)
     }
 
     private fun analyzeCapturedPhoto(file: File) {
@@ -351,6 +475,7 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
         existingCreatedAt = entity.createdAt
         existingQuantity = entity.quantity
         existingPhotoPath = entity.photoPath
+        originalPhotoPath = entity.photoPath
         selectedCategoryId = entity.categoryId
         selectedExpirationDate = entity.expirationDate
 
@@ -401,7 +526,11 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
         dialog.setOnShowListener {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 val value = dialogBinding.etOption.text?.toString()?.trim().orEmpty()
-                if (value.isEmpty()) {
+                if (!InputValidation.isValidRequiredText(
+                        value,
+                        InputValidation.SHORT_LABEL_MAX_LENGTH
+                    )
+                ) {
                     dialogBinding.tilOption.error = getString(R.string.dialog_option_error_empty)
                     return@setOnClickListener
                 }
@@ -436,7 +565,11 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
         dialog.setOnShowListener {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 val name = dialogBinding.etCategoryName.text?.toString()?.trim().orEmpty()
-                if (name.isEmpty()) {
+                if (!InputValidation.isValidRequiredText(
+                        name,
+                        InputValidation.SHORT_LABEL_MAX_LENGTH
+                    )
+                ) {
                     dialogBinding.tilCategoryName.error =
                         getString(R.string.dialog_option_error_empty)
                     return@setOnClickListener
@@ -526,7 +659,7 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
         val categoryId = selectedCategoryId
 
         var hasError = false
-        if (name.isEmpty()) {
+        if (!InputValidation.isValidRequiredText(name)) {
             binding.etName.error = getString(R.string.product_error_name)
             hasError = true
         } else {
@@ -540,12 +673,48 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
             binding.actCategory.error = null
         }
 
-        val quantity = quantityText.toDoubleOrNull()
-        if (quantity == null || quantity < 0) {
+        val quantity = InputValidation.parseQuantity(quantityText, required = true)
+        if (quantity == null) {
             binding.etQuantity.error = getString(R.string.product_error_quantity)
             hasError = true
         } else {
             binding.etQuantity.error = null
+        }
+
+        val minQuantityText = binding.etMinQuantity.text?.toString()?.trim().orEmpty()
+        val minQuantity = if (minQuantityText.isEmpty()) {
+            null
+        } else {
+            InputValidation.parseQuantity(minQuantityText, required = true)
+        }
+        if (minQuantityText.isNotEmpty() && minQuantity == null) {
+            binding.etMinQuantity.error = getString(R.string.product_error_min_quantity)
+            hasError = true
+        } else {
+            binding.etMinQuantity.error = null
+        }
+
+        val barcode = binding.etBarcode.text?.toString()?.trim().orEmpty()
+        if (!InputValidation.isValidBarcode(barcode)) {
+            binding.etBarcode.error = getString(R.string.product_error_barcode)
+            hasError = true
+        } else {
+            binding.etBarcode.error = null
+        }
+
+        val brand = binding.etBrand.text?.toString()?.trim().orEmpty()
+        val notes = binding.etNotes.text?.toString()?.trim().orEmpty()
+        if (!InputValidation.isValidOptionalText(brand, InputValidation.NAME_MAX_LENGTH)) {
+            binding.etBrand.error = getString(R.string.input_error_too_long)
+            hasError = true
+        } else {
+            binding.etBrand.error = null
+        }
+        if (!InputValidation.isValidOptionalText(notes, InputValidation.NOTES_MAX_LENGTH)) {
+            binding.etNotes.error = getString(R.string.input_error_too_long)
+            hasError = true
+        } else {
+            binding.etNotes.error = null
         }
 
         if (hasError) return
@@ -558,21 +727,19 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
             id = editingItemId ?: 0L,
             categoryId = safeCategoryId,
             name = name,
-            brand = binding.etBrand.text?.toString()?.trim()?.ifEmpty { null },
+            brand = brand.ifEmpty { null },
             formType = binding.actFormType.text?.toString()?.trim()
                 ?.takeUnless { it.isEmpty() || it == addOtherLabel },
             unit = binding.actUnit.text?.toString()?.trim()
                 ?.takeUnless { it.isEmpty() || it == addOtherLabel },
             quantity = safeQuantity,
-            minQuantity = binding.etMinQuantity.text?.toString()?.trim()
-                ?.takeIf { it.isNotEmpty() }
-                ?.toDoubleOrNull(),
+            minQuantity = minQuantity,
             expirationDate = selectedExpirationDate,
-            barcode = binding.etBarcode.text?.toString()?.trim()?.ifEmpty { null },
+            barcode = barcode.ifEmpty { null },
             photoPath = existingPhotoPath,
             location = binding.actLocation.text?.toString()?.trim()
                 ?.takeUnless { it.isEmpty() || it == addOtherLabel },
-            notes = binding.etNotes.text?.toString()?.trim()?.ifEmpty { null },
+            notes = notes.ifEmpty { null },
             createdAt = if (editingItemId != null) existingCreatedAt else now,
             updatedAt = now
         )
@@ -600,6 +767,10 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
                 )
                 PrettyToast.success(binding.root, R.string.product_saved)
             }
+            if (originalPhotoPath != existingPhotoPath) {
+                ProductPhotoStore.deleteIfOwned(requireContext(), originalPhotoPath)
+            }
+            photoChangesCommitted = true
             parentFragmentManager.popBackStack()
         }
     }
@@ -615,6 +786,8 @@ class AddInventoryItemFragment : BaseFragment<FragmentAddInventoryItemBinding>()
     companion object {
         const val TAG = "AddInventoryItemFragment"
         private const val ARG_ITEM_ID = "arg_item_id"
+        private const val PHOTO_OUTPUT_WIDTH = 1200
+        private const val PHOTO_OUTPUT_HEIGHT = 630
 
         fun newInstance(itemId: Long? = null): AddInventoryItemFragment {
             return AddInventoryItemFragment().apply {

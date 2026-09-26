@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#F2EEFF"/><stop offset="1" stop-color="#E1E7FF"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#23306E" flood-opacity=".18"/></filter>
+    <clipPath id="screen"><rect x="150" y="650" width="780" height="1733" rx="42"/></clipPath>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#bg)"/>
+  <circle cx="75" cy="360" r="190" fill="#FFFFFF" opacity=".25"/><circle cx="1010" cy="170" r="230" fill="#9DAEFF" opacity=".18"/>
+  <image href="../../branding/promo-header-illustration.png" x="370" y="20" width="340" height="227" preserveAspectRatio="xMidYMid meet"/>
+  <text x="540" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="66" font-weight="700" fill="#11131A">Todo tu hogar,</text>
+  <text x="540" y="408" text-anchor="middle" font-family="Arial, sans-serif" font-size="66" font-weight="700" fill="#11131A">de un vistazo</text>
+  <text x="540" y="485" text-anchor="middle" font-family="Arial, sans-serif" font-size="31" fill="#515769">Stock, caducidades y actividad reciente en un solo lugar.</text>
+  <rect x="120" y="620" width="840" height="1760" rx="66" fill="#FFFFFF" filter="url(#shadow)"/>
+  <image href="../final/01-inicio.png" x="150" y="650" width="780" height="1733" preserveAspectRatio="none" clip-path="url(#screen)"/>
+</svg>

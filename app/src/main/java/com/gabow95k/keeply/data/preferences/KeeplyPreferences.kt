@@ -116,7 +116,7 @@ class KeeplyPreferences(context: Context) {
     companion object {
         const val PREFS_NAME = "keeply_prefs"
         const val DEFAULT_EXPIRING_SOON_DAYS = 7
-        const val CURRENT_PRIVACY_VERSION = 1
+        const val CURRENT_PRIVACY_VERSION = 2
 
         private const val KEY_NOTIFICATIONS_ENABLED = "notifications_enabled"
         private const val KEY_NOTIFY_EXPIRED = "notify_expired"

@@ -1,10 +1,15 @@
 package com.gabow95k.keeply.notifications
 
 import android.app.PendingIntent
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
+import androidx.annotation.PluralsRes
 import com.gabow95k.keeply.R
 import com.gabow95k.keeply.presentation.controller.ControllerActivity
 
@@ -20,28 +25,28 @@ class InventoryAlertNotifier(private val context: Context) {
             show(
                 id = ID_EXPIRED,
                 title = context.getString(R.string.notification_expired_title),
-                body = buildBody(expiredNames, R.string.notification_expired_body)
+                body = buildBody(expiredNames, R.plurals.notification_expired_body)
             )
         }
         if (expiringSoonNames.isNotEmpty()) {
             show(
                 id = ID_EXPIRING_SOON,
                 title = context.getString(R.string.notification_expiring_title),
-                body = buildBody(expiringSoonNames, R.string.notification_expiring_body)
+                body = buildBody(expiringSoonNames, R.plurals.notification_expiring_body)
             )
         }
         if (outOfStockNames.isNotEmpty()) {
             show(
                 id = ID_OUT_OF_STOCK,
                 title = context.getString(R.string.notification_out_of_stock_title),
-                body = buildBody(outOfStockNames, R.string.notification_out_of_stock_body)
+                body = buildBody(outOfStockNames, R.plurals.notification_out_of_stock_body)
             )
         }
         if (lowStockNames.isNotEmpty()) {
             show(
                 id = ID_LOW_STOCK,
                 title = context.getString(R.string.notification_low_stock_title),
-                body = buildBody(lowStockNames, R.string.notification_low_stock_body)
+                body = buildBody(lowStockNames, R.plurals.notification_low_stock_body)
             )
         }
     }
@@ -50,18 +55,35 @@ class InventoryAlertNotifier(private val context: Context) {
         show(id = ID_SHOPPING_PROMPT, title = title, body = body)
     }
 
-    private fun buildBody(names: List<String>, pluralRes: Int): String {
+    private fun buildBody(names: List<String>, @PluralsRes pluralRes: Int): String {
         val preview = names.take(MAX_NAMES_IN_BODY).joinToString(", ")
         val extra = names.size - MAX_NAMES_IN_BODY
         val listText = if (extra > 0) {
-            context.getString(R.string.notification_names_more, preview, extra)
+            context.resources.getQuantityString(
+                R.plurals.notification_names_more,
+                extra,
+                preview,
+                extra
+            )
         } else {
             preview
         }
-        return context.getString(pluralRes, names.size, listText)
+        return context.resources.getQuantityString(
+            pluralRes,
+            names.size,
+            names.size,
+            listText
+        )
     }
 
     private fun show(id: Int, title: String, body: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) !=
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+
         val intent = Intent(context, ControllerActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         }
@@ -83,7 +105,9 @@ class InventoryAlertNotifier(private val context: Context) {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .build()
 
-        NotificationManagerCompat.from(context).notify(id, notification)
+        runCatching {
+            NotificationManagerCompat.from(context).notify(id, notification)
+        }
     }
 
     companion object {

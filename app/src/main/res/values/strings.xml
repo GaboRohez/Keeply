@@ -32,7 +32,10 @@
     <string name="inventory_consume_label">Usar</string>
     <string name="inventory_consume_done">−%1$d · Stock: %2$s</string>
     <string name="inventory_consume_empty">Ya no hay stock de \"%1$s\"</string>
-    <string name="inventory_consume_limit">Solo quedan %1$d de \"%2$s\"</string>
+    <plurals name="inventory_consume_limit">
+        <item quantity="one">Solo queda %1$d de \"%2$s\"</item>
+        <item quantity="other">Solo quedan %1$d de \"%2$s\"</item>
+    </plurals>
     <string name="botiquin_title">Inventario</string>
     <string name="botiquin_empty">Aún no hay productos.\nToca + para agregar uno.</string>
     <string name="botiquin_add">Agregar producto</string>
@@ -56,11 +59,23 @@
     <string name="product_field_notes">Notas</string>
     <string name="product_hint_form_type">Ej. cápsula, líquido, tableta</string>
     <string name="product_hint_unit">Ej. pzas, mg, ml, kg</string>
-    <string name="product_take_photo">Tomar foto</string>
+    <string name="product_add_photo">Agregar foto</string>
     <string name="product_change_photo">Cambiar foto</string>
     <string name="product_remove_photo">Quitar</string>
     <string name="product_photo_preview">Foto del producto</string>
-    <string name="product_photo_hint">La foto se guarda en el producto y se intenta leer nombre, marca, caducidad, presentación, unidad y código de barras.</string>
+    <string name="product_photo_hint">Toma una foto o elige una de tu galería. Después podrás moverla y recortarla antes de guardarla.</string>
+    <string name="product_photo_source_title">Agregar foto</string>
+    <string name="product_photo_source_camera">Tomar con la cámara</string>
+    <string name="product_photo_source_gallery">Elegir de la galería</string>
+    <string name="product_photo_preparing">Preparando imagen…</string>
+    <string name="product_photo_load_failed">No se pudo abrir la imagen</string>
+    <string name="product_photo_crop_failed">No se pudo guardar el recorte</string>
+    <string name="product_crop_title">Ajustar foto</string>
+    <string name="product_crop_instructions">Mueve la imagen con un dedo y pellizca para acercar. Solo se guardará el contenido dentro del marco redondeado.</string>
+    <string name="product_crop_preview">Área de recorte de la foto</string>
+    <string name="product_crop_zoom">Zoom</string>
+    <string name="product_crop_reset">Centrar</string>
+    <string name="product_crop_use">Usar imagen</string>
     <string name="product_photo_analyzing">Analizando etiqueta…</string>
     <string name="product_photo_filled">Campos prellenados desde la foto</string>
     <string name="product_photo_no_data">Foto guardada. No se detectaron datos legibles</string>
@@ -93,6 +108,9 @@
     <string name="product_error_name">Ingresa el nombre</string>
     <string name="product_error_category">Selecciona una categoría</string>
     <string name="product_error_quantity">Ingresa una cantidad válida</string>
+    <string name="product_error_min_quantity">Ingresa un stock mínimo válido</string>
+    <string name="product_error_barcode">Usa entre 8 y 14 dígitos</string>
+    <string name="input_error_too_long">El texto excede la longitud permitida</string>
     <string name="product_clear_expiration">Quitar fecha</string>
     <string name="home_title">Inicio</string>
     <string name="home_greeting">Hola, %1$s</string>
@@ -105,7 +123,10 @@
     <string name="home_next_expiry_empty_body">Cuando un producto tenga caducidad, lo verás aquí.</string>
     <string name="home_next_expiry_today">Caduca hoy</string>
     <string name="home_next_expiry_tomorrow">Caduca mañana</string>
-    <string name="home_next_expiry_in_days">Caduca en %1$d días</string>
+    <plurals name="home_next_expiry_in_days">
+        <item quantity="one">Caduca en %1$d día</item>
+        <item quantity="other">Caduca en %1$d días</item>
+    </plurals>
     <string name="home_next_expiry_badge_today">Hoy</string>
     <string name="home_next_expiry_badge_days">%1$dd</string>
     <string name="home_last_activity_eyebrow">Última actividad</string>
@@ -128,7 +149,10 @@
     <string name="home_alert_expiring_title">Por caducar</string>
     <string name="home_alert_low_stock_title">Stock bajo</string>
     <string name="home_alert_out_of_stock_title">Agotados</string>
-    <string name="home_alert_count">%1$d producto(s)</string>
+    <plurals name="home_alert_count">
+        <item quantity="one">%1$d producto</item>
+        <item quantity="other">%1$d productos</item>
+    </plurals>
     <string name="home_alert_empty_expired">No hay productos caducados</string>
     <string name="home_alert_empty_expiring">No hay productos por caducar</string>
     <string name="home_alert_empty_low_stock">No hay productos con stock bajo</string>
@@ -233,7 +257,7 @@
     <string name="privacy_decline">No aceptar y salir</string>
     <string name="privacy_close">Cerrar</string>
     <string name="privacy_accepted_on">Lo aceptaste el %1$s</string>
-    <string name="privacy_body">Última actualización: julio 2026\n\n1. Quiénes somos\nKeeply es una aplicación de inventario personal orientada a registrar productos del hogar (medicinas, limpieza, cocina y más) en tu dispositivo.\n\n2. Datos que tratamos\nKeeply puede almacenar de forma local:\n• Perfil opcional (nombre, edad, tipo de sangre, teléfono, correo y notas).\n• Inventario (nombre, categoría, marca, presentación, unidad, cantidades, caducidad, código de barras, ubicación, notas y fotos).\n• Preferencias de la app (notificaciones, filtros y opciones personalizadas).\n• Registro de aceptación de este aviso (fecha y versión).\n\n3. Finalidad\nUsamos esos datos solo para:\n• Mostrar y administrar tu inventario.\n• Enviar avisos locales que tú configures (caducidad, stock, etc.).\n• Mejorar la experiencia de captura (foto, OCR y códigos de barras en el dispositivo).\n\n4. Almacenamiento y transferencia\nPor defecto, la información se guarda en el dispositivo. Keeply no crea una cuenta en la nube en esta versión. Si en el futuro se activa respaldo (por ejemplo Google Drive), se te informará y se pedirá consentimiento adicional.\n\n5. Permisos del sistema\n• Cámara: para fotografiar productos y escanear códigos.\n• Notificaciones: solo si las activas en Ajustes.\nPuedes revocar estos permisos en la configuración de Android; algunas funciones dejarán de estar disponibles.\n\n6. Conservación y eliminación\nLos datos permanecen mientras uses la app o hasta que los borres (por ejemplo eliminando productos o desinstalando Keeply).\n\n7. Menores\nSi la app es usada por un menor, debe contar con supervisión de un adulto responsable.\n\n8. Cambios a este aviso\nSi actualizamos el aviso de forma relevante, te pediremos aceptarlo de nuevo antes de continuar.\n\n9. Contacto\nPara dudas sobre privacidad relacionadas con Keeply, contacta al desarrollador a través de la ficha de la aplicación en la tienda donde la descargaste.\n\nAl pulsar “Acepto”, confirmas que leíste y aceptas este aviso.</string>
+    <string name="privacy_body">Última actualización: septiembre 2026\n\n1. Quiénes somos\nKeeply es una aplicación de inventario personal orientada a registrar productos del hogar (medicinas, limpieza, cocina y más) en tu dispositivo.\n\n2. Datos que tratamos\nKeeply puede almacenar de forma local:\n• Perfil opcional (nombre, edad, tipo de sangre, teléfono, correo y notas).\n• Inventario (nombre, categoría, marca, presentación, unidad, cantidades, caducidad, código de barras, ubicación, notas y fotos).\n• Preferencias de la app (notificaciones, filtros y opciones personalizadas).\n• Registro de aceptación de este aviso (fecha y versión).\n\n3. Finalidad\nUsamos esos datos solo para:\n• Mostrar y administrar tu inventario.\n• Enviar avisos locales que tú configures (caducidad, stock, etc.).\n• Mejorar la experiencia de captura (foto, OCR y códigos de barras en el dispositivo).\n\n4. Almacenamiento y transferencias\nTus datos de perfil e inventario se guardan localmente. Keeply no crea una cuenta ni respalda esos datos en la nube en esta versión. El procesamiento de imágenes, texto y códigos mediante ML Kit ocurre en el dispositivo; Google no recibe el contenido ni los resultados. Los SDK de ML Kit sí pueden enviar cifrados a Google información del dispositivo y de la app, identificadores por instalación y métricas técnicas de uso para diagnóstico, seguridad y mejora del servicio. No vendemos ni compartimos tus datos personales con fines publicitarios.\n\n5. Permisos del sistema\n• Cámara: para fotografiar productos y escanear códigos.\n• Fotos: el selector del sistema permite elegir solo la imagen que decidas, sin acceso general a tu galería.\n• Notificaciones: solo si las activas en Ajustes.\nPuedes revocar estos permisos en la configuración de Android; algunas funciones dejarán de estar disponibles.\n\n6. Conservación y eliminación\nLos datos permanecen mientras uses la app o hasta que los borres (por ejemplo eliminando productos o desinstalando Keeply).\n\n7. Menores\nKeeply está dirigida a público general, no específicamente a menores de 13 años. Si la usa un menor, debe contar con supervisión de un adulto responsable.\n\n8. Cambios a este aviso\nSi actualizamos el aviso de forma relevante, te pediremos aceptarlo de nuevo antes de continuar.\n\n9. Contacto\nPara dudas sobre privacidad relacionadas con Keeply, usa el correo de contacto publicado en la ficha de Google Play.\n\nAl pulsar “Acepto”, confirmas que leíste y aceptas este aviso.</string>
 
     <string name="profile_field_name">Nombre *</string>
     <string name="profile_field_age">Edad</string>
@@ -243,19 +267,37 @@
     <string name="profile_field_notes">Notas / alergias</string>
     <string name="profile_error_name">Ingresa tu nombre</string>
     <string name="profile_error_age">Edad no válida</string>
+    <string name="profile_error_blood_type">Usa A+, A-, B+, B-, AB+, AB-, O+ u O-</string>
+    <string name="profile_error_phone">Ingresa un teléfono válido de 7 a 15 dígitos</string>
+    <string name="profile_error_email">Ingresa un correo válido</string>
     <string name="profile_saved">Perfil guardado</string>
 
     <string name="notification_channel_inventory">Alertas de inventario</string>
     <string name="notification_channel_inventory_desc">Caducidad, stock bajo y productos agotados</string>
     <string name="notification_expired_title">Productos caducados</string>
-    <string name="notification_expired_body">%1$d producto(s): %2$s</string>
+    <plurals name="notification_expired_body">
+        <item quantity="one">%1$d producto: %2$s</item>
+        <item quantity="other">%1$d productos: %2$s</item>
+    </plurals>
     <string name="notification_expiring_title">Por caducar pronto</string>
-    <string name="notification_expiring_body">%1$d producto(s): %2$s</string>
+    <plurals name="notification_expiring_body">
+        <item quantity="one">%1$d producto: %2$s</item>
+        <item quantity="other">%1$d productos: %2$s</item>
+    </plurals>
     <string name="notification_out_of_stock_title">Productos agotados</string>
-    <string name="notification_out_of_stock_body">%1$d producto(s): %2$s</string>
+    <plurals name="notification_out_of_stock_body">
+        <item quantity="one">%1$d producto: %2$s</item>
+        <item quantity="other">%1$d productos: %2$s</item>
+    </plurals>
     <string name="notification_low_stock_title">Stock bajo</string>
-    <string name="notification_low_stock_body">%1$d producto(s): %2$s</string>
-    <string name="notification_names_more">%1$s y %2$d más</string>
+    <plurals name="notification_low_stock_body">
+        <item quantity="one">%1$d producto: %2$s</item>
+        <item quantity="other">%1$d productos: %2$s</item>
+    </plurals>
+    <plurals name="notification_names_more">
+        <item quantity="one">%1$s y %2$d más</item>
+        <item quantity="other">%1$s y %2$d más</item>
+    </plurals>
 
     <string name="shopping_title">Compras</string>
     <string name="shopping_empty">Aún no tienes listas.\nCrea una manual o auto-generada.</string>
@@ -274,10 +316,16 @@
     <string name="shopping_include_out_of_stock">Agotados</string>
     <string name="shopping_include_low_stock">Stock bajo</string>
     <string name="shopping_include_expired">Caducados</string>
+    <string name="shopping_reason_out_of_stock">Agotado</string>
+    <string name="shopping_reason_low_stock">Stock bajo</string>
+    <string name="shopping_reason_expired">Caducado</string>
     <string name="shopping_auto_categories">Categorías</string>
     <string name="shopping_auto_title">Auto-generar lista</string>
     <string name="shopping_manual_title">Nueva lista</string>
-    <string name="shopping_meta_pending">%1$d pendientes · %2$s</string>
+    <plurals name="shopping_meta_pending">
+        <item quantity="one">%1$d pendiente · %2$s</item>
+        <item quantity="other">%1$d pendientes · %2$s</item>
+    </plurals>
     <string name="shopping_source_manual">Manual</string>
     <string name="shopping_source_auto">Auto</string>
     <string name="shopping_add_item_hint">Agregar producto…</string>
@@ -296,14 +344,21 @@
     <string name="prompt_end_month_body">¿Quieres crear tu lista de compras del súper?</string>
     <string name="prompt_end_month_action">Crear lista</string>
     <string name="prompt_low_stock_title">Hay productos por reponer</string>
-    <string name="prompt_low_stock_body">Tienes %1$d producto(s) con stock bajo o agotados. ¿Generamos una lista?</string>
+    <plurals name="prompt_low_stock_body">
+        <item quantity="one">Tienes %1$d producto con stock bajo o agotado. ¿Generamos una lista?</item>
+        <item quantity="other">Tienes %1$d productos con stock bajo o agotados. ¿Generamos una lista?</item>
+    </plurals>
     <string name="prompt_low_stock_action">Crear lista</string>
     <string name="prompt_tip_action">Entendido</string>
+    <string name="prompt_tip_title">Consejo Keeply</string>
 
     <string name="settings_notify_shopping_prompts">Tips y recordatorios de compras</string>
     <string name="settings_notify_shopping_prompts_info">Recibe sugerencias para armar tu lista: por ejemplo al acercarse fin de mes, o cuando hay varios productos con poco o nada de stock según lo que sueles consumir.</string>
     <string name="notification_shopping_month_title">Fin de mes cerca</string>
     <string name="notification_shopping_month_body">Arma tu lista del súper desde Compras en Keeply</string>
     <string name="notification_shopping_stock_title">Productos por reponer</string>
-    <string name="notification_shopping_stock_body">Tienes %1$d producto(s) con poco o nada de stock</string>
+    <plurals name="notification_shopping_stock_body">
+        <item quantity="one">Tienes %1$d producto con poco o nada de stock</item>
+        <item quantity="other">Tienes %1$d productos con poco o nada de stock</item>
+    </plurals>
 </resources>

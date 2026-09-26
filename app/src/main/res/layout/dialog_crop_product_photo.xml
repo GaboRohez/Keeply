@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="20dp"
+    android:paddingTop="4dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="4dp">
+
+    <TextView
+        android:id="@+id/tvCropInstructions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/product_crop_instructions"
+        android:textColor="@color/keeply_text_secondary"
+        android:textSize="13sp"
+        app:fontFamily="@font/onest_regular_file"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.gabow95k.keeply.presentation.botiquin.ProductPhotoCropView
+        android:id="@+id/cropImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="14dp"
+        android:contentDescription="@string/product_crop_preview"
+        app:layout_constraintDimensionRatio="40:21"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCropInstructions" />
+
+    <TextView
+        android:id="@+id/tvZoomLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="@string/product_crop_zoom"
+        android:textColor="@color/keeply_text_primary"
+        android:textSize="13sp"
+        app:fontFamily="@font/onest_medium_file"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cropImageView" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sliderZoom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:contentDescription="@string/product_crop_zoom"
+        android:value="1"
+        android:valueFrom="1"
+        android:valueTo="4"
+        app:labelBehavior="gone"
+        app:layout_constraintBottom_toBottomOf="@id/tvZoomLabel"
+        app:layout_constraintEnd_toStartOf="@id/btnResetCrop"
+        app:layout_constraintStart_toEndOf="@id/tvZoomLabel"
+        app:layout_constraintTop_toTopOf="@id/tvZoomLabel" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnResetCrop"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="0dp"
+        android:text="@string/product_crop_reset"
+        android:textAllCaps="false"
+        app:fontFamily="@font/onest_medium_file"
+        app:layout_constraintBottom_toBottomOf="@id/sliderZoom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/sliderZoom" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -115,7 +115,12 @@ class BotiquinFragment : BaseFragment<FragmentBotiquinBinding>() {
         if (consumeSessionCount >= maxAvailable) {
             PrettyToast.error(
                 binding.root,
-                getString(R.string.inventory_consume_limit, maxAvailable, item.name)
+                resources.getQuantityString(
+                    R.plurals.inventory_consume_limit,
+                    maxAvailable,
+                    maxAvailable,
+                    item.name
+                )
             )
             scheduleConsumeCommit()
             return

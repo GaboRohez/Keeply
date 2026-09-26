@@ -168,8 +168,8 @@ Migraciones: `MIGRATION_1_2` (compras), `MIGRATION_2_3` (eventos de stock) en `K
 | Búsqueda y filtro por categoría                                         | `BotiquinFragment`                                                   |
 | Alta / edición de producto                                              | `AddInventoryItemFragment.kt`, `fragment_add_inventory_item.xml`     |
 | Spinners + “Agregar otra…” (presentación, unidad, ubicación, categoría) | `AddInventoryItemFragment` + `LookupOptionsStore.kt`                 |
-| Foto de producto                                                        | `util/ProductPhotoStore.kt` + FileProvider en Manifest               |
-| Prefill por OCR / barcode en foto                                       | `scanner/ProductLabelAnalyzer.kt`, `ProductLabelHints.kt`            |
+| Foto desde cámara o galería + recorte (mover/zoom)                      | `AddInventoryItemFragment`, `ProductPhotoCropView.kt`, `ProductPhotoStore.kt` |
+| Prefill por OCR / barcode en la imagen recortada                        | `scanner/ProductLabelAnalyzer.kt`, `ProductLabelHints.kt`            |
 | Escaneo de código de barras                                             | Play Services Code Scanner (en `AddInventoryItemFragment`)           |
 | Persistencia productos                                                  | `InventoryItemDao`, `InventoryItemEntity`                            |
 
@@ -256,6 +256,35 @@ SplashActivity
 ```
 
 Abrir el proyecto en Android Studio y ejecutar el run configuration `app`.
+
+### Validación completa
+
+```bash
+ANDROID_HOME=/ruta/al/sdk ./gradlew \
+  :app:testDebugUnitTest :app:lintDebug :app:assembleDebug \
+  :app:assembleDebugAndroidTest :app:connectedDebugAndroidTest :app:bundleRelease
+```
+
+Para firmar el bundle, copia `keystore.properties.example` como `keystore.properties` y completa
+la ruta y credenciales de tu clave de carga. Tanto ese archivo como `*.jks` y `*.keystore` están
+ignorados por Git. El AAB queda en `app/build/outputs/bundle/release/app-release.aab`.
+
+## Estado QA y publicación
+
+La revisión actualizada el 24 de septiembre de 2026 dejó **12/12 pruebas unitarias**, **2/2 pruebas
+instrumentadas** en Pixel 7/Android 13, **0 errores de lint** y builds debug/release correctos.
+También se endurecieron las validaciones de producto, perfil y compras; se corrigieron plurales,
+permisos de notificación y localización; y se desactivó el respaldo automático para esta versión.
+
+- [Informe QA completo](docs/qa/qa-report-2026-09-23.md)
+- [Paquete para Google Play](docs/google-play/README.md)
+- [Ficha en español](docs/google-play/store-listing-es.md)
+- [Seguridad de los datos](docs/google-play/data-safety.md)
+- [Checklist de publicación](docs/google-play/release-checklist.md)
+
+El repositorio es un candidato condicionado: antes de producción todavía se necesita una clave de
+carga, correo de soporte, URL HTTPS para la política y pruebas físicas de cámara/escáner y
+notificaciones. El respaldo quedó fuera del alcance solicitado.
 
 ---
 

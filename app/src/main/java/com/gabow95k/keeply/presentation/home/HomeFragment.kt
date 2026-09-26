@@ -301,7 +301,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         val subtitle = when (daysLeft) {
             0 -> getString(R.string.home_next_expiry_today)
             1 -> getString(R.string.home_next_expiry_tomorrow)
-            else -> getString(R.string.home_next_expiry_in_days, daysLeft)
+            else -> resources.getQuantityString(
+                R.plurals.home_next_expiry_in_days,
+                daysLeft,
+                daysLeft
+            )
         }
         val badge = when (daysLeft) {
             0 -> getString(R.string.home_next_expiry_badge_today)
@@ -462,14 +466,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 SoftPromptType.LOW_STOCK_SHOPPING -> SoftPrompt(
                     type = type,
                     title = getString(R.string.prompt_low_stock_title),
-                    body = getString(R.string.prompt_low_stock_body, count),
+                    body = resources.getQuantityString(
+                        R.plurals.prompt_low_stock_body,
+                        count,
+                        count
+                    ),
                     primaryLabel = getString(R.string.prompt_low_stock_action)
                 )
 
                 SoftPromptType.FEATURE_TIP -> SoftPrompt(
                     type = type,
-                    title = "Tip Keeply",
-                    body = "",
+                    title = getString(R.string.prompt_tip_title),
+                    body = resources.getStringArray(R.array.feature_tips)[count],
                     primaryLabel = getString(R.string.prompt_tip_action)
                 )
             }
@@ -522,7 +530,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         cardBinding.tvAlertTitle.setTextColor(
             ContextCompat.getColor(requireContext(), titleColorRes)
         )
-        cardBinding.tvAlertCount.text = getString(R.string.home_alert_count, count)
+        cardBinding.tvAlertCount.text = resources.getQuantityString(
+            R.plurals.home_alert_count,
+            count,
+            count
+        )
         cardBinding.tvAlertCount.setTextColor(
             ContextCompat.getColor(requireContext(), countColorRes)
         )

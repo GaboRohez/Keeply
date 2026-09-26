@@ -97,6 +97,7 @@
                     android:hint="@string/shopping_add_item_hint"
                     android:imeOptions="actionDone"
                     android:inputType="textCapSentences"
+                    android:maxLength="80"
                     android:maxLines="1"
                     android:popupBackground="@color/keeply_surface"
                     android:textColor="@color/keeply_text_primary"

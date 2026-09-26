@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             app:fontFamily="@font/onest_medium_file"
             android:inputType="textCapWords"
+            android:maxLength="40"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 </FrameLayout>

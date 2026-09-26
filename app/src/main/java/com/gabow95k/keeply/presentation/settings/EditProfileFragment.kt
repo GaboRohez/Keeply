@@ -11,6 +11,7 @@ import com.gabow95k.keeply.data.local.entity.UserProfileEntity
 import com.gabow95k.keeply.databinding.FragmentEditProfileBinding
 import com.gabow95k.keeply.presentation.base.BaseFragment
 import com.gabow95k.keeply.util.PrettyToast
+import com.gabow95k.keeply.util.InputValidation
 import kotlinx.coroutines.launch
 
 class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
@@ -43,17 +44,47 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
 
     private fun saveProfile() {
         val name = binding.etName.text?.toString()?.trim().orEmpty()
-        if (name.isBlank()) {
+        if (!InputValidation.isValidRequiredText(name)) {
             binding.etName.error = getString(R.string.profile_error_name)
             return
         }
+        binding.etName.error = null
 
         val ageText = binding.etAge.text?.toString()?.trim().orEmpty()
         val age = ageText.toIntOrNull()
-        if (ageText.isNotEmpty() && age == null) {
+        if ((ageText.isNotEmpty() && age == null) || !InputValidation.isValidAge(age)) {
             binding.etAge.error = getString(R.string.profile_error_age)
             return
         }
+        binding.etAge.error = null
+
+        val bloodType = binding.etBloodType.text?.toString().orEmpty()
+        if (!InputValidation.isValidBloodType(bloodType)) {
+            binding.etBloodType.error = getString(R.string.profile_error_blood_type)
+            return
+        }
+        binding.etBloodType.error = null
+
+        val phone = binding.etPhone.text?.toString()?.trim().orEmpty()
+        if (!InputValidation.isValidPhone(phone)) {
+            binding.etPhone.error = getString(R.string.profile_error_phone)
+            return
+        }
+        binding.etPhone.error = null
+
+        val email = binding.etEmail.text?.toString()?.trim().orEmpty()
+        if (!InputValidation.isValidEmail(email)) {
+            binding.etEmail.error = getString(R.string.profile_error_email)
+            return
+        }
+        binding.etEmail.error = null
+
+        val notes = binding.etNotes.text?.toString()?.trim().orEmpty()
+        if (!InputValidation.isValidOptionalText(notes, InputValidation.NOTES_MAX_LENGTH)) {
+            binding.etNotes.error = getString(R.string.input_error_too_long)
+            return
+        }
+        binding.etNotes.error = null
 
         viewLifecycleOwner.lifecycleScope.launch {
             KeeplyDatabase.getInstance(requireContext()).userProfileDao().upsert(
@@ -61,10 +92,10 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
                     id = UserProfileEntity.SINGLE_PROFILE_ID,
                     name = name,
                     age = age,
-                    bloodType = binding.etBloodType.text?.toString()?.trim()?.ifBlank { null },
-                    phone = binding.etPhone.text?.toString()?.trim()?.ifBlank { null },
-                    email = binding.etEmail.text?.toString()?.trim()?.ifBlank { null },
-                    notes = binding.etNotes.text?.toString()?.trim()?.ifBlank { null },
+                    bloodType = InputValidation.normalizeBloodType(bloodType).ifBlank { null },
+                    phone = phone.ifBlank { null },
+                    email = email.ifBlank { null },
+                    notes = notes.ifBlank { null },
                     updatedAt = System.currentTimeMillis()
                 )
             )
